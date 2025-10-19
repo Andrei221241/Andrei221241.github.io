@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Home — Andrei</title>
+    <meta name="description" content="A clean, home page template." />
+    <style>
+        :root{
+            --bg:#0f1724;
+            --card:#0b1220;
+            --muted:#98a0b3;
+            --accent:#4f46e5;
+            --glass: rgba(255,255,255,0.03);
+            --radius:12px;
+            --max:1000px;
+            color-scheme: dark;
+        }
+        *{box-sizing:border-box}
+        html,body{height:100%}
+        body{
+            margin:0;
+            font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+            background:
+                radial-gradient(800px 400px at 10% 10%, rgba(79,70,229,0.08), transparent 10%),
+                radial-gradient(600px 300px at 90% 90%, rgba(14,165,233,0.04), transparent 10%),
+                var(--bg);
+            color:#e6eef8;
+            -webkit-font-smoothing:antialiased;
+            -moz-osx-font-smoothing:grayscale;
+            padding:32px;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+        }
+        .container{
+            width:100%;
+            max-width:var(--max);
+            background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);
+            border-radius:var(--radius);
+            padding:28px;
+            box-shadow: 0 6px 30px rgba(2,6,23,0.6);
+            backdrop-filter: blur(6px);
+        }
+        header{
+            display:flex;
+            align-items:center;
+            justify-content:space-between;
+            gap:16px;
+            margin-bottom:20px;
+        }
+        .brand{
+            display:flex;
+            align-items:center;
+            gap:12px;
+            text-decoration:none;
+            color:inherit;
+        }
+        .logo{
+            width:44px;
+            height:44px;
+            border-radius:10px;
+            background:linear-gradient(135deg,var(--accent),#06b6d4);
+            display:inline-grid;
+            place-items:center;
+            font-weight:700;
+            box-shadow: 0 4px 18px rgba(79,70,229,0.18);
+            color:white;
+        }
+        nav a{
+            color:var(--muted);
+            text-decoration:none;
+            margin-left:18px;
+            font-weight:600;
+            font-size:14px;
+        }
+        nav a:hover{color: #fff}
+        .hero{
+            display:grid;
+            grid-template-columns:1fr 360px;
+            gap:28px;
+            align-items:center;
+        }
+        .intro h1{
+            font-size:2.2rem;
+            margin:0 0 8px 0;
+            line-height:1.05;
+        }
+        .intro p{
+            margin:0 0 18px 0;
+            color:var(--muted);
+            max-width:60ch;
+        }
+        .actions{
+            display:flex;
+            gap:12px;
+            align-items:center;
+        }
+        .btn{
+            display:inline-block;
+            padding:10px 16px;
+            border-radius:10px;
+            font-weight:600;
+            text-decoration:none;
+            color:white;
+            background:linear-gradient(90deg,var(--accent),#06b6d4);
+            box-shadow: 0 8px 30px rgba(79,70,229,0.18);
+        }
+        .btn.ghost{
+            background:transparent;
+            color:var(--muted);
+            border:1px solid rgba(255,255,255,0.04);
+        }
+        .card{
+            background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+            padding:18px;
+            border-radius:12px;
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.02);
+        }
+        .stats{
+            display:flex;
+            gap:12px;
+            margin-top:12px;
+        }
+        .stat{
+            flex:1;
+            background:var(--glass);
+            padding:12px;
+            border-radius:10px;
+            text-align:center;
+        }
+        .stat b{display:block;font-size:1.05rem}
+        .features{
+            display:grid;
+            grid-template-columns:repeat(3,1fr);
+            gap:12px;
+            margin-top:22px;
+        }
+        .feature{
+            background:linear-gradient(180deg, rgba(255,255,255,0.015), transparent);
+            padding:14px;
+            border-radius:10px;
+            color:var(--muted);
+            font-size:14px;
+        }
+        footer{
+            margin-top:18px;
+            display:flex;
+            align-items:center;
+            justify-content:space-between;
+            color:var(--muted);
+            font-size:13px;
+        }
+        @media (max-width:880px){
+            .hero{grid-template-columns:1fr; padding-bottom:8px}
+            .features{grid-template-columns:1fr}
+            nav{display:none}
+        }
+    </style>
+</head>
+<body>
+    <main class="container" role="main">
+        <header>
+            <a class="brand" href="#" aria-label="Home">
+                <span class="logo">A</span>
+                <div>
+                    <div style="font-weight:700">Andrei</div>
+                    <div style="font-size:12px;color:var(--muted)">Home</div>
+                </div>
+            </a>
+            <nav aria-label="Main navigation">
+                <a href="week_1.html">Week 1</a>
+                <a href="week_2.html">Week 2</a>
+                <a href="week_3.html">Week 3</a>
+                <a href="#">Week 4</a>
+                <a href="#">Week 5</a>
+                <a href="#">Week 6</a>
+                <a href="#">Week 7</a>
+                <a href="#">Week 8</a>
+                <a href="#">Week 9</a>
+            </nav>
+        </header>
+
+        <section class="hero">
+            <div>
+                <div class="intro">
+                    <h1>Welcome ...</h1>
+                    <p> to my Operating Systems journal.</p>
+                    <p>Explore weekly updates, insights, and resources as I document my journey through the world of operating systems.</p>
+                </div>
+            </div>
+        </section>
+
+        <section style="margin-top:28px">
+            <div class="card">
+                <h2 style="margin-top:0;margin-bottom:12px">Latest Update</h2>
+                <p>Week 3: Introduction to Operating Systems</p>
+                <a href="week_3.html" class="btn" style="margin-top:12px;display:inline-block">Read More</a>
+                
+            </div>
+
+        <footer>
+            <div>© <span id="year"></span> Andrei</div>
+            <div style="font-size:13px;color:var(--muted);display:flex;gap:12px;align-items:center">
+            <span>Page styles by GitHub Copilot</span>
+            <span>
+                Licensed under
+                <a href="https://www.apache.org/licenses/LICENSE-2.0" style="color:var(--muted);text-decoration:none;margin-left:6px">
+                Apache License 2.0
+                </a>
+            </span>
+            </div>
+        </footer>
+        <p style="margin-top:12px;color:var(--muted);font-size:13px">
+            <small>
+                Disclaimer: The author does not claim ownership of the page styles. Styles were generated with assistance from GitHub Copilot and have been reviewed and edited by the author.
+            </small>
+        </p>
+        </section>
+    </main>
+    
+
+    <script>
+        // small runtime touches
+        document.getElementById('year').textContent = new Date().getFullYear();
+    </script>
+</body>
+</html>
