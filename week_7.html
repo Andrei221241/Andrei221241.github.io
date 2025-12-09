@@ -38,6 +38,13 @@
             color: var(--accent);
             text-decoration: none;
             font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+        }
+
+        nav a span {
+            font-size: 1.2em;
+            margin-right: 6px;
         }
 
         header {
@@ -82,12 +89,17 @@
             font-size: 0.9rem;
         }
 
+        ul,
+        ol {
+            margin: 0.25rem 0 0.75rem 1.2rem;
+        }
+
         /* Figure Grid */
         .fig-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
             gap: 1rem;
-            margin-top: 1rem;
+            margin-top: 0.75rem;
         }
 
         figure {
@@ -113,6 +125,15 @@
             font-size: 0.85rem;
             color: var(--muted);
             margin-top: 0.4rem;
+            text-align: center;
+        }
+
+        footer {
+            border-top: 1px solid #e6eef6;
+            padding-top: 0.75rem;
+            color: var(--muted);
+            font-size: 0.9rem;
+            margin-top: 1rem;
         }
 
         /* Modal */
@@ -169,18 +190,97 @@
     <div class="wrap">
 
         <nav>
-            <a href="index.html">🏠 Home</a>
+            <a href="index.html">
+                <span>🏠</span> Home
+            </a>
         </nav>
 
         <header>
-            <h1>Week 7: Security Audit & System Evaluation</h1>
+            <h1>Week 7: Security Audit &amp; System Evaluation</h1>
             <p class="lead">
                 Final security assessment of the Ubuntu Server, including Lynis auditing, network scanning,
                 service verification, access control analysis, and overall system evaluation.
             </p>
         </header>
 
-        <!-- ----------------------- INTRO ---------------------------- -->
+        <!-- PHASE 7 STRUCTURE -->
+        <section>
+            <h2>Phase 7: Security Audit and System Evaluation (Week 7)</h2>
+            <p>
+                This phase conducts a security audit of the deployed Ubuntu Server and evaluates the overall
+                configuration, using command-line tooling only and remote administration via SSH.
+            </p>
+
+            <h3>Mandatory Audit Tasks</h3>
+            <ul>
+                <li>
+                    Security scanning with Lynis
+                    <div class="fig-grid">
+                        <figure class="gallery-item" data-full="images/week7-figure1_lynis_before_remediation.png">
+                            <img src="images/week7-figure1_lynis_before_remediation.png" alt="Lynis scan before remediation">
+                            <figcaption>Figure 1 – Lynis security scan before remediation (hardening index 59).</figcaption>
+                        </figure>
+                        <figure class="gallery-item" data-full="images/week7-figure2_lynis_after_remediation.png">
+                            <img src="images/week7-figure2_lynis_after_remediation.png" alt="Lynis scan after remediation">
+                            <figcaption>Figure 2 – Lynis security scan after remediation (hardening index 63).</figcaption>
+                        </figure>
+                    </div>
+                </li>
+                <li>
+                    Network security assessment with <code>nmap</code>
+                    <div class="fig-grid">
+                        <figure class="gallery-item" data-full="images/week7-nmap.png">
+                            <img src="images/week7-nmap.png" alt="nmap scan of server">
+                            <figcaption>Figure 3 – <code>nmap</code> scan from the workstation showing only SSH (port 22) open.</figcaption>
+                        </figure>
+                    </div>
+                </li>
+                <li>
+                    Access control verification
+                    <div class="fig-grid">
+                        <figure class="gallery-item" data-full="images/week7-access.png">
+                            <img src="images/week7-access.png" alt="Access control verification output">
+                            <figcaption>Figure 4 – Evidence of AppArmor status, SSH hardening, and sudo-based administration.</figcaption>
+                        </figure>
+                    </div>
+                </li>
+                <li>
+                    Service audit justifying all running services
+                    <div class="fig-grid">
+                        <figure class="gallery-item" data-full="images/week7-services.png">
+                            <img src="images/week7-services.png" alt="Running services list">
+                            <figcaption>Figure 5 – Running services from <code>systemctl</code> and <code>ps</code> used for the service inventory.</figcaption>
+                        </figure>
+                    </div>
+                </li>
+                <li>
+                    System configuration review
+                    <div class="fig-grid">
+                        <figure class="gallery-item" data-full="images/week7-final-summary.png">
+                            <img src="images/week7-final-summary.png" alt="Final configuration summary">
+                            <figcaption>Figure 6 – Summary view used to cross-check firewall, SSH, update, and monitoring configuration.</figcaption>
+                        </figure>
+                    </div>
+                </li>
+            </ul>
+
+            <h3>Deliverables (Journal and Video)</h3>
+            <ol>
+                <li>
+                    Security Audit Report covering infrastructure security assessment, Lynis scores before and
+                    after remediation, network security testing results, SSH security verification, service
+                    inventory with justifications, and remaining risk assessment.
+                    <div class="fig-grid">
+                        <figure class="gallery-item" data-full="images/week7-final-summary.png">
+                            <img src="images/week7-final-summary.png" alt="Security audit report evidence">
+                            <figcaption>Figure 7 – Visual summary used to support the written Week 7 Security Audit Report.</figcaption>
+                        </figure>
+                    </div>
+                </li>
+            </ol>
+        </section>
+
+        <!-- INTRO -->
         <section>
             <h2>1. Introduction</h2>
             <p>
@@ -192,7 +292,7 @@
             </p>
         </section>
 
-        <!-- ----------------------- LYNIS ---------------------------- -->
+        <!-- LYNIS -->
         <section>
             <h2>2. System Audit with Lynis</h2>
             <p>
@@ -203,29 +303,23 @@
             <h3>Command Used</h3>
             <pre>sudo lynis audit system</pre>
 
-            <p><strong>Before Remediation Score:</strong> [Insert score here]</p>
+            <p><strong>Before Remediation Score:</strong> Hardening index 59.</p>
+            <p><strong>After Remediation Score:</strong> Hardening index 63.</p>
 
             <div class="fig-grid">
                 <figure class="gallery-item" data-full="images/week7-lynis-before.png">
-                    <img src="images/week7-lynis-before.png" alt="">
-                    <figcaption>Figure 1 – Lynis audit (before remediation).</figcaption>
+                    <img src="images/week7-lynis-before.png" alt="Lynis scan before remediation">
+                    <figcaption>Figure 1 – Lynis audit before remediation, highlighting missing controls such as a malware scanner.</figcaption>
                 </figure>
-            </div>
 
-            <h3>Post-Remediation Improvements</h3>
-            <p>
-                After resolving warnings related to SSH, file permissions, and log configuration, I reran Lynis:
-            </p>
-
-            <div class="fig-grid">
                 <figure class="gallery-item" data-full="images/week7-lynis-after.png">
-                    <img src="images/week7-lynis-after.png" alt="">
-                    <figcaption>Figure 2 – Lynis audit (after remediation).</figcaption>
+                    <img src="images/week7-lynis-after.png" alt="Lynis scan after remediation">
+                    <figcaption>Figure 2 – Lynis audit after remediation showing an improved hardening index and all key modules enabled.</figcaption>
                 </figure>
             </div>
         </section>
 
-        <!-- ----------------------- NMAP ---------------------------- -->
+        <!-- NMAP -->
         <section>
             <h2>3. Network Security Assessment (nmap)</h2>
             <p>
@@ -233,13 +327,13 @@
                 verify the firewall and ensure only SSH was reachable.
             </p>
 
-            <h3>Commands Used</h3>
+            <h3>Command Used</h3>
             <pre>nmap -sV -O 192.168.56.102</pre>
 
             <div class="fig-grid">
                 <figure class="gallery-item" data-full="images/week7-nmap.png">
-                    <img src="images/week7-nmap.png" alt="">
-                    <figcaption>Figure 3 – nmap scan showing exposed services.</figcaption>
+                    <img src="images/week7-nmap.png" alt="nmap scan result">
+                    <figcaption>Figure 3 – <code>nmap</code> scan confirming that port 22/SSH is the only exposed service.</figcaption>
                 </figure>
             </div>
 
@@ -249,7 +343,7 @@
             </p>
         </section>
 
-        <!-- ----------------------- ACCESS CONTROL ---------------------------- -->
+        <!-- ACCESS CONTROL -->
         <section>
             <h2>4. Access Control Verification</h2>
             <p>
@@ -261,19 +355,19 @@
 aa-status
 sudo cat /etc/ssh/sshd_config | grep -E "PermitRootLogin|PasswordAuthentication"
 id adminuser
-        </pre>
+            </pre>
 
             <div class="fig-grid">
                 <figure class="gallery-item" data-full="images/week7-access.png">
-                    <img src="images/week7-access.png" alt="">
-                    <figcaption>Figure 4 – Evidence of AppArmor & SSH hardening.</figcaption>
+                    <img src="images/week7-access.png" alt="Access control checks">
+                    <figcaption>Figure 4 – Evidence that AppArmor is enforcing and SSH disallows root and password logins.</figcaption>
                 </figure>
             </div>
         </section>
 
-        <!-- ----------------------- SERVICE AUDIT ---------------------------- -->
+        <!-- SERVICE AUDIT -->
         <section>
-            <h2>5. Service Inventory & Justification</h2>
+            <h2>5. Service Inventory &amp; Justification</h2>
             <p>
                 Using <code>systemctl --type=service --state=running</code> and
                 <code>ps aux</code>, I compiled a list of all active services and evaluated whether they were
@@ -282,8 +376,8 @@ id adminuser
 
             <div class="fig-grid">
                 <figure class="gallery-item" data-full="images/week7-services.png">
-                    <img src="images/week7-services.png" alt="">
-                    <figcaption>Figure 5 – Running services audit.</figcaption>
+                    <img src="images/week7-services.png" alt="Running services">
+                    <figcaption>Figure 5 – Running services audit used to justify which daemons remain enabled.</figcaption>
                 </figure>
             </div>
 
@@ -292,32 +386,32 @@ id adminuser
             </p>
         </section>
 
-        <!-- ----------------------- FINAL EVALUATION ---------------------------- -->
+        <!-- FINAL EVALUATION -->
         <section>
-            <h2>6. Overall System Evaluation</h2>
+            <h2>6. Overall System Evaluation &amp; Remaining Risk</h2>
             <p>
-                The combined security controls from Weeks 4–7 create a robust environment aligned with
-                LO3 and the industry-standard practices in the assessment brief. The Final Week 7 audit
-                confirms that:
+                The combined security controls from Weeks 4–7 create a robust environment aligned with the
+                coursework learning outcomes. The final audit confirms that:
             </p>
 
             <ul>
-                <li>The firewall allows only authorised traffic.</li>
-                <li>SSH operates strictly with key-based authentication.</li>
-                <li>Access control (AppArmor) restricts system processes.</li>
-                <li>fail2ban and automatic updates strengthen long-term resilience.</li>
+                <li>The firewall allows only authorised traffic (SSH from the workstation).</li>
+                <li>SSH operates strictly with key-based authentication and no direct root access.</li>
+                <li>Access control (AppArmor) restricts system processes to defined profiles.</li>
+                <li>fail2ban and automatic updates strengthen long-term resilience and patching.</li>
                 <li>No unnecessary network-exposed services remain active.</li>
             </ul>
 
             <p>
-                The system demonstrates a hardened, well-monitored, and well-documented Linux server
-                suitable for secure remote administration.
+                Residual risk mainly relates to the limits of a single-host setup (no redundancy) and
+                dependencies on VirtualBox networking. These are noted in the written report as design rather
+                than configuration risks.
             </p>
 
             <div class="fig-grid">
                 <figure class="gallery-item" data-full="images/week7-final-summary.png">
-                    <img src="images/week7-final-summary.png" alt="">
-                    <figcaption>Figure 6 – Final system evaluation summary.</figcaption>
+                    <img src="images/week7-final-summary.png" alt="Final system evaluation summary">
+                    <figcaption>Figure 6 – Final summary view used to cross-check configuration against the Phase 7 requirements.</figcaption>
                 </figure>
             </div>
         </section>
@@ -341,10 +435,9 @@ id adminuser
             <div>© 2025 Andrei</div>
         </footer>
 
-
     </div>
 
-    <!-- MODAL SCRIPT (same as Weeks 5–6) -->
+    <!-- MODAL -->
     <div class="img-modal" id="imgModal" data-open="false">
         <div class="img-modal-inner">
             <button class="modal-close" onclick="closeModal()">×</button>
@@ -362,13 +455,28 @@ id adminuser
             item.addEventListener("click", () => {
                 modal.setAttribute("data-open", "true");
                 modalImg.src = item.dataset.full;
-                modalCaption.textContent = item.querySelector("figcaption").innerText;
+                const cap = item.querySelector("figcaption");
+                modalCaption.textContent = cap ? cap.innerText : "";
             });
         });
 
         function closeModal() {
             modal.setAttribute("data-open", "false");
+            modalImg.src = "";
+            modalCaption.textContent = "";
         }
+
+        modal.addEventListener("click", e => {
+            if (e.target === modal) {
+                closeModal();
+            }
+        });
+
+        document.addEventListener("keydown", e => {
+            if (e.key === "Escape" && modal.getAttribute("data-open") === "true") {
+                closeModal();
+            }
+        });
     </script>
 
 </body>

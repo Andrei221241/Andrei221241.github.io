@@ -2,312 +2,329 @@
 <html lang="en">
 
 <head>
-	<meta charset="UTF-8">
-	<title>Week 2: Security Planning and Testing Methodology</title>
-	<style>
-		:root {
-			--max-w: 900px;
-			--accent: #1f618d;
-			--muted: #666;
-		}
+    <meta charset="UTF-8">
+    <title>Week 2: Security Planning and Testing Methodology</title>
+    <style>
+        :root {
+            --max-w: 900px;
+            --accent: #1f618d;
+            --muted: #666;
+        }
 
-		body {
-			font-family: system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial;
-			line-height: 1.5;
-			color: #222;
-			margin: 0;
-			padding: 2rem;
-			background: #f7f9fb
-		}
+        body {
+            font-family: system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial;
+            line-height: 1.5;
+            color: #222;
+            margin: 0;
+            padding: 2rem;
+            background: #f7f9fb
+        }
 
-		.wrap {
-			max-width: var(--max-w);
-			margin: 0 auto;
-			background: #fff;
-			border-radius: 8px;
-			padding: 1.5rem 2rem;
-			box-shadow: 0 8px 30px rgba(22, 40, 60, 0.08)
-		}
+        .wrap {
+            max-width: var(--max-w);
+            margin: 0 auto;
+            background: #fff;
+            border-radius: 8px;
+            padding: 1.5rem 2rem;
+            box-shadow: 0 8px 30px rgba(22, 40, 60, 0.08)
+        }
 
-		header {
-			border-bottom: 1px solid #e6eef6;
-			padding-bottom: 0.75rem;
-			margin-bottom: 1rem
-		}
+        header {
+            border-bottom: 1px solid #e6eef6;
+            padding-bottom: 0.75rem;
+            margin-bottom: 1rem
+        }
 
-		h1 {
-			margin: 0;
-			font-size: 1.4rem;
-			color: var(--accent)
-		}
+        h1 {
+            margin: 0;
+            font-size: 1.4rem;
+            color: var(--accent)
+        }
 
-		p.lead {
-			margin: 0.5rem 0;
-			color: var(--muted)
-		}
+        p.lead {
+            margin: 0.5rem 0;
+            color: var(--muted)
+        }
 
-		section {
-			margin: 1rem 0
-		}
+        section {
+            margin: 1rem 0
+        }
 
-		h2 {
-			font-size: 1.05rem;
-			margin: 0 0 0.5rem 0;
-			color: #113047
-		}
+        h2 {
+            font-size: 1.05rem;
+            margin: 0 0 0.5rem 0;
+            color: #113047
+        }
 
-		ul,
-		ol {
-			margin: 0.25rem 0 0.75rem 1.2rem
-		}
+        ul,
+        ol {
+            margin: 0.25rem 0 0.75rem 1.2rem
+        }
 
-		pre {
-			background: #0b1220;
-			color: #e6f1ff;
-			padding: 0.75rem;
-			border-radius: 6px;
-			overflow: auto;
-			font-size: 0.9rem
-		}
+        pre {
+            background: #0b1220;
+            color: #e6f1ff;
+            padding: 0.75rem;
+            border-radius: 6px;
+            overflow: auto;
+            font-size: 0.9rem
+        }
 
-		table {
-			width: 100%;
-			border-collapse: collapse;
-			margin: 0.5rem 0 0
-		}
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 0.5rem 0 0
+        }
 
-		th,
-		td {
-			border: 1px solid #e9f0f6;
-			padding: 0.5rem;
-			text-align: left;
-			background: #fff
-		}
+        th,
+        td {
+            border: 1px solid #e9f0f6;
+            padding: 0.5rem;
+            text-align: left;
+            background: #fff
+        }
 
-		th {
-			background: #f3f8fb;
-			color: #113047;
-			font-weight: 600
-		}
+        th {
+            background: #f3f8fb;
+            color: #113047;
+            font-weight: 600
+        }
 
-		.fig-grid {
-			display: grid;
-			grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-			gap: 1rem;
-			margin-top: 0.75rem
-		}
+        .fig-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1rem;
+            margin-top: 0.75rem
+        }
 
-		figure {
-			background: #fbfdff;
-			border: 1px dashed #e3eef9;
-			padding: 0.5rem;
-			border-radius: 6px;
-			min-height: 140px;
-			display: flex;
-			flex-direction: column;
-			align-items: center;
-			justify-content: center
-		}
+        figure {
+            background: #fbfdff;
+            border: 1px dashed #e3eef9;
+            padding: 0.5rem;
+            border-radius: 6px;
+            min-height: 140px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center
+        }
 
-		figure img {
-			max-width: 100%;
-			max-height: 96px;
-			object-fit: contain;
-			display: block
-		}
+        figure img {
+            max-width: 100%;
+            max-height: 96px;
+            object-fit: contain;
+            display: block
+        }
 
-		figcaption {
-			font-size: 0.85rem;
-			color: var(--muted);
-			margin-top: 0.5rem
-		}
+        figcaption {
+            font-size: 0.85rem;
+            color: var(--muted);
+            margin-top: 0.5rem
+        }
 
-		footer {
-			border-top: 1px solid #e6eef6;
-			padding-top: 0.75rem;
-			color: var(--muted);
-			font-size: 0.9rem
-		}
+        footer {
+            border-top: 1px solid #e6eef6;
+            padding-top: 0.75rem;
+            color: var(--muted);
+            font-size: 0.9rem;
+            margin-top: 1rem;
+        }
 
-		.note {
-			background: #fff8e6;
-			border-left: 4px solid #ffb86b;
-			padding: 0.6rem;
-			border-radius: 4px;
-			color: #663f00
-		}
-	</style>
+        .note {
+            background: #fff8e6;
+            border-left: 4px solid #ffb86b;
+            padding: 0.6rem;
+            border-radius: 4px;
+            color: #663f00
+        }
+    </style>
 </head>
 
 <body>
-	<nav style="margin-bottom:1rem">
-		<a href="index.html"
-			style="color:var(--accent);text-decoration:none;display:inline-flex;align-items:center;font-weight:500">
-			<span style="font-size:1.2em;margin-right:6px">🏠</span> Home
-		</a>
-	</nav>
 
-	<h1>Week 2: Security Planning and Testing Methodology</h1>
-	<div class="section">
-		<h2>Objective</h2>
-		<p>In Week 2, I planned the security baseline for the Ubuntu Server and outlined a performance testing
-			methodology. This phase focuses on planning, not implementation.</p>
-	</div>
-	<hr>
-	<div class="section">
-		<h2>1. Security Baseline Checklist</h2>
-		<table>
-			<thead>
-				<tr>
-					<th>Security Area</th>
-					<th>Planned Configuration / Notes</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<td>SSH Hardening</td>
-					<td>Disable password authentication, enable key-based authentication, restrict SSH access to the
-						workstation IP. Ensures only authorized users can log in remotely.</td>
-				</tr>
-				<tr>
-					<td>Firewall Configuration</td>
-					<td>Configure ufw to allow only essential ports (SSH) and block all others. Protects server from
-						unauthorized network access.</td>
-				</tr>
-				<tr>
-					<td>Mandatory Access Control (MAC)</td>
-					<td>Use AppArmor to enforce process-level security policies. Limits the impact of compromised
-						applications.</td>
-				</tr>
-				<tr>
-					<td>Automatic Updates</td>
-					<td>Enable unattended security updates to ensure all security patches are applied promptly.</td>
-				</tr>
-				<tr>
-					<td>User Privilege Management</td>
-					<td>Create a non-root administrative user; enforce sudo usage. Minimizes risk of accidental or
-						malicious system changes.</td>
-				</tr>
-				<tr>
-					<td>Network Security</td>
-					<td>Keep server on Host-Only network to isolate it from external networks. Plan to monitor for
-						unauthorized access attempts.</td>
-				</tr>
-			</tbody>
-		</table>
-		<p><strong>Explanation:</strong> Each control is selected to reduce the risk of common security threats and to
-			follow best practices for server hardening.</p>
-	</div>
-	<hr>
-	<div class="section">
-		<h2>2. Threat Model</h2>
-		<table>
-			<thead>
-				<tr>
-					<th>Threat</th>
-					<th>Description</th>
-					<th>Mitigation Strategy</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<td>Unauthorized SSH access</td>
-					<td>Attackers may try to guess passwords or brute-force login attempts.</td>
-					<td>Disable password login, enable key-based authentication, enforce IP restrictions, and use
-						fail2ban (later).</td>
-				</tr>
-				<tr>
-					<td>Malware / compromised packages</td>
-					<td>Malicious software could be installed on the server.</td>
-					<td>Enable automatic security updates and verify software sources before installation.</td>
-				</tr>
-				<tr>
-					<td>Privilege escalation</td>
-					<td>Non-admin users could gain root access.</td>
-					<td>Proper user management, enforce sudo usage, and use AppArmor for access control enforcement.
-					</td>
-				</tr>
-			</tbody>
-		</table>
-		<p><strong>Explanation:</strong> Identifying these threats ensures a proactive approach to securing the server
-			before deployment.</p>
-	</div>
-	<hr>
-	<div class="section">
-		<h2>3. Performance Testing Methodology</h2>
-		<p>Although performance testing will be performed in Week 6, I planned the approach now:</p>
-		<table>
-			<thead>
-				<tr>
-					<th>Metric</th>
-					<th>Measurement Method</th>
-					<th>Notes</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<td>CPU Usage</td>
-					<td>top, htop, or mpstat</td>
-					<td>Measure baseline and load usage for different applications.</td>
-				</tr>
-				<tr>
-					<td>Memory Usage</td>
-					<td>free -h, vmstat</td>
-					<td>Monitor RAM and swap usage during workloads.</td>
-				</tr>
-				<tr>
-					<td>Disk I/O</td>
-					<td>iostat, dd</td>
-					<td>Record read/write speeds and identify potential bottlenecks.</td>
-				</tr>
-				<tr>
-					<td>Network Performance</td>
-					<td>ping, iperf</td>
-					<td>Measure latency and throughput for network-intensive applications.</td>
-				</tr>
-				<tr>
-					<td>System Latency / Responsiveness</td>
-					<td>Observe delays under load</td>
-					<td>Identify if applications cause slow system responses.</td>
-				</tr>
-			</tbody>
-		</table>
-		<p><strong>Explanation:</strong> Metrics will be collected via command-line tools and recorded systematically to
-			evaluate the server’s behavior under different workloads.</p>
-	</div>
-	<hr>
-	<div class="section">
-		<h2>4. Reflection</h2>
-		<p>In Week 2, planning the security baseline and performance testing methodology helped me develop a deeper
-			understanding of the potential vulnerabilities and risks associated with the Ubuntu Server. This planning
-			ensured that all future server configurations, monitoring, and testing activities will be structured,
-			consistent, and measurable. By carefully considering areas such as SSH hardening, firewall rules, access
-			control, and automated updates, I was able to create a clear roadmap for Week 4 and beyond. Focusing on
-			documentation and planning at this stage establishes a solid foundation for implementing security controls
-			and evaluating performance systematically, which will ultimately support a more secure and efficient server
-			environment.</p>
-	</div>
+    <div class="wrap">
 
-	<section>
-		<h2>References</h2>
-		<ol>
-			<li>[1] Canonical, “OpenSSH Server Configuration,” Ubuntu Documentation. Available:
-				https://help.ubuntu.com/community/SSH/OpenSSH/Configuring. Accessed: Oct. 2025.</li>
-			<li>[2] Ubuntu, “Uncomplicated Firewall (UFW),” Ubuntu Documentation. Available:
-				https://help.ubuntu.com/community/UFW. Accessed: Oct. 2025.</li>
-			<li>[3] Canonical, “AppArmor Security Profiles,” Ubuntu Documentation. Available:
-				https://ubuntu.com/server/docs/security-apparmor. Accessed: Oct. 2025.</li>
-			<li>[4] OWASP, “Threat Modeling Process,” OWASP Foundation. Available:
-				https://owasp.org/www-community/Threat_Modeling. Accessed: Oct. 2025.</li>
-			<li>[5] NIST, “Security and Privacy Controls for Information Systems,” NIST SP 800-53. Accessed: Oct. 2025.
-			</li>
-		</ol>
-	</section>
+        <nav style="margin-bottom:1rem">
+            <a href="index.html"
+                style="color:var(--accent);text-decoration:none;display:inline-flex;align-items:center;font-weight:500">
+                <span style="font-size:1.2em;margin-right:6px">🏠</span> Home
+            </a>
+        </nav>
 
+        <header>
+            <h1>Week 2: Security Planning and Testing Methodology</h1>
+        </header>
 
-	<footer>
-		<div>© 2025 Andrei</div>
-	</footer>
+        <section>
+            <h2>Objective</h2>
+            <p>In Week 2, I planned the security baseline for the Ubuntu Server and outlined a performance testing
+                methodology. This phase focuses on planning, not implementation.</p>
+        </section>
+
+        <hr>
+
+        <section>
+            <h2>1. Security Baseline Checklist</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Security Area</th>
+                        <th>Planned Configuration / Notes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>SSH Hardening</td>
+                        <td>Disable password authentication, enable key-based authentication, restrict SSH access to the
+                            workstation IP. Ensures only authorized users can log in remotely.</td>
+                    </tr>
+                    <tr>
+                        <td>Firewall Configuration</td>
+                        <td>Configure ufw to allow only essential ports (SSH) and block all others. Protects server from
+                            unauthorized network access.</td>
+                    </tr>
+                    <tr>
+                        <td>Mandatory Access Control (MAC)</td>
+                        <td>Use AppArmor to enforce process-level security policies. Limits the impact of compromised
+                            applications.</td>
+                    </tr>
+                    <tr>
+                        <td>Automatic Updates</td>
+                        <td>Enable unattended security updates to ensure all security patches are applied promptly.</td>
+                    </tr>
+                    <tr>
+                        <td>User Privilege Management</td>
+                        <td>Create a non-root administrative user; enforce sudo usage. Minimizes risk of accidental or
+                            malicious system changes.</td>
+                    </tr>
+                    <tr>
+                        <td>Network Security</td>
+                        <td>Keep server on Host-Only network to isolate it from external networks. Plan to monitor for
+                            unauthorized access attempts.</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p><strong>Explanation:</strong> Each control is selected to reduce the risk of common security threats and to
+                follow best practices for server hardening.</p>
+        </section>
+
+        <hr>
+
+        <section>
+            <h2>2. Threat Model</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Threat</th>
+                        <th>Description</th>
+                        <th>Mitigation Strategy</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Unauthorized SSH access</td>
+                        <td>Attackers may try to guess passwords or brute-force login attempts.</td>
+                        <td>Disable password login, enable key-based authentication, enforce IP restrictions, and use
+                            fail2ban (later).</td>
+                    </tr>
+                    <tr>
+                        <td>Malware / compromised packages</td>
+                        <td>Malicious software could be installed on the server.</td>
+                        <td>Enable automatic security updates and verify software sources before installation.</td>
+                    </tr>
+                    <tr>
+                        <td>Privilege escalation</td>
+                        <td>Non-admin users could gain root access.</td>
+                        <td>Proper user management, enforce sudo usage, and use AppArmor for access control enforcement.
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <p><strong>Explanation:</strong> Identifying these threats ensures a proactive approach to securing the server
+                before deployment.</p>
+        </section>
+
+        <hr>
+
+        <section>
+            <h2>3. Performance Testing Methodology</h2>
+            <p>Although performance testing will be performed in Week 6, I planned the approach now:</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Metric</th>
+                        <th>Measurement Method</th>
+                        <th>Notes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>CPU Usage</td>
+                        <td>top, htop, or mpstat</td>
+                        <td>Measure baseline and load usage for different applications.</td>
+                    </tr>
+                    <tr>
+                        <td>Memory Usage</td>
+                        <td>free -h, vmstat</td>
+                        <td>Monitor RAM and swap usage during workloads.</td>
+                    </tr>
+                    <tr>
+                        <td>Disk I/O</td>
+                        <td>iostat, dd</td>
+                        <td>Record read/write speeds and identify potential bottlenecks.</td>
+                    </tr>
+                    <tr>
+                        <td>Network Performance</td>
+                        <td>ping, iperf</td>
+                        <td>Measure latency and throughput for network-intensive applications.</td>
+                    </tr>
+                    <tr>
+                        <td>System Latency / Responsiveness</td>
+                        <td>Observe delays under load</td>
+                        <td>Identify if applications cause slow system responses.</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p><strong>Explanation:</strong> Metrics will be collected via command-line tools and recorded systematically to
+                evaluate the server’s behavior under different workloads.</p>
+        </section>
+
+        <hr>
+
+        <section>
+            <h2>4. Reflection</h2>
+            <p>In Week 2, planning the security baseline and performance testing methodology helped me develop a deeper
+                understanding of the potential vulnerabilities and risks associated with the Ubuntu Server. This planning
+                ensured that all future server configurations, monitoring, and testing activities will be structured,
+                consistent, and measurable. By carefully considering areas such as SSH hardening, firewall rules, access
+                control, and automated updates, I was able to create a clear roadmap for Week 4 and beyond. Focusing on
+                documentation and planning at this stage establishes a solid foundation for implementing security controls
+                and evaluating performance systematically, which will ultimately support a more secure and efficient server
+                environment.</p>
+        </section>
+
+        <section>
+            <h2>References</h2>
+            <ol>
+                <li>[1] Canonical, “OpenSSH Server Configuration,” Ubuntu Documentation. Available:
+                    https://help.ubuntu.com/community/SSH/OpenSSH/Configuring. Accessed: Oct. 2025.</li>
+                <li>[2] Ubuntu, “Uncomplicated Firewall (UFW),” Ubuntu Documentation. Available:
+                    https://help.ubuntu.com/community/UFW. Accessed: Oct. 2025.</li>
+                <li>[3] Canonical, “AppArmor Security Profiles,” Ubuntu Documentation. Available:
+                    https://ubuntu.com/server/docs/security-apparmor. Accessed: Oct. 2025.</li>
+                <li>[4] OWASP, “Threat Modeling Process,” OWASP Foundation. Available:
+                    https://owasp.org/www-community/Threat_Modeling. Accessed: Oct. 2025.</li>
+                <li>[5] NIST, “Security and Privacy Controls for Information Systems,” NIST SP 800-53. Accessed: Oct. 2025.
+                </li>
+            </ol>
+        </section>
+
+        <footer>
+            <div>© 2025 Andrei</div>
+        </footer>
+
+    </div>
+
 </body>
 
 </html>

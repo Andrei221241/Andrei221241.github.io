@@ -5,10 +5,8 @@
     <meta charset="UTF-8">
     <title>Week 6: Performance Evaluation and Analysis</title>
     <style>
-        /* Styles generated using GitHub Copilot*/
-        /* Global Styles */
         :root {
-            --max-w: 1280;
+            --max-w: 900px;
             --accent: #1f618d;
             --muted: #666;
         }
@@ -58,6 +56,12 @@
             color: #113047
         }
 
+        h3 {
+            font-size: 0.98rem;
+            margin: 0.5rem 0 0.35rem;
+            color: #153955;
+        }
+
         ul,
         ol {
             margin: 0.25rem 0 0.75rem 1.2rem
@@ -99,54 +103,6 @@
             margin-top: 0.75rem
         }
 
-        figure {
-            background: #fbfdff;
-            border: 1px dashed #e3eef9;
-            padding: 0.5rem;
-            border-radius: 6px;
-            min-height: 140px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center
-        }
-
-        figure img {
-            max-width: 100%;
-            max-height: 96px;
-            object-fit: contain;
-            display: block
-        }
-
-        figcaption {
-            font-size: 0.85rem;
-            color: var(--muted);
-            margin-top: 0.5rem
-        }
-
-        footer {
-            border-top: 1px solid #e6eef6;
-            padding-top: 0.75rem;
-            color: var(--muted);
-            font-size: 0.9rem
-        }
-
-        .note {
-            background: #fff8e6;
-            border-left: 4px solid #ffb86b;
-            padding: 0.6rem;
-            border-radius: 4px;
-            color: #663f00
-        }
-
-        /* Gallery styles (keeps existing layout but adds modal) */
-        .fig-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 1rem;
-            margin-top: 0.75rem
-        }
-
         figure.gallery-item {
             background: #fbfdff;
             border: 1px dashed #e3eef9;
@@ -175,7 +131,28 @@
             text-align: center
         }
 
-        /* Modal (full-size view) */
+        figcaption {
+            font-size: 0.85rem;
+            color: var(--muted);
+            margin-top: 0.5rem
+        }
+
+        footer {
+            border-top: 1px solid #e6eef6;
+            padding-top: 0.75rem;
+            color: var(--muted);
+            font-size: 0.9rem;
+            margin-top: 1rem;
+        }
+
+        .note {
+            background: #fff8e6;
+            border-left: 4px solid #ffb86b;
+            padding: 0.6rem;
+            border-radius: 4px;
+            color: #663f00
+        }
+
         .img-modal {
             position: fixed;
             inset: 0;
@@ -228,6 +205,9 @@
             cursor: pointer
         }
     </style>
+
+    <!-- Plotly.js for charts -->
+    <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
 </head>
 
 <body>
@@ -240,7 +220,6 @@
             </a>
         </nav>
 
-
         <header>
             <h1>Week 6: Performance Evaluation and Analysis</h1>
             <p class="lead">
@@ -248,6 +227,54 @@
                 virtualisation-related trade-offs.
             </p>
         </header>
+
+        <!-- Phase 6 structure from brief -->
+        <section>
+            <h2>Phase 6: Performance Evaluation and Analysis (Week 6)</h2>
+            <p>
+                This phase executes detailed performance testing of the Ubuntu Server and analyses operating system
+                behaviour under different workloads, using the workstation–server dual VM setup and remote
+                administration via SSH.
+            </p>
+
+            <h3>Testing Methodology</h3>
+            <p>
+                For each application or service chosen, the following metrics were selected, monitored and compared
+                where appropriate:
+            </p>
+            <ol>
+                <li>CPU usage</li>
+                <li>Memory usage</li>
+                <li>Disk I/O performance</li>
+                <li>Network performance</li>
+                <li>System latency</li>
+                <li>Service response times</li>
+            </ol>
+
+            <h3>Testing Scenarios</h3>
+            <p>
+                For each application or service chosen, the following scenarios were considered, monitored and compared
+                where appropriate:
+            </p>
+            <ul>
+                <li>Baseline performance testing</li>
+                <li>Application load testing</li>
+                <li>Performance analysis identifying bottlenecks</li>
+                <li>Optimisation testing, aiming to implement and evidence at least two improvements</li>
+            </ul>
+
+            <h3>Deliverables (Journal and Video)</h3>
+            <ol>
+                <li>Document your approach</li>
+                <li>Create a performance data table with structured measurements for all applications and metrics</li>
+                <li>Create performance visualisations including charts and graphs</li>
+                <li>Capture testing evidence</li>
+                <li>Conduct network performance analysis documenting latency and throughput</li>
+                <li>Capture optimisation analysis results describing improvements with quantitative data</li>
+            </ol>
+        </section>
+
+        <!-- existing narrative (unchanged) -->
 
         <section>
             <h2>1. Introduction</h2>
@@ -476,7 +503,7 @@ sudo sysctl -w net.core.wmem_max=212992</pre>
         </section>
 
         <section>
-            <h2>9. Critical Reflection and Link to Learning Outcomes</h2>
+            <h2>9. Reflection</h2>
             <p>
                 The experiments confirmed that while command-line tools such as <code>stress-ng</code>, <code>dd</code>,
                 <code>ping</code> and <code>iperf3</code> are powerful for understanding OS behaviour, their outputs
@@ -510,202 +537,249 @@ sudo sysctl -w net.core.wmem_max=212992</pre>
             </p>
         </section>
 
+        <!-- Figures organised under each deliverable -->
         <section>
-            <h2>11. Figures (Terminal Evidence)</h2>
+            <h2>11. Figures by Deliverable</h2>
             <p>
-                The following figures provide terminal evidence for the commands and measurements discussed above. Click
-                any
-                thumbnail to view a larger version.
+                The following figures and charts provide evidence for each Phase 6 deliverable.
             </p>
 
-            <div class="fig-grid" id="gallery">
-                <!-- Baseline and environment -->
-                <figure class="gallery-item" tabindex="0"
-                    data-full="images/week6-fig-baseline-uptime-free-df-top-workstation.png"
-                    aria-label="Open Figure 1: Baseline system metrics">
-                    <img src="images/week6-fig-baseline-uptime-free-df-top-workstation.png"
-                        alt="Figure 1: Baseline uptime, free, df and top outputs">
-                    <figcaption class="fig-caption">
-                        Figure 1: Baseline system metrics workstation (uptime, free -h, df -h, top -b -n 1) showing an
-                        idle server.
-                    </figcaption>
-                </figure>
+            <div id="gallery">
+                <!-- Deliverable 1 -->
+                <h3>Deliverable 1 – Document your approach</h3>
+                <div class="fig-grid">
+                    <figure class="gallery-item" tabindex="0"
+                        data-full="images/week6-fig-baseline-uptime-free-df-top-workstation.png"
+                        aria-label="Open Figure 1: Baseline system metrics (workstation)">
+                        <img src="images/week6-fig-baseline-uptime-free-df-top-workstation.png"
+                            alt="Figure 1: Baseline uptime, free, df and top outputs on workstation">
+                        <figcaption class="fig-caption">
+                            Figure 1: Baseline system metrics on the workstation (uptime, free -h, df -h, top -b -n 1),
+                            confirming an idle system.
+                        </figcaption>
+                    </figure>
 
-                <figure class="gallery-item" tabindex="0"
-                    data-full="images/week6-fig=baseline-uptime-free-df-top-server.png"
-                    aria-label="Open Figure 2: Baseline system metrics">
-                    <img src="images/week6-fig=baseline-uptime-free-df-top-server.png"
-                        alt="Figure 2: Baseline uptime, free, df and top outputs">
-                    <figcaption class="fig-caption">
-                        Figure 2: Baseline system metrics server (uptime, free -h, df -h, top -b -n 1) showing an idle
-                        server.
-                    </figcaption>
-                </figure>
+                    <figure class="gallery-item" tabindex="0"
+                        data-full="images/week6-fig=baseline-uptime-free-df-top-server.png"
+                        aria-label="Open Figure 2: Baseline system metrics (server)">
+                        <img src="images/week6-fig=baseline-uptime-free-df-top-server.png"
+                            alt="Figure 2: Baseline uptime, free, df and top outputs on server">
+                        <figcaption class="fig-caption">
+                            Figure 2: Baseline system metrics on the server (uptime, free -h, df -h, top -b -n 1),
+                            showing a lightly loaded headless VM.
+                        </figcaption>
+                    </figure>
 
-                <figure class="gallery-item" tabindex="0" data-full="images/week6-fig-ssh-login-workstation.png"
-                    aria-label="Open Figure 3: SSH login to server">
-                    <img src="images/week6-fig-ssh-login-workstation.png"
-                        alt="Figure 3: SSH login from workstation to Ubuntu Server">
-                    <figcaption class="fig-caption">
-                        Figure 3: SSH login from the workstation to the headless Ubuntu Server VM.
-                    </figcaption>
-                </figure>
+                    <figure class="gallery-item" tabindex="0" data-full="images/week6-fig-ssh-login-workstation.png"
+                        aria-label="Open Figure 3: SSH login to server">
+                        <img src="images/week6-fig-ssh-login-workstation.png"
+                            alt="Figure 3: SSH login from workstation to Ubuntu Server">
+                        <figcaption class="fig-caption">
+                            Figure 3: SSH login from the Ubuntu Desktop workstation to the headless Ubuntu Server VM.
+                        </figcaption>
+                    </figure>
 
-                <figure class="gallery-item" tabindex="0" data-full="images/week6-fig-ipaddr-workstation.png"
-                    aria-label="Open Figure 4: ip addr on workstation">
-                    <img src="images/week6-fig-ipaddr-workstation.png" alt="Figure 4: ip addr output on workstation VM">
-                    <figcaption class="fig-caption">
-                        Figure 4: <code>ip addr</code> on the workstation VM, showing the host-only address
-                        192.168.56.10.
-                    </figcaption>
-                </figure>
+                    <figure class="gallery-item" tabindex="0" data-full="images/week6-fig-ipaddr-workstation.png"
+                        aria-label="Open Figure 4: ip addr on workstation">
+                        <img src="images/week6-fig-ipaddr-workstation.png"
+                            alt="Figure 4: ip addr output on workstation VM">
+                        <figcaption class="fig-caption">
+                            Figure 4: <code>ip addr</code> on the workstation, showing the host-only address
+                            192.168.56.10/24 used for testing.
+                        </figcaption>
+                    </figure>
 
-                <figure class="gallery-item" tabindex="0" data-full="images/week6-fig-ipaddr-server.png"
-                    aria-label="Open Figure 5: ip addr on server">
-                    <img src="images/week6-fig-ipaddr-server.png" alt="Figure 5: ip addr output on server VM">
-                    <figcaption class="fig-caption">
-                        Figure 5: <code>ip addr</code> on the Ubuntu Server VM, showing the host-only address
-                        192.168.56.102.
-                    </figcaption>
-                </figure>
+                    <figure class="gallery-item" tabindex="0" data-full="images/week6-fig-ipaddr-server2.png"
+                        aria-label="Open Figure 5: ip addr on Ubuntu Server">
+                        <img src="images/week6-fig-ipaddr-server2.png"
+                            alt="Figure 5: ip addr output on Ubuntu Server showing host-only interface">
+                        <figcaption class="fig-caption">
+                            Figure 5: <code>ip addr</code> on the Ubuntu Server console, showing the host-only address
+                            192.168.56.102/24.
+                        </figcaption>
+                    </figure>
+                </div>
 
-                <!-- Disk benchmarks -->
-                <figure class="gallery-item" tabindex="0" data-full="images/week6-fig-dd-workstation.png"
-                    aria-label="Open Figure 6: dd benchmark on workstation">
-                    <img src="images/week6-fig-dd-workstation.png" alt="Figure 6: dd write benchmark on workstation">
-                    <figcaption class="fig-caption">
-                        Figure 6: <code>dd</code> benchmark on the workstation VM, reporting around 261&nbsp;MB/s.
-                    </figcaption>
-                </figure>
+                <!-- Deliverable 2 -->
+                <h3>Deliverable 2 – Performance data table with structured measurements</h3>
+                <p>
+                    The disk I/O performance table in Section 5 is supported by the following write benchmarks using
+                    <code>dd</code> on both VMs.
+                </p>
+                <div class="fig-grid">
+                    <figure class="gallery-item" tabindex="0" data-full="images/week6-fig-dd-workstation.png"
+                        aria-label="Open Figure 6: dd benchmark on workstation">
+                        <img src="images/week6-fig-dd-workstation.png"
+                            alt="Figure 6: dd write benchmark on workstation">
+                        <figcaption class="fig-caption">
+                            Figure 6: <code>dd</code> benchmark on the workstation VM, reporting around 261&nbsp;MB/s
+                            write speed.
+                        </figcaption>
+                    </figure>
 
-                <figure class="gallery-item" tabindex="0" data-full="images/week6-fig-dd-server.png"
-                    aria-label="Open Figure 7: dd benchmark on server">
-                    <img src="images/week6-fig-dd-server.png" alt="Figure 7: dd write benchmark on server">
-                    <figcaption class="fig-caption">
-                        Figure 7: <code>dd</code> benchmark on the server VM, reporting around 2.1&nbsp;GB/s due to
-                        VirtualBox caching.
-                    </figcaption>
-                </figure>
+                    <figure class="gallery-item" tabindex="0" data-full="images/week6-fig-dd-server.png"
+                        aria-label="Open Figure 7: dd benchmark on server">
+                        <img src="images/week6-fig-dd-server.png" alt="Figure 7: dd write benchmark on server">
+                        <figcaption class="fig-caption">
+                            Figure 7: <code>dd</code> benchmark on the server VM, reporting around 2.1&nbsp;GB/s due to
+                            aggressive VirtualBox caching.
+                        </figcaption>
+                    </figure>
+                </div>
 
-                <!-- Network tests -->
-                <figure class="gallery-item" tabindex="0" data-full="images/week6-fig-ping.png"
-                    aria-label="Open Figure 8: ping latency test">
-                    <img src="images/week6-fig-ping.png" alt="Figure 8: ping output from workstation to server">
-                    <figcaption class="fig-caption">
-                        Figure 8: <code>ping -c 10 192.168.56.102</code> from the workstation, showing low latency and
-                        0% packet loss.
-                    </figcaption>
-                </figure>
+                <!-- Deliverable 3 -->
+                <h3>Deliverable 3 – Performance visualisations (charts and graphs)</h3>
+                <p>
+                    The following interactive charts, built with Plotly.js, aggregate the CPU and network measurements
+                    captured in the terminal screenshots and show how utilisation and throughput change under load.
+                </p>
+                <div id="cpuChart" style="height:350px;"></div>
+                <p>
+                    The CPU utilisation chart summarises how busy the server was at three points in the
+                    experiments: almost idle at baseline, noticeably higher during the <code>iperf3</code>
+                    network load, and then dropping back down once the test finished. It shows that even
+                    when stressed, the VM stayed well below 100% utilisation and quickly returned to a
+                    low-load state, which matches the snapshots seen in the <code>top</code> output.
+                </p>
+                <div id="netChart" style="height:350px;margin-top:1rem;"></div>
+                <p>
+                    The network chart compares throughput and retransmissions for the two
+                    <code>iperf3</code> runs. Throughput remains consistently high (around 3&nbsp;Gbit/s)
+                    while the number of retransmitted segments is also high and very similar across both
+                    runs. This combination supports the conclusion that the virtual NIC / VirtualBox
+                    networking layer is the main bottleneck, rather than TCP tuning inside the Ubuntu
+                    guest.
+                </p>
 
-                <figure class="gallery-item" tabindex="0" data-full="images/week6-fig-iperf-run1.png"
-                    aria-label="Open Figure 9: iperf3 baseline throughput">
-                    <img src="images/week6-fig-iperf-run1.png" alt="Figure 9: iperf3 baseline throughput measurement">
-                    <figcaption class="fig-caption">
-                        Figure 9: Baseline <code>iperf3</code> run, with throughput around 2.9&nbsp;Gbit/s and high
-                        retransmission counts.
-                    </figcaption>
-                </figure>
+                <p>
+                    CLI screenshots in Figures 8–9 provide the underlying evidence for these charts.
+                </p>
+                <div class="fig-grid">
+                    <figure class="gallery-item" tabindex="0" data-full="images/week6-fig-iperf3-server.png"
+                        aria-label="Open Figure 8: top snapshot with iperf3">
+                        <img src="images/week6-fig-iperf3-server.png"
+                            alt="Figure 8: top output showing iperf3 process and CPU load">
+                        <figcaption class="fig-caption">
+                            Figure 8: <code>top -b -n 1</code> snapshot capturing the <code>iperf3</code> process and
+                            CPU utilisation during throughput testing.
+                        </figcaption>
+                    </figure>
 
-                <figure class="gallery-item" tabindex="0" data-full="images/week6-fig-iperf-run2.png"
-                    aria-label="Open Figure 10: iperf3 after optimisation">
-                    <img src="images/week6-fig-iperf-run2.png" alt="Figure 10: iperf3 throughput after sysctl tuning">
-                    <figcaption class="fig-caption">
-                        Figure 10: <code>iperf3</code> run after buffer tuning, showing similar throughput and
-                        retransmission behaviour.
-                    </figcaption>
-                </figure>
+                    <figure class="gallery-item" tabindex="0" data-full="images/week6-fig-ls-lah.png"
+                        aria-label="Open Figure 9: ls -lah timing">
+                        <img src="images/week6-fig-ls-lah.png"
+                            alt="Figure 9: ls output showing root filesystem contents and timing">
+                        <figcaption class="fig-caption">
+                            Figure 9: <code>ls</code> executed in the root filesystem (with timing), confirming low
+                            latency for basic filesystem operations.
+                        </figcaption>
+                    </figure>
+                </div>
 
-                <figure class="gallery-item" tabindex="0" data-full="images/week6-fig-sysctl.png"
-                    aria-label="Open Figure 11: sysctl network buffer settings">
-                    <img src="images/week6-fig-sysctl.png" alt="Figure 11: sysctl rmem_max and wmem_max values">
-                    <figcaption class="fig-caption">
-                        Figure 11: <code>sysctl</code> output showing <code>net.core.rmem_max</code> and
-                        <code>net.core.wmem_max</code> already at 212992 before and after tuning attempts.
-                    </figcaption>
-                </figure>
+                <!-- Deliverable 4 -->
+                <h3>Deliverable 4 – Testing evidence</h3>
+                <p>
+                    The following figures show direct terminal evidence of the CPU stress tests and related commands.
+                </p>
+                <div class="fig-grid">
+                    <figure class="gallery-item" tabindex="0" data-full="images/week6-fig-stressng-output1.png"
+                        aria-label="Open Figure 10: stress-ng CPU test (run 1)">
+                        <img src="images/week6-fig-stressng-output1.png"
+                            alt="Figure 10: stress-ng output with failed CPU metrics">
+                        <figcaption class="fig-caption">
+                            Figure 10: <code>stress-ng --cpu 4 --metrics-brief</code> output (run 1), showing failed
+                            metric collection under VirtualBox despite visible CPU load.
+                        </figcaption>
+                    </figure>
 
-                <!-- CPU stress (you can add more figures here) -->
-                <figure class="gallery-item" tabindex="0" data-full="images/week6-fig-stressng-output1.png"
-                    aria-label="Open Figure 12: stress-ng CPU test">
-                    <img src="images/week6-fig-stressng-output1.png"
-                        alt="Figure 12: stress-ng output with failed CPU metrics">
-                    <figcaption class="fig-caption">
-                        Figure 12: <code>stress-ng --cpu 4 --metrics-brief</code> output 1, showing failed metric
-                        collection under VirtualBox.
-                    </figcaption>
-                </figure>
+                    <figure class="gallery-item" tabindex="0" data-full="images/week6-fig-stressng-output2.png"
+                        aria-label="Open Figure 11: stress-ng CPU test (run 2)">
+                        <img src="images/week6-fig-stressng-output2.png"
+                            alt="Figure 11: stress-ng output with failed CPU metrics">
+                        <figcaption class="fig-caption">
+                            Figure 11: <code>stress-ng --cpu 4 --metrics-brief</code> output (run 2), reinforcing the
+                            same measurement limitations.
+                        </figcaption>
+                    </figure>
 
-                <figure class="gallery-item" tabindex="0" data-full="images/week6-fig-stressng-output2.png"
-                    aria-label="Open Figure 13: stress-ng CPU test">
-                    <img src="images/week6-fig-stressng-output2.png"
-                        alt="Figure 13: stress-ng output with failed CPU metrics">
-                    <figcaption class="fig-caption">
-                        Figure 13: <code>stress-ng --cpu 4 --metrics-brief</code> output 2, showing failed metric
-                        collection under VirtualBox.
-                    </figcaption>
-                </figure>
+                    <figure class="gallery-item" tabindex="0" data-full="images/week6-fig-stressng-output3.png"
+                        aria-label="Open Figure 12: stress-ng CPU test (run 3)">
+                        <img src="images/week6-fig-stressng-output3.png"
+                            alt="Figure 12: stress-ng output with failed CPU metrics">
+                        <figcaption class="fig-caption">
+                            Figure 12: <code>stress-ng --cpu 4 --metrics-brief</code> output (run 3), again confirming
+                            that the workload runs but metrics are unreliable.
+                        </figcaption>
+                    </figure>
+                </div>
 
-                <figure class="gallery-item" tabindex="0" data-full="images/week6-fig-stressng-output3.png"
-                    aria-label="Open Figure 14: stress-ng CPU test">
-                    <img src="images/week6-fig-stressng-output3.png"
-                        alt="Figure 14: stress-ng output with failed CPU metrics">
-                    <figcaption class="fig-caption">
-                        Figure 14: <code>stress-ng --cpu 4 --metrics-brief</code> output 3, showing failed metric
-                        collection under VirtualBox.
-                    </figcaption>
-                </figure>
+                <!-- Deliverable 5 -->
+                <h3>Deliverable 5 – Network performance analysis (latency and throughput)</h3>
+                <p>
+                    Latency and throughput between the workstation and server are evidenced in the following
+                    <code>ping</code> and <code>iperf3</code> outputs.
+                </p>
+                <div class="fig-grid">
+                    <figure class="gallery-item" tabindex="0" data-full="images/week6-fig-ping.png"
+                        aria-label="Open Figure 13: ping latency test">
+                        <img src="images/week6-fig-ping.png" alt="Figure 13: ping output from workstation to server">
+                        <figcaption class="fig-caption">
+                            Figure 13: <code>ping -c 10 192.168.56.102</code> from the workstation, showing low
+                            round-trip times and 0% packet loss.
+                        </figcaption>
+                    </figure>
 
-                <figure class="gallery-item" tabindex="0" data-full="images/week6-fig-ls-lah.png"
-                    aria-label="Open Figure 15: ls -lah / of root filesystem">
-                    <img src="images/week6-fig-ls-lah.png"
-                        alt="Figure 15: ls output showing root filesystem contents and timing">
-                    <figcaption class="fig-caption">
-                        Figure 15: <code>ls</code> executed in the root filesystem (with timing), confirming the
-                        expected directory layout and negligible overhead for directory access.
-                    </figcaption>
-                </figure>
+                    <figure class="gallery-item" tabindex="0" data-full="images/week6-fig-iperf-run1.png"
+                        aria-label="Open Figure 14: iperf3 baseline throughput">
+                        <img src="images/week6-fig-iperf-run1.png"
+                            alt="Figure 14: iperf3 baseline throughput measurement">
+                        <figcaption class="fig-caption">
+                            Figure 14: Baseline <code>iperf3</code> test, with throughput around 2.9&nbsp;Gbit/s and
+                            significant retransmission counts.
+                        </figcaption>
+                    </figure>
 
-                <!-- Figure: ip addr on server -->
-                <figure class="gallery-item" tabindex="0" data-full="images/week6-fig-ipaddr-server2.png"
-                    aria-label="Open Figure 16: ip addr on Ubuntu Server">
-                    <img src="images/week6-fig-ipaddr-server2.png"
-                        alt="Figure 16: ip addr output on Ubuntu Server showing host-only interface">
-                    <figcaption class="fig-caption">
-                        Figure 16: <code>ip addr</code> on the Ubuntu Server console, showing the loopback,
-                        NAT and host-only interfaces, including 192.168.56.102/24.
-                    </figcaption>
-                </figure>
+                    <figure class="gallery-item" tabindex="0" data-full="images/week6-fig-iperf-run2.png"
+                        aria-label="Open Figure 15: iperf3 repeat throughput">
+                        <img src="images/week6-fig-iperf-run2.png"
+                            alt="Figure 15: iperf3 repeat throughput measurement">
+                        <figcaption class="fig-caption">
+                            Figure 15: Repeat <code>iperf3</code> run, showing similar throughput and retransmission
+                            behaviour, supporting the analysis of VirtualBox network bottlenecks.
+                        </figcaption>
+                    </figure>
+                </div>
 
-                <figure class="gallery-item" tabindex="0" data-full="images/week6-fig-iperf3-server.png"
-                    aria-label="Open Figure 17: top snapshot with iperf3">
-                    <img src="images/week6-fig-iperf3-server.png"
-                        alt="Figure 17: top output showing iperf3 process and low overall load">
-                    <figcaption class="fig-caption">
-                        Figure 17: <code>top -b -n 1</code> snapshot capturing the <code>iperf3</code> process and
-                        overall CPU utilisation during the network throughput test.
-                    </figcaption>
-                </figure>
+                <!-- Deliverable 6 -->
+                <h3>Deliverable 6 – Optimisation analysis results</h3>
+                <p>
+                    The attempted optimisation of network buffer settings and its impact (or lack of impact) are
+                    documented below.
+                </p>
+                <div class="fig-grid">
+                    <figure class="gallery-item" tabindex="0" data-full="images/week6-fig-sysctl.png"
+                        aria-label="Open Figure 16: sysctl network buffer settings (before)">
+                        <img src="images/week6-fig-sysctl.png"
+                            alt="Figure 16: sysctl rmem_max and wmem_max values before tuning">
+                        <figcaption class="fig-caption">
+                            Figure 16: <code>sysctl</code> output showing <code>net.core.rmem_max</code> and
+                            <code>net.core.wmem_max</code> values prior to tuning attempts.
+                        </figcaption>
+                    </figure>
 
-                <figure class="gallery-item" tabindex="0" data-full="images/week6-fig-sysctl2.png"
-                    aria-label="Open Figure 18: sysctl network buffer settings">
-                    <img src="images/week6-fig-sysctl2.png" alt="Figure 18: sysctl rmem_max and wmem_max values">
-                    <figcaption class="fig-caption">
-                        Figure 18: <code>sysctl</code> output showing <code>net.core.rmem_max</code> and
-                        <code>net.core.wmem_max</code> already at 212992 before and after tuning attempts.
-                    </figcaption>
-                </figure>
-
+                    <figure class="gallery-item" tabindex="0" data-full="images/week6-fig-sysctl2.png"
+                        aria-label="Open Figure 17: sysctl network buffer settings (after)">
+                        <img src="images/week6-fig-sysctl2.png"
+                            alt="Figure 17: sysctl rmem_max and wmem_max values after tuning">
+                        <figcaption class="fig-caption">
+                            Figure 17: <code>sysctl</code> output after attempting to tune
+                            <code>net.core.rmem_max</code> and <code>net.core.wmem_max</code> – values remained at
+                            212992, explaining why throughput did not change.
+                        </figcaption>
+                    </figure>
+                </div>
             </div>
         </section>
-
-        <!-- Modal for full-size images -->
-        <div id="imgModal" class="img-modal" role="dialog" aria-modal="true" aria-hidden="true" data-open="false">
-            <button class="modal-close" aria-label="Close image">&times;</button>
-            <div class="modal-content">
-                <img id="modalImg" src="" alt="">
-                <div id="modalCaption" class="modal-caption"></div>
-            </div>
-        </div>
 
         <section>
             <h2>References</h2>
@@ -722,14 +796,22 @@ sudo sysctl -w net.core.wmem_max=212992</pre>
             </ol>
         </section>
 
-
         <footer>
             <div>© 2025 Andrei</div>
         </footer>
 
     </div>
 
-    <!-- Script generated using GitHub Copilot -->
+    <!-- Modal for full-size images -->
+    <div id="imgModal" class="img-modal" role="dialog" aria-modal="true" aria-hidden="true" data-open="false">
+        <button class="modal-close" aria-label="Close image">&times;</button>
+        <div class="modal-content">
+            <img id="modalImg" src="" alt="">
+            <div id="modalCaption" class="modal-caption"></div>
+        </div>
+    </div>
+
+    <!-- Script for image modal + charts -->
     <script>
         (function () {
             const gallery = document.getElementById('gallery');
@@ -756,32 +838,89 @@ sudo sysctl -w net.core.wmem_max=212992</pre>
                 document.body.style.overflow = '';
             }
 
-            // Open on click
-            gallery.addEventListener('click', e => {
-                const fig = e.target.closest('figure.gallery-item');
-                if (!fig) return;
-                openModal(fig);
-            });
+            if (gallery) {
+                gallery.addEventListener('click', e => {
+                    const fig = e.target.closest('figure.gallery-item');
+                    if (!fig) return;
+                    openModal(fig);
+                });
 
-            // Keyboard: open on Enter/Space when figure focused
-            gallery.addEventListener('keydown', e => {
-                if (e.key === 'Enter' || e.key === ' ') {
-                    const fig = document.activeElement.closest('figure.gallery-item');
-                    if (fig) { e.preventDefault(); openModal(fig); }
-                }
-            });
+                gallery.addEventListener('keydown', e => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        const fig = document.activeElement.closest('figure.gallery-item');
+                        if (fig) { e.preventDefault(); openModal(fig); }
+                    }
+                });
+            }
 
             closeBtn.addEventListener('click', closeModal);
 
-            // Click backdrop to close
             modal.addEventListener('click', e => {
                 if (e.target === modal) closeModal();
             });
 
-            // ESC to close
             document.addEventListener('keydown', e => {
                 if (e.key === 'Escape' && modal.getAttribute('data-open') === 'true') closeModal();
             });
+
+            // ------- Plotly charts -------
+
+            // Simple CPU utilisation view: baseline vs iperf3 load vs post-load
+            const cpuStages = ['Baseline', 'iperf3 run', 'Post-load'];
+            const cpuUsage = [3, 18, 5]; // approximate percentages from top snapshots
+
+            Plotly.newPlot('cpuChart', [{
+                x: cpuStages,
+                y: cpuUsage,
+                type: 'scatter',
+                mode: 'lines+markers',
+                name: 'CPU utilisation'
+            }], {
+                title: 'CPU utilisation across baseline, load and post-load periods',
+                xaxis: { title: 'Test phase' },
+                yaxis: { title: 'CPU utilisation (%)', rangemode: 'tozero' },
+                margin: { t: 40, r: 20, b: 40, l: 50 }
+            }, { responsive: true });
+
+            // Network throughput + retransmissions for two iperf3 runs
+            const runs = ['iperf3 run 1', 'iperf3 run 2'];
+            const throughput = [2.9, 3.0];      // Gbit/s (from iperf screenshots)
+            const retrans = [8200, 10500];      // retransmitted segments
+
+            const traceThroughput = {
+                x: runs,
+                y: throughput,
+                type: 'bar',
+                name: 'Throughput (Gbit/s)',
+                yaxis: 'y1'
+            };
+
+            const traceRetrans = {
+                x: runs,
+                y: retrans,
+                type: 'scatter',
+                mode: 'lines+markers',
+                name: 'Retransmissions',
+                yaxis: 'y2'
+            };
+
+            Plotly.newPlot('netChart', [traceThroughput, traceRetrans], {
+                title: 'Network throughput and retransmissions (iperf3)',
+                xaxis: { title: 'Test run' },
+                yaxis: {
+                    title: 'Throughput (Gbit/s)',
+                    rangemode: 'tozero'
+                },
+                yaxis2: {
+                    title: 'Retransmissions',
+                    overlaying: 'y',
+                    side: 'right',
+                    rangemode: 'tozero'
+                },
+                legend: { orientation: 'h' },
+                margin: { t: 40, r: 60, b: 40, l: 50 }
+            }, { responsive: true });
+
         })();
     </script>
 

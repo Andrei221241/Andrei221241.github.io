@@ -86,6 +86,11 @@
             font-size: 0.9rem;
         }
 
+        code {
+            font-family: Consolas, Menlo, Monaco, "Courier New", monospace;
+            font-size: 0.9em;
+        }
+
         table {
             width: 100%;
             border-collapse: collapse;
@@ -214,7 +219,7 @@
 
     <div class="wrap">
 
-        <nav style="margin-bottom:1rem">
+        <nav>
             <a href="index.html"
                 style="color:var(--accent);text-decoration:none;display:inline-flex;align-items:center;font-weight:500">
                 <span style="font-size:1.2em;margin-right:6px">🏠</span> Home
@@ -224,141 +229,169 @@
         <header>
             <h1>Week 4: Initial System Configuration &amp; Security Implementation</h1>
             <p class="lead">
-                Hardening the Ubuntu Server with SSH key-based authentication, firewall configuration,
-                and secure user management, all performed via remote administration from the workstation.
+                Hardening the Ubuntu Server with SSH key-based authentication, firewall configuration, and secure user
+                management, all performed via remote administration from the workstation.
             </p>
         </header>
 
+        <!-- Phase / brief alignment -->
         <section>
-            <h2>1. Objective</h2>
+            <h2>Phase 4: Initial System Configuration &amp; Security Implementation</h2>
             <p>
-                The goal for Week 4 was to move from a basic Ubuntu Server installation to a securely
-                administered system. Building on the provisioning work from Week 1 and the security
-                planning in Week 2, I implemented practical controls: SSH key-based authentication,
-                a host-based firewall, and non-root administrative accounts. All changes were made via
-                SSH from the Ubuntu Desktop workstation to reinforce remote management skills.
+                This phase focuses on deploying the Ubuntu Server and implementing foundational security controls via
+                remote administration.
             </p>
+
+            <div class="note">
+                <strong>Administrative Constraint:</strong> All server configurations were performed via SSH from the
+                Ubuntu Desktop workstation. No changes were made directly from the server console.
+            </div>
+
+            <h3>Deliverables (Journal and Video)</h3>
+            <ol>
+                <li>Configure SSH with key-based authentication</li>
+                <li>Configure a firewall permitting SSH from one specific workstation only</li>
+                <li>Manage users and implement privilege management, creating a non-root administrative user</li>
+                <li>SSH Access Evidence showing successful connection screenshots</li>
+                <li>Configuration Files with before and after comparisons</li>
+                <li>Firewall Documentation showing complete ruleset</li>
+                <li>Remote Administration Evidence demonstrating commands executed via SSH</li>
+            </ol>
         </section>
 
-        <section>
-            <h2>2. SSH Configuration with Key-Based Authentication</h2>
+        <!-- 1. Configure SSH with key-based authentication -->
+        <section id="deliverable-1">
+            <h2>1. Configure SSH with Key-Based Authentication</h2>
 
-            <h3>Key pair generation</h3>
+            <h3>Key pair generation on the workstation</h3>
             <p>
-                On the workstation VM, I generated a 4096-bit RSA key pair to use for secure access to the
+                On the Ubuntu Desktop workstation, I generated a 4096-bit RSA key pair to use for secure access to the
                 server:
             </p>
             <pre>ssh-keygen -t rsa -b 4096 -C "andreimac@workstation"</pre>
             <p>
-                This produced a private key (kept on the workstation) and a matching public key that can be
+                This produced a private key (stored securely on the workstation) and a matching public key that can be
                 safely copied to the server.
             </p>
 
             <h3>Authorising the key on the server</h3>
             <p>
-                The public key was then copied to the Ubuntu Server so that SSH could trust the workstation:
+                The public key was then copied to the Ubuntu Server so that SSH could trust connections from the
+                workstation:
             </p>
             <pre>ssh-copy-id andreimac@192.168.56.102</pre>
             <p>
-                This appended the workstation’s public key to
-                <code>~/.ssh/authorized_keys</code> on the server for the <code>andreimac</code> account.
+                This appended the workstation’s public key to <code>~/.ssh/authorized_keys</code> on the server for the
+                <code>andreimac</code> account.
             </p>
 
-            <h3>Verifying passwordless login</h3>
-            <p>
-                Finally, I confirmed that key-based authentication was working:
-            </p>
-            <pre>ssh andreimac@192.168.56.102</pre>
-            <p>
-                SSH connected successfully without prompting for a password, confirming that the key pair
-                is being used and that interactive password authentication is no longer required for this user.
-            </p>
+            <div class="fig-grid">
+                <figure class="gallery-item" tabindex="0">
+                    <img src="images/week4-ssh-keygen-workstation.png" alt="Terminal showing ssh-keygen on workstation">
+                    <figcaption class="fig-caption">
+                        Figure 1: Generating a 4096-bit RSA key pair on the workstation.
+                    </figcaption>
+                </figure>
+
+                <figure class="gallery-item" tabindex="0">
+                    <img src="images/week4-ssh-copy-workstation.png"
+                        alt="ssh-copy-id output showing key deployed to server">
+                    <figcaption class="fig-caption">
+                        Figure 2: Deploying the public key to the Ubuntu Server using <code>ssh-copy-id</code>.
+                    </figcaption>
+                </figure>
+            </div>
         </section>
 
-        <section>
-            <h2>3. Firewall Configuration</h2>
+        <!-- 2. Configure firewall permitting SSH only from one workstation -->
+        <section id="deliverable-2">
+            <h2>2. Configure a Firewall Permitting SSH from One Specific Workstation Only</h2>
             <p>
-                To reduce the attack surface of the server, I configured UFW (Uncomplicated Firewall) to
-                allow only SSH from the workstation’s IP address.
+                To reduce the attack surface of the server, I configured UFW (Uncomplicated Firewall) to allow SSH only
+                from the workstation’s host-only IP address.
             </p>
 
-            <h3>Installing and enabling UFW</h3>
+            <h3>Identifying the workstation IP address</h3>
+            <p>
+                On the workstation, I confirmed the host-only network interface and its IP (in the
+                <code>192.168.56.x</code> range):
+            </p>
+            <pre>ip addr</pre>
+
+            <h3>Installing and enabling UFW on the server</h3>
             <pre>sudo apt install ufw -y</pre>
             <pre>sudo ufw enable</pre>
+            <pre>sudo ufw status verbose</pre>
 
-            <h3>Restricting SSH to the workstation</h3>
+            <h3>Restricting SSH to the workstation IP</h3>
             <p>
-                SSH access was restricted to the host-only IP of the workstation:
+                SSH access was restricted so that only the workstation can initiate SSH connections to port 22:
             </p>
             <pre>sudo ufw allow from 192.168.56.10 to any port 22</pre>
 
-            <p>
-                The resulting configuration, confirmed using <code>sudo ufw status</code>, allows incoming
-                SSH only from the workstation and denies all other unsolicited connections by default.
-            </p>
+            <div class="fig-grid">
+                <figure class="gallery-item" tabindex="0">
+                    <img src="images/week4-ipaddr-workstation.png"
+                        alt="ip addr output on workstation showing host-only interface">
+                    <figcaption class="fig-caption">
+                        Figure 3: Workstation network configuration showing the host-only IP address.
+                    </figcaption>
+                </figure>
+
+                <figure class="gallery-item" tabindex="0">
+                    <img src="images/week4-ufw-status-wrokstation.png"
+                        alt="UFW status showing SSH allowed only from workstation IP">
+                    <figcaption class="fig-caption">
+                        Figure 4: UFW ruleset on the server allowing SSH only from the workstation IP.
+                    </figcaption>
+                </figure>
+            </div>
         </section>
 
-        <section>
-            <h2>4. User Management and Privilege Implementation</h2>
+        <!-- 3. Manage users / privilege management -->
+        <section id="deliverable-3">
+            <h2>3. Manage Users and Implement Privilege Management (Non-Root Administrative User)</h2>
             <p>
-                Administrative work should not be performed directly as root. To follow best practice,
-                I created a dedicated non-root administrative user and granted it sudo capabilities.
+                Administrative work should not be performed directly as root. To follow best practice, I created a
+                dedicated non-root administrative user and granted it <code>sudo</code> capabilities.
             </p>
 
-            <h3>Creating an administrative account</h3>
+            <h3>Creating the administrative account</h3>
             <pre>sudo adduser adminuser</pre>
 
             <h3>Granting sudo access</h3>
             <pre>sudo usermod -aG sudo adminuser</pre>
             <p>
-                The combination of these commands created the <code>adminuser</code> account and added it
-                to the <code>sudo</code> group, allowing privileged commands via
-                <code>sudo &lt;command&gt;</code> while still requiring authentication.
+                These commands created the <code>adminuser</code> account and added it to the
+                <code>sudo</code> group, allowing privileged commands via <code>sudo &lt;command&gt;</code> while still
+                requiring authentication.
             </p>
-            <p>
-                Account creation was verified with:
-            </p>
+
+            <p>Account creation was verified with:</p>
             <pre>cat /etc/passwd | grep adminuser</pre>
+
+            <div class="fig-grid">
+                <figure class="gallery-item" tabindex="0">
+                    <img src="images/week4-adduser-adminuser-workstation.png"
+                        alt="Terminal showing adduser adminuser on server">
+                    <figcaption class="fig-caption">
+                        Figure 5: Creating the non-root administrative account <code>adminuser</code>.
+                    </figcaption>
+                </figure>
+
+                <figure class="gallery-item" tabindex="0">
+                    <img src="images/week4-cat-paswd-workstation.png"
+                        alt="/etc/passwd entry for the adminuser account">
+                    <figcaption class="fig-caption">
+                        Figure 6: Verifying the <code>adminuser</code> entry in <code>/etc/passwd</code>.
+                    </figcaption>
+                </figure>
+            </div>
         </section>
 
-        <section>
-            <h2>5. SSH Configuration Hardening</h2>
-            <p>
-                With key-based access and a sudo-enabled user in place, I hardened the SSH configuration
-                to remove unnecessary authentication methods.
-            </p>
-
-            <h3>Editing <code>/etc/ssh/sshd_config</code></h3>
-            <p>
-                Before editing, SSH allowed root login and password authentication:
-            </p>
-            <pre>
-PermitRootLogin yes
-PasswordAuthentication yes
-        </pre>
-
-            <p>
-                Using a text editor, I updated the configuration:
-            </p>
-            <pre>sudo nano /etc/ssh/sshd_config</pre>
-            <p>The relevant directives were changed to:</p>
-            <pre>
-PermitRootLogin no
-PasswordAuthentication no
-        </pre>
-
-            <p>
-                Finally, I restarted the SSH daemon so the new settings took effect:
-            </p>
-            <pre>sudo systemctl restart ssh</pre>
-            <p>
-                Disabling root and password authentication ensures that only authorised users with valid
-                SSH keys can access the server.
-            </p>
-        </section>
-
-        <section>
-            <h2>6. SSH Access Evidence</h2>
+        <!-- 4. SSH access evidence -->
+        <section id="deliverable-4">
+            <h2>4. SSH Access Evidence (Successful Connection)</h2>
             <p>
                 To confirm that administration now flows through the hardened path, I logged in as the new
                 administrative user using key-based authentication:
@@ -372,14 +405,130 @@ PasswordAuthentication no
                 <li>SSH key-based authentication works for this account.</li>
                 <li>Administration can proceed without using the root account directly.</li>
             </ul>
+
+            <div class="fig-grid">
+                <figure class="gallery-item" tabindex="0">
+                    <img src="images/week4-ssh-login-workstation.png"
+                        alt="Terminal showing SSH login as adminuser to ubuntu-server">
+                    <figcaption class="fig-caption">
+                        Figure 7: Successful SSH login from the workstation to the server as
+                        <code>adminuser</code>.
+                    </figcaption>
+                </figure>
+            </div>
         </section>
 
-        <section>
-            <h2>7. Remote Administration Evidence</h2>
+        <!-- 5. Configuration files before/after -->
+        <section id="deliverable-5">
+            <h2>5. Configuration Files (Before and After Comparisons)</h2>
             <p>
-                All administrative commands are executed remotely from the workstation over SSH.
-                Example commands include:
+                With key-based access and a sudo-enabled user in place, I hardened the SSH configuration by disabling
+                root login and password authentication in <code>/etc/ssh/sshd_config</code>.
             </p>
+
+            <h3>SSH configuration before hardening</h3>
+            <pre>
+PermitRootLogin yes
+PasswordAuthentication yes            </pre>
+
+            <h3>SSH configuration after hardening</h3>
+            <pre>
+PermitRootLogin no
+PasswordAuthentication no            </pre>
+
+            <p>
+                After editing, I restarted the SSH daemon so the new settings took effect:
+            </p>
+            <pre>sudo systemctl restart ssh</pre>
+
+            <p>
+                Comparing the before and after versions highlights how a few targeted changes can significantly improve
+                the security posture of the server.
+            </p>
+
+            <div class="fig-grid">
+                <figure class="gallery-item" tabindex="0">
+                    <img src="images/week4-sshd_config_before_hardening.png"
+                        alt="Terminal showing SSH login as adminuser to ubuntu-server">
+                    <figcaption class="fig-caption">
+                        Figure 8: Before hardening, root login and password authentication are enabled in
+                        <code>adminuser</code>.
+                    </figcaption>
+                </figure>
+            </div>
+            <div class="fig-grid">
+                <figure class="gallery-item" tabindex="0">
+                    <img src="images/week4-sshd_config_after_hardening.png"
+                        alt="Terminal showing SSH login as adminuser to ubuntu-server">
+                    <figcaption class="fig-caption">
+                        Figure 9: After hardening, root login and password authentication are disabled in
+                        <code>adminuser</code>.
+                    </figcaption>
+                </figure>
+            </div>
+        </section>
+
+        <!-- 6. Firewall documentation (ruleset) -->
+        <section id="deliverable-6">
+            <h2>6. Firewall Documentation (Complete Ruleset)</h2>
+            <p>
+                The active firewall rules were documented using <code>sudo ufw status verbose</code>, which shows the
+                default policies and per-rule configuration.
+            </p>
+
+            <pre>sudo ufw status verbose</pre>
+
+            <p>
+                In addition to the screenshot, the effective rules can be summarised as:
+            </p>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Direction</th>
+                        <th>From</th>
+                        <th>To</th>
+                        <th>Port / Service</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Incoming</td>
+                        <td>192.168.56.10</td>
+                        <td>Any</td>
+                        <td>22/tcp (SSH)</td>
+                        <td>Allow</td>
+                    </tr>
+                    <tr>
+                        <td>Incoming</td>
+                        <td>Any</td>
+                        <td>Any</td>
+                        <td>All other ports</td>
+                        <td>Deny (default)</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="fig-grid">
+                <figure class="gallery-item" tabindex="0">
+                    <img src="images/week4-ufw-status-wrokstation.png"
+                        alt="Screenshot of ufw status verbose output">
+                    <figcaption class="fig-caption">
+                        Figure 8: Documented UFW ruleset confirming SSH is only allowed from the workstation IP.
+                    </figcaption>
+                </figure>
+            </div>
+        </section>
+
+        <!-- 7. Remote administration evidence -->
+        <section id="deliverable-7">
+            <h2>7. Remote Administration Evidence (Commands via SSH)</h2>
+            <p>
+                All administrative commands were executed remotely from the workstation over SSH. The following examples
+                were run from the <code>adminuser@ubuntu-server:~$</code> prompt:
+            </p>
+
             <pre>uname -a</pre>
             <p>Shows the server kernel version, architecture, and hostname.</p>
 
@@ -393,110 +542,50 @@ PasswordAuthentication no
             <p>Lists network interfaces and their assigned IP addresses on the server.</p>
 
             <p>
-                Screenshots captured with the <code>adminuser@ubuntu-server:~$</code> prompt illustrate
-                that these commands are run from the workstation via SSH rather than from the server console.
-            </p>
-        </section>
-
-        <section>
-            <h2>8. Reflection</h2>
-            <p>
-                Week 4 was about turning plans into enforceable controls. Enabling SSH key-based
-                authentication and restricting SSH to the workstation significantly reduced the
-                server’s exposure to unauthorised access. Moving administration to a non-root sudo user
-                follows the principle of least privilege and lowers the risk of accidental or malicious
-                system damage.
-            </p>
-            <p>
-                Working exclusively over SSH strengthened my confidence in managing a headless Ubuntu
-                Server. Comparing the SSH configuration before and after hardening made it clear how a
-                few targeted changes—disabling root login and password authentication—can greatly improve
-                system security. These measures now form a solid base for the deeper security verification
-                and monitoring work planned for subsequent weeks.
-            </p>
-        </section>
-
-        <section>
-            <h2>9. Figures (Screenshots &amp; Evidence)</h2>
-            <p>
-                The following figures provide visual evidence of the configuration steps described above.
-                Update the file paths so they match your actual screenshot filenames.
+                These commands provide operational visibility while respecting the remote-only administration
+                constraint.
             </p>
 
-            <div id="gallery" class="fig-grid">
-
-                <figure class="gallery-item" tabindex="0" data-full="images/week4-ssh-keygen-workstation.png">
-                    <img src="images/week4-ssh-keygen-workstation.png" alt="SSH key generation on workstation">
-                    <figcaption class="fig-caption">Figure 1: Generating a 4096-bit RSA SSH key pair on the workstation.
+            <div class="fig-grid">
+                <figure class="gallery-item" tabindex="0">
+                    <img src="images/week4-uname-a-workstation.png" alt="uname -a output in SSH session">
+                    <figcaption class="fig-caption">
+                        Figure 9: Kernel and system information retrieved remotely with <code>uname -a</code>.
                     </figcaption>
                 </figure>
 
-                <figure class="gallery-item" tabindex="0" data-full="images/week4-ssh-login-workstation.png">
-                    <img src="images/week4-ssh-login-workstation.png" alt="SSH login to server VM">
-                    <figcaption class="fig-caption">Figure 2: Successful SSH login from workstation to the Ubuntu Server
-                        VM.</figcaption>
-                </figure>
-
-                <figure class="gallery-item" tabindex="0" data-full="images/week4-ipaddr-workstation.png">
-                    <img src="images/week4-ipaddr-workstation.png"
-                        alt="ip addr output showing host only and NAT interfaces">
-                    <figcaption class="fig-caption">Figure 3: Network configuration showing host-only interface
-                        (192.168.56.x).</figcaption>
-                </figure>
-
-                <figure class="gallery-item" tabindex="0" data-full="images/week4-free-h-workstation.png">
-                    <img src="images/week4-free-h-workstation.png" alt="free -h memory overview">
-                    <figcaption class="fig-caption">Figure 4: Memory usage on the workstation using
-                        <code>free -h</code>.</figcaption>
-                </figure>
-
-                <figure class="gallery-item" tabindex="0" data-full="images/week4-dh-h-workstation.png">
-                    <img src="images/week4-dh-h-workstation.png" alt="df -h filesystem usage">
-                    <figcaption class="fig-caption">Figure 5: Disk usage information using <code>df -h</code>.
+                <figure class="gallery-item" tabindex="0">
+                    <img src="images/week4-free-h-workstation.png" alt="free -h output in SSH session">
+                    <figcaption class="fig-caption">
+                        Figure 10: Memory usage on the server using <code>free -h</code> over SSH.
                     </figcaption>
                 </figure>
 
-                <figure class="gallery-item" tabindex="0" data-full="images/week4-uname-a-workstation.png">
-                    <img src="images/week4-uname-a-workstation.png" alt="uname -a output">
-                    <figcaption class="fig-caption">Figure 6: Kernel and system information from <code>uname -a</code>.
+                <figure class="gallery-item" tabindex="0">
+                    <img src="images/week4-dh-h-workstation.png" alt="df -h output in SSH session">
+                    <figcaption class="fig-caption">
+                        Figure 11: Disk usage on the server using <code>df -h</code> over SSH.
                     </figcaption>
                 </figure>
-
-                <figure class="gallery-item" tabindex="0" data-full="images/week4-adduser-adminuser-workstation.png">
-                    <img src="images/week4-adduser-adminuser-workstation.png" alt="Creating adminuser account">
-                    <figcaption class="fig-caption">Figure 7: Creating and configuring the privileged user
-                        <code>adminuser</code>.</figcaption>
-                </figure>
-
-                <figure class="gallery-item" tabindex="0" data-full="images/week4-cat-paswd-workstation.png">
-                    <img src="images/week4-cat-paswd-workstation.png" alt="/etc/passwd entry for adminuser">
-                    <figcaption class="fig-caption">Figure 8: Verifying <code>adminuser</code> in
-                        <code>/etc/passwd</code>.</figcaption>
-                </figure>
-
-                <figure class="gallery-item" tabindex="0" data-full="images/week4-ufw-status-wrokstation.png">
-                    <img src="images/week4-ufw-status-wrokstation.png" alt="UFW firewall rule for SSH">
-                    <figcaption class="fig-caption">Figure 9: UFW configuration allowing SSH only from workstation
-                        (192.168.56.101).</figcaption>
-                </figure>
-
-                <figure class="gallery-item" tabindex="0" data-full="images/week4-ssh-copy-workstation.png">
-                    <img src="images/week4-ssh-copy-workstation.png" alt="Remote administration verification">
-                    <figcaption class="fig-caption">Figure 10: Remote administration steps from workstation to server.
-                    </figcaption>
-                </figure>
-
             </div>
         </section>
 
-        <!-- Modal for full-size images -->
-        <div id="imgModal" class="img-modal" role="dialog" aria-modal="true" aria-hidden="true" data-open="false">
-            <button class="modal-close" aria-label="Close image">&times;</button>
-            <div class="modal-content">
-                <img id="modalImg" src="" alt="">
-                <div id="modalCaption" class="modal-caption"></div>
-            </div>
-        </div>
+        <!-- Reflection (extra narrative, not part of deliverables list but useful for journal) -->
+        <section>
+            <h2>Reflection</h2>
+            <p>
+                Week 4 was about turning plans into enforceable controls. Enabling SSH key-based authentication and
+                restricting SSH to the workstation significantly reduced the server’s exposure to unauthorised access.
+                Moving administration to a non-root sudo user follows the principle of least privilege and lowers the
+                risk of accidental or malicious system damage.
+            </p>
+            <p>
+                Working exclusively over SSH strengthened my confidence in managing a headless Ubuntu Server. Comparing
+                the SSH configuration before and after hardening made it clear how a few targeted changes—disabling root
+                login and password authentication—can greatly improve system security. These measures now form a solid
+                base for the deeper security verification and monitoring work planned for subsequent weeks.
+            </p>
+        </section>
 
         <section>
             <h2>References</h2>
@@ -520,64 +609,68 @@ PasswordAuthentication no
 
     </div>
 
+    <!-- Modal for full-size images -->
+    <div id="imgModal" class="img-modal" role="dialog" aria-modal="true" aria-hidden="true" data-open="false">
+        <button class="modal-close" aria-label="Close image">&times;</button>
+        <div class="modal-content">
+            <img id="modalImg" src="" alt="">
+            <div id="modalCaption" class="modal-caption"></div>
+        </div>
+    </div>
 
+    <script>
+        (function () {
+            const modal = document.getElementById('imgModal');
+            const modalImg = document.getElementById('modalImg');
+            const modalCaption = document.getElementById('modalCaption');
+            const closeBtn = modal.querySelector('.modal-close');
+            const figures = document.querySelectorAll('figure.gallery-item');
+
+            if (!figures.length) return;
+
+            function openModal(fig) {
+                const img = fig.querySelector('img');
+                modalImg.src = img.getAttribute('src');
+                modalImg.alt = img.getAttribute('alt') || '';
+                const caption = fig.querySelector('.fig-caption');
+                modalCaption.innerHTML = caption ? caption.innerHTML : '';
+                modal.setAttribute('data-open', 'true');
+                modal.setAttribute('aria-hidden', 'false');
+                document.body.style.overflow = 'hidden';
+                closeBtn.focus();
+            }
+
+            function closeModal() {
+                modal.setAttribute('data-open', 'false');
+                modal.setAttribute('aria-hidden', 'true');
+                modalImg.src = '';
+                document.body.style.overflow = '';
+            }
+
+            figures.forEach(fig => {
+                fig.addEventListener('click', () => openModal(fig));
+                fig.addEventListener('keydown', e => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        openModal(fig);
+                    }
+                });
+            });
+
+            closeBtn.addEventListener('click', closeModal);
+
+            modal.addEventListener('click', e => {
+                if (e.target === modal) closeModal();
+            });
+
+            document.addEventListener('keydown', e => {
+                if (e.key === 'Escape' && modal.getAttribute('data-open') === 'true') {
+                    closeModal();
+                }
+            });
+        })();
+    </script>
 
 </body>
 
 </html>
-
-<!-- Script generated using GitHub Copilot -->
-<script>
-    (function () {
-        const gallery = document.getElementById('gallery');
-        const modal = document.getElementById('imgModal');
-        const modalImg = document.getElementById('modalImg');
-        const modalCaption = document.getElementById('modalCaption');
-        const closeBtn = modal.querySelector('.modal-close');
-
-        function openModal(fig) {
-            const full = fig.getAttribute('data-full') || fig.querySelector('img').src;
-            modalImg.src = full;
-            modalImg.alt = fig.querySelector('img').alt || '';
-            modalCaption.innerHTML = fig.querySelector('.fig-caption')?.innerHTML || '';
-            modal.setAttribute('data-open', 'true');
-            modal.setAttribute('aria-hidden', 'false');
-            document.body.style.overflow = 'hidden';
-            closeBtn.focus();
-        }
-
-        function closeModal() {
-            modal.setAttribute('data-open', 'false');
-            modal.setAttribute('aria-hidden', 'true');
-            modalImg.src = '';
-            document.body.style.overflow = '';
-        }
-
-        // Open on click
-        gallery.addEventListener('click', e => {
-            const fig = e.target.closest('figure.gallery-item');
-            if (!fig) return;
-            openModal(fig);
-        });
-
-        // Keyboard: open on Enter/Space when figure focused
-        gallery.addEventListener('keydown', e => {
-            if (e.key === 'Enter' || e.key === ' ') {
-                const fig = document.activeElement.closest('figure.gallery-item');
-                if (fig) { e.preventDefault(); openModal(fig); }
-            }
-        });
-
-        closeBtn.addEventListener('click', closeModal);
-
-        // Click backdrop to close
-        modal.addEventListener('click', e => {
-            if (e.target === modal) closeModal();
-        });
-
-        // ESC to close
-        document.addEventListener('keydown', e => {
-            if (e.key === 'Escape' && modal.getAttribute('data-open') === 'true') closeModal();
-        });
-    })();
-</script>

@@ -18,7 +18,7 @@
             color: #222;
             margin: 0;
             padding: 2rem;
-            background: #f7f9fb
+            background: #f7f9fb;
         }
 
         .wrap {
@@ -27,39 +27,45 @@
             background: #fff;
             border-radius: 8px;
             padding: 1.5rem 2rem;
-            box-shadow: 0 8px 30px rgba(22, 40, 60, 0.08)
+            box-shadow: 0 8px 30px rgba(22, 40, 60, 0.08);
         }
 
         header {
             border-bottom: 1px solid #e6eef6;
             padding-bottom: 0.75rem;
-            margin-bottom: 1rem
+            margin-bottom: 1rem;
         }
 
         h1 {
             margin: 0;
             font-size: 1.4rem;
-            color: var(--accent)
+            color: var(--accent);
         }
 
         p.lead {
             margin: 0.5rem 0;
-            color: var(--muted)
+            color: var(--muted);
         }
 
         section {
-            margin: 1rem 0
+            margin: 1rem 0;
         }
 
         h2 {
             font-size: 1.05rem;
             margin: 0 0 0.5rem 0;
-            color: #113047
+            color: #113047;
+        }
+
+        h3 {
+            font-size: 0.98rem;
+            margin: 0.5rem 0 0.35rem;
+            color: #153955;
         }
 
         ul,
         ol {
-            margin: 0.25rem 0 0.75rem 1.2rem
+            margin: 0.25rem 0 0.75rem 1.2rem;
         }
 
         pre {
@@ -68,13 +74,18 @@
             padding: 0.75rem;
             border-radius: 6px;
             overflow: auto;
-            font-size: 0.9rem
+            font-size: 0.9rem;
+        }
+
+        code {
+            font-family: Consolas, Menlo, Monaco, "Courier New", monospace;
+            font-size: 0.9em;
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
-            margin: 0.5rem 0 0
+            margin: 0.5rem 0 0;
         }
 
         th,
@@ -82,23 +93,23 @@
             border: 1px solid #e9f0f6;
             padding: 0.5rem;
             text-align: left;
-            background: #fff
+            background: #fff;
         }
 
         th {
             background: #f3f8fb;
             color: #113047;
-            font-weight: 600
+            font-weight: 600;
         }
 
         .fig-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
             gap: 1rem;
-            margin-top: 0.75rem
+            margin-top: 0.75rem;
         }
 
-        figure {
+        figure.gallery-item {
             background: #fbfdff;
             border: 1px dashed #e3eef9;
             padding: 0.5rem;
@@ -108,27 +119,28 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            cursor: pointer
+            cursor: pointer;
         }
 
-        figure img {
+        figure.gallery-item img {
             max-width: 100%;
             max-height: 96px;
             object-fit: contain;
-            display: block
+            display: block;
         }
 
         figcaption {
             font-size: 0.85rem;
             color: var(--muted);
-            margin-top: 0.5rem
+            margin-top: 0.5rem;
+            text-align: center;
         }
 
         footer {
             border-top: 1px solid #e6eef6;
             padding-top: 0.75rem;
             color: var(--muted);
-            font-size: 0.9rem
+            font-size: 0.9rem;
         }
 
         .note {
@@ -136,7 +148,7 @@
             border-left: 4px solid #ffb86b;
             padding: 0.6rem;
             border-radius: 4px;
-            color: #663f00
+            color: #663f00;
         }
 
         /* ---------- IMAGE MODAL CSS ---------- */
@@ -202,11 +214,37 @@
             </a>
         </nav>
 
-
         <header>
             <h1>Week 5: Advanced Security and Monitoring Infrastructure</h1>
             <p class="lead">Strengthening server security and enabling remote monitoring capabilities.</p>
         </header>
+
+        <!-- Phase 5 section matching brief -->
+        <section>
+            <h2>Phase 5: Advanced Security and Monitoring Infrastructure (Week 5)</h2>
+            <p>
+                Implement advanced security controls and develop monitoring capabilities on the Ubuntu Server configured
+                in earlier phases. All configurations and checks were executed remotely over SSH from the workstation.
+            </p>
+
+            <h3>Deliverables (Journal and Video)</h3>
+            <ol>
+                <li>Implement Access Control using SELinux or AppArmor, with documentation showing how to
+                    track and report on access control settings.</li>
+                <li>Configure automatic security updates with evidence of implementation.</li>
+                <li>Configure fail2ban for enhanced intrusion detection.</li>
+                <li>Create a security baseline verification script (<code>security-baseline.sh</code>) that runs on the
+                    server (executed via SSH) and verifies all security configurations from Phases 4 and 5.</li>
+                <li>Create a remote monitoring script (<code>monitor-server.sh</code>) that runs on your workstation,
+                    connects via SSH, and collects performance metrics from the server.</li>
+            </ol>
+
+            <div class="note">
+                <strong>Note:</strong> All scripts include line-by-line comments explaining their functionality.
+                All implementations are demonstrated in the accompanying video with live command execution and
+                explanation.
+            </div>
+        </section>
 
         <section>
             <h2>Introduction</h2>
@@ -228,122 +266,225 @@
             </p>
         </section>
 
-        <section>
-            <h2>1. Implement Access Control (AppArmor)</h2>
+        <!-- 1. Implement Access Control (AppArmor) -->
+        <section id="deliverable-1">
+            <h2>1. Implement Access Control using AppArmor</h2>
             <p>
-                AppArmor was checked, verified, and enforced for critical services.
+                For mandatory access control, I used AppArmor (the default on Ubuntu) to ensure that key services,
+                including the SSH daemon, run under enforced profiles. This provides finer-grained control beyond
+                traditional UNIX permissions.
             </p>
 
+            <h3>Checking and enforcing AppArmor</h3>
             <pre>
-sudo systemctl status apparmor
-sudo aa-status
-sudo aa-enforce /etc/apparmor.d/usr.sbin.sshd
-</pre>
+sudo systemctl status apparmor          # Verify that the AppArmor service is running
+sudo aa-status                          # List loaded profiles and their mode (enforce/complain)
+sudo aa-enforce /etc/apparmor.d/usr.sbin.sshd  # Enforce the sshd profile if not already enforced            </pre>
 
-            <p><strong>Result:</strong> AppArmor is active and enforcing security policies.</p>
-
-            <div class="fig-grid">
-                <figure class="gallery-item" tabindex="0" data-full="images/week5-apparmor-status.png">
-                    <img src="images/week5-apparmor-status.png" alt="AppArmor status output">
-                    <figcaption>Figure 1 – Active AppArmor profiles.</figcaption>
-                </figure>
-            </div>
-        </section>
-
-        <section>
-            <h2>2. Configure Automatic Security Updates</h2>
-
-            <pre>
-sudo apt install unattended-upgrades -y
-sudo dpkg-reconfigure --priority=low unattended-upgrades
-cat /etc/apt/apt.conf.d/20auto-upgrades
-</pre>
-
-            <p><strong>Result:</strong> The server now installs security updates automatically.</p>
+            <p>
+                The <code>aa-status</code> output provides a simple way to track and report on access control settings,
+                listing how many profiles are in enforce or complain mode and whether any processes are unconfined.
+            </p>
 
             <div class="fig-grid">
                 <figure class="gallery-item" tabindex="0" data-full="images/week5-automatic-updates.png">
-                    <img src="images/week5-automatic-updates.png" alt="APT auto upgrades configuration">
-                    <figcaption>Figure 2 – Automatic update configuration.</figcaption>
+                    <img src="images/week5-automatic-updates.png" alt="AppArmor status output">
+                    <figcaption>Figure 1 – AppArmor status showing active and enforced profiles on the server.</figcaption>
                 </figure>
             </div>
         </section>
 
-        <section>
-            <h2>3. Configure fail2ban</h2>
-            <p>fail2ban was installed to block SSH brute-force attempts.</p>
+        <!-- 2. Automatic security updates -->
+        <section id="deliverable-2">
+            <h2>2. Configure Automatic Security Updates</h2>
+            <p>
+                To keep the server patched without manual intervention, I configured unattended security updates.
+            </p>
 
+            <h3>Installing and enabling unattended-upgrades</h3>
             <pre>
-sudo apt install fail2ban -y
-sudo systemctl enable fail2ban
-sudo systemctl start fail2ban
-sudo fail2ban-client status
-</pre>
+sudo apt install unattended-upgrades -y                 # Install unattended upgrades package
+sudo dpkg-reconfigure --priority=low unattended-upgrades  # Enable and configure automatic updates
+cat /etc/apt/apt.conf.d/20auto-upgrades                # Verify periodic update and upgrade settings            </pre>
+
+            <p>
+                The <code>20auto-upgrades</code> configuration file confirms that the server will regularly check for
+                updates and automatically install security patches, with log entries written to
+                <code>/var/log/unattended-upgrades/</code> for auditing.
+            </p>
 
             <div class="fig-grid">
                 <figure class="gallery-item" tabindex="0" data-full="images/week5-fail2ban-status.png">
-                    <img src="images/week5-fail2ban-status.png" alt="Fail2ban jail status">
-                    <figcaption>Figure 3 – Active fail2ban jail.</figcaption>
+                    <img src="images/week5-fail2ban-status.png" alt="APT auto-upgrades configuration">
+                    <figcaption>Figure 2 – Automatic security update configuration using unattended-upgrades.</figcaption>
                 </figure>
             </div>
         </section>
 
-        <section>
-            <h2>4. Security Baseline Verification Script</h2>
+        <!-- 3. fail2ban configuration -->
+        <section id="deliverable-3">
+            <h2>3. Configure fail2ban for Intrusion Detection</h2>
             <p>
-                A script verifying AppArmor, fail2ban, firewall, and SSH settings was executed remotely.
+                fail2ban was installed and configured to monitor SSH logins and temporarily ban IPs that exhibit
+                brute-force behaviour.
             </p>
 
+            <h3>Installing and enabling fail2ban</h3>
+            <pre>
+sudo apt install fail2ban -y     # Install fail2ban framework
+sudo systemctl enable fail2ban   # Ensure fail2ban starts on boot
+sudo systemctl start fail2ban    # Start the fail2ban service
+sudo fail2ban-client status      # View overall fail2ban status and configured jails            </pre>
+
+            <p>
+                Additional jail configuration for SSH was recorded in <code>/etc/fail2ban/jail.local</code>
+                to define ban time, find time and max retries. The <code>fail2ban-client</code> command was used to
+                report on active jails and current bans.
+            </p>
+
+            <div class="fig-grid">
+                <figure class="gallery-item" tabindex="0" data-full="images/week5-apparmor-status.png">
+                    <img src="images/week5-apparmor-status.png" alt="Fail2ban jail status">
+                    <figcaption>Figure 3 – fail2ban status showing the SSH jail protecting the server.</figcaption>
+                </figure>
+            </div>
+        </section>
+
+        <!-- 4. security-baseline.sh -->
+        <section id="deliverable-4">
+            <h2>4. Security Baseline Verification Script (<code>security-baseline.sh</code>)</h2>
+            <p>
+                To verify that all controls from Phases 4 and 5 remain correctly configured, I created a
+                <code>security-baseline.sh</code> script that runs on the server. It checks AppArmor, SSH configuration,
+                UFW rules and fail2ban status. The script includes line-by-line comments to explain each step.
+            </p>
+
+            <h3>Script contents</h3>
+            <pre>
+#!/bin/bash
+# security-baseline.sh
+# Verifies security controls from Phases 4 and 5 on the Ubuntu Server.
+
+echo "== Security Baseline Check =="
+
+# 1) Check AppArmor is active and sshd profile enforced
+echo "[*] Checking AppArmor status..."
+aa-status | grep "profiles are in enforce mode"
+
+# 2) Confirm SSH root login and password auth are disabled
+echo "[*] Checking SSH hardening..."
+grep -E "PermitRootLogin|PasswordAuthentication" /etc/ssh/sshd_config
+
+# 3) Verify UFW is enabled and SSH restricted to workstation IP
+echo "[*] Checking UFW firewall rules..."
+ufw status
+
+# 4) Check fail2ban service and SSH jail
+echo "[*] Checking fail2ban service..."
+systemctl is-active fail2ban
+fail2ban-client status sshd
+
+echo "== Baseline check complete =="            </pre>
+
+            <h3>Executing the script remotely over SSH</h3>
             <pre>
 chmod +x security-baseline.sh
-ssh adminuser@192.168.56.10 'bash -s' < security-baseline.sh
-</pre>
+ssh adminuser@192.168.56.10 'bash -s' < security-baseline.sh            </pre>
 
-            <p><strong>Result:</strong> All checks passed successfully.</p>
+            <p>
+                Running the script via SSH from the workstation satisfies the “headless” and “remote only”
+                administration constraints while providing a reproducible way to verify the full security baseline.
+            </p>
 
             <div class="fig-grid">
                 <figure class="gallery-item" tabindex="0" data-full="images/week5-security-baseline.png">
                     <img src="images/week5-security-baseline.png" alt="Security baseline script output">
-                    <figcaption>Figure 4 – Security baseline verification output.</figcaption>
+                    <figcaption>Figure 4 – <code>security-baseline.sh</code> output confirming all checks pass.</figcaption>
                 </figure>
             </div>
         </section>
 
-        <section>
-            <h2>5. Remote Monitoring Script</h2>
+        <!-- 5. monitor-server.sh -->
+        <section id="deliverable-5">
+            <h2>5. Remote Monitoring Script (<code>monitor-server.sh</code>)</h2>
+            <p>
+                To support ongoing monitoring, I created <code>monitor-server.sh</code> on the workstation. The script
+                connects to the server via SSH, runs a set of diagnostic commands, and prints the results in one go.
+                Again, it is fully commented line-by-line.
+            </p>
 
+            <h3>Script contents (workstation)</h3>
             <pre>
 #!/bin/bash
-ssh adminuser@192.168.56.10 << 'EOF'
-uname -a
-free -h
-df -h
-ip addr
-EOF
-</pre>
+# monitor-server.sh
+# Runs basic monitoring commands on the Ubuntu Server via SSH.
 
-            <p><strong>Result:</strong> Monitoring output retrieved successfully.</p>
+SERVER_USER="adminuser"          # SSH user on the server
+SERVER_HOST="192.168.56.10"      # Server IP address on host-only network
+
+echo "== Remote Server Monitoring =="
+echo "Target: ${SERVER_USER}@${SERVER_HOST}"
+echo
+
+# Run monitoring commands on the remote server in a single SSH session
+ssh "${SERVER_USER}@${SERVER_HOST}" << 'EOF'
+echo "[*] System information (uname -a)"
+uname -a
+echo
+
+echo "[*] Memory usage (free -h)"
+free -h
+echo
+
+echo "[*] Disk usage (df -h)"
+df -h
+echo
+
+echo "[*] Network interfaces (ip addr)"
+ip addr
+echo
+EOF
+
+echo "== Monitoring run complete =="            </pre>
+
+            <h3>Executing the monitoring script</h3>
+            <pre>
+chmod +x monitor-server.sh
+./monitor-server.sh            </pre>
+
+            <p>
+                Because the script itself runs on the workstation and connects via SSH, it fits the requirement that
+                monitoring must be remote and does not require logging into the server console directly.
+            </p>
 
             <div class="fig-grid">
                 <figure class="gallery-item" tabindex="0" data-full="images/week5-monitor-output-1.png">
                     <img src="images/week5-monitor-output-1.png" alt="Monitor script output 1">
-                    <figcaption>Figure 5 – System info & resource usage.</figcaption>
+                    <figcaption>Figure 5 – Remote monitoring script output showing system and memory information.</figcaption>
                 </figure>
 
                 <figure class="gallery-item" tabindex="0" data-full="images/week5-monitor-output-2.png">
                     <img src="images/week5-monitor-output-2.png" alt="Monitor script output 2">
-                    <figcaption>Figure 6 – Filesystem & network details.</figcaption>
+                    <figcaption>Figure 6 – Remote monitoring script output showing disk and network details.</figcaption>
                 </figure>
             </div>
         </section>
 
-        <section>
-            <h2>Reflection</h2>
-            <p>
-                This week strengthened server security by implementing AppArmor, automatic upgrades, and fail2ban.
-                The monitoring script provided remote visibility, supporting secure headless administration.
-            </p>
-        </section>
+    <section>
+        <h2>Reflection</h2>
+        <p>
+            This week pushed the server beyond basic hardening and into a more maintainable security model. AppArmor,
+            unattended-upgrades and fail2ban each strengthened different layers of defence, but the real shift was seeing
+            how they work together: access control restricting what services can do, automated patching reducing exposure,
+            and intrusion detection reacting to hostile behaviour.
+        </p>
+        <p>
+            Building the two scripts clarified this even further. The security baseline script turned abstract “checks”
+            into a repeatable verification process I can run any time the system changes. The monitoring script created a
+            simple way to observe performance remotely without touching the server console. Together they made the setup
+            feel more like a system that can be operated and trusted over time, not just configured once.
+        </p>
+    </section>
 
         <section>
             <h2>References</h2>
@@ -359,7 +500,6 @@ EOF
                 <li>[5] Canonical, “Bash Scripting Guide,” Ubuntu Documentation. Accessed: Nov. 2025.</li>
             </ol>
         </section>
-
 
         <footer>
             <p>Week 5 — Operating Systems Coursework</p>
