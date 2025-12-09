@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Week 6: Performance Evaluation and Analysis</title>
+    <style>
+        /* Styles generated using GitHub Copilot*/
+        /* Global Styles */
+        :root {
+            --max-w: 1280;
+            --accent: #1f618d;
+            --muted: #666;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial;
+            line-height: 1.5;
+            color: #222;
+            margin: 0;
+            padding: 2rem;
+            background: #f7f9fb
+        }
+
+        .wrap {
+            max-width: var(--max-w);
+            margin: 0 auto;
+            background: #fff;
+            border-radius: 8px;
+            padding: 1.5rem 2rem;
+            box-shadow: 0 8px 30px rgba(22, 40, 60, 0.08)
+        }
+
+        header {
+            border-bottom: 1px solid #e6eef6;
+            padding-bottom: 0.75rem;
+            margin-bottom: 1rem
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 1.4rem;
+            color: var(--accent)
+        }
+
+        p.lead {
+            margin: 0.5rem 0;
+            color: var(--muted)
+        }
+
+        section {
+            margin: 1rem 0
+        }
+
+        h2 {
+            font-size: 1.05rem;
+            margin: 0 0 0.5rem 0;
+            color: #113047
+        }
+
+        ul,
+        ol {
+            margin: 0.25rem 0 0.75rem 1.2rem
+        }
+
+        pre {
+            background: #0b1220;
+            color: #e6f1ff;
+            padding: 0.75rem;
+            border-radius: 6px;
+            overflow: auto;
+            font-size: 0.9rem
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 0.5rem 0 0
+        }
+
+        th,
+        td {
+            border: 1px solid #e9f0f6;
+            padding: 0.5rem;
+            text-align: left;
+            background: #fff
+        }
+
+        th {
+            background: #f3f8fb;
+            color: #113047;
+            font-weight: 600
+        }
+
+        .fig-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1rem;
+            margin-top: 0.75rem
+        }
+
+        figure {
+            background: #fbfdff;
+            border: 1px dashed #e3eef9;
+            padding: 0.5rem;
+            border-radius: 6px;
+            min-height: 140px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center
+        }
+
+        figure img {
+            max-width: 100%;
+            max-height: 96px;
+            object-fit: contain;
+            display: block
+        }
+
+        figcaption {
+            font-size: 0.85rem;
+            color: var(--muted);
+            margin-top: 0.5rem
+        }
+
+        footer {
+            border-top: 1px solid #e6eef6;
+            padding-top: 0.75rem;
+            color: var(--muted);
+            font-size: 0.9rem
+        }
+
+        .note {
+            background: #fff8e6;
+            border-left: 4px solid #ffb86b;
+            padding: 0.6rem;
+            border-radius: 4px;
+            color: #663f00
+        }
+
+        /* Gallery styles (keeps existing layout but adds modal) */
+        .fig-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1rem;
+            margin-top: 0.75rem
+        }
+
+        figure.gallery-item {
+            background: #fbfdff;
+            border: 1px dashed #e3eef9;
+            padding: 0.5rem;
+            border-radius: 6px;
+            min-height: 140px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            outline: none
+        }
+
+        figure.gallery-item img {
+            max-width: 100%;
+            max-height: 96px;
+            object-fit: contain;
+            display: block
+        }
+
+        .fig-caption {
+            font-size: 0.85rem;
+            color: var(--muted);
+            margin-top: 0.5rem;
+            text-align: center
+        }
+
+        /* Modal (full-size view) */
+        .img-modal {
+            position: fixed;
+            inset: 0;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            background: rgba(2, 6, 23, 0.6);
+            z-index: 1000;
+            padding: 2rem
+        }
+
+        .img-modal[data-open="true"] {
+            display: flex
+        }
+
+        .img-modal .modal-content {
+            max-width: 95%;
+            max-height: 95%;
+            background: transparent;
+            display: flex;
+            flex-direction: column;
+            align-items: center
+        }
+
+        .img-modal img {
+            max-width: 100%;
+            max-height: 82vh;
+            border-radius: 6px;
+            box-shadow: 0 10px 40px rgba(2, 6, 23, 0.6)
+        }
+
+        .img-modal .modal-caption {
+            margin-top: 0.6rem;
+            color: #fff;
+            text-align: center;
+            max-width: 95%;
+            overflow: auto
+        }
+
+        .img-modal .modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: rgba(255, 255, 255, 0.08);
+            border: 0;
+            color: #fff;
+            font-size: 1.25rem;
+            padding: 0.4rem 0.6rem;
+            border-radius: 6px;
+            cursor: pointer
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrap">
+
+        <nav style="margin-bottom:1rem">
+            <a href="index.html"
+                style="color:var(--accent);text-decoration:none;display:inline-flex;align-items:center;font-weight:500">
+                <span style="font-size:1.2em;margin-right:6px">🏠</span> Home
+            </a>
+        </nav>
+
+
+        <header>
+            <h1>Week 6: Performance Evaluation and Analysis</h1>
+            <p class="lead">
+                Performance testing of the Ubuntu Server VM, identification of bottlenecks, and reflection on
+                virtualisation-related trade-offs.
+            </p>
+        </header>
+
+        <section>
+            <h2>1. Introduction</h2>
+            <p>
+                Week 6 of the operating systems coursework focused on evaluating the performance of my Ubuntu Server
+                virtual machine in line with Phase 6 of the assessment brief. The aim was to understand how the
+                operating
+                system behaves under different workloads and to analyse the limitations and trade-offs introduced by the
+                virtualised environment. All administration of the server was performed remotely from a separate Ubuntu
+                Desktop workstation over SSH, as required by the dual-system architecture.
+            </p>
+            <p>
+                The specific objectives were to establish a clean performance baseline, apply CPU, disk and network
+                workloads, collect quantitative metrics, attempt performance optimisations, and critically interpret the
+                results with respect to the underlying hardware and virtualisation layer.
+            </p>
+        </section>
+
+        <section>
+            <h2>2. Test Environment and Methodology</h2>
+            <p>
+                The environment consisted of two VirtualBox virtual machines: an Ubuntu Desktop workstation and a
+                headless
+                Ubuntu Server. The server exposed a host-only network interface on the 192.168.56.0/24 network, while
+                the
+                workstation acted as the SSH client and performance test driver. IP addressing was verified using
+                <code>ip addr</code> on both systems, confirming connectivity between <code>192.168.56.10</code>
+                (workstation) and <code>192.168.56.102</code> (server).
+            </p>
+            <p>
+                Before running any workload, I established a baseline using:
+            </p>
+            <ul>
+                <li><code>uptime</code> – load averages and system uptime</li>
+                <li><code>free -h</code> – memory utilisation</li>
+                <li><code>df -h</code> – disk usage of mounted filesystems</li>
+                <li><code>top -b -n 1</code> – non-interactive process snapshot</li>
+            </ul>
+            <p>
+                These measurements showed an idle system with negligible CPU usage, low memory consumption and ample
+                disk
+                space. This ensured that later changes could be attributed to the test workloads rather than background
+                activity.
+            </p>
+            <p>
+                Performance evaluation then proceeded in three main phases:
+            </p>
+            <ol>
+                <li>CPU stress testing using <code>stress-ng</code>.</li>
+                <li>Disk I/O benchmarking using <code>dd</code>.</li>
+                <li>Network latency and throughput testing using <code>ping</code> and <code>iperf3</code>.</li>
+            </ol>
+        </section>
+
+        <section>
+            <h2>3. Baseline System Performance</h2>
+            <p>
+                The baseline captures how the operating system behaves in an idle state:
+            </p>
+            <ul>
+                <li><strong>CPU and load:</strong> <code>uptime</code> reported load averages of
+                    <code>0.00, 0.00, 0.00</code>, confirming no prior CPU stress.
+                </li>
+                <li><strong>Memory:</strong> <code>free -h</code> showed approximately 9.9&nbsp;GiB RAM in total, with
+                    just
+                    over 500&nbsp;MiB in use and more than 8&nbsp;GiB available.</li>
+                <li><strong>Disk:</strong> <code>df -h</code> indicated that the root filesystem was around 40%
+                    utilised,
+                    leaving enough space for benchmarking.</li>
+                <li><strong>Processes:</strong> <code>top -b -n 1</code> showed that the majority of CPU time was spent
+                    in
+                    the idle state, with only system daemons and SSH sessions running.</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>4. CPU Performance Evaluation</h2>
+            <p>
+                To exercise CPU scheduling and utilisation, I used:
+            </p>
+            <pre>stress-ng --cpu 4 --metrics-brief</pre>
+            <p>
+                This command attempts to run four CPU stressors concurrently and report bogo-operations as a crude
+                measure
+                of throughput. In practice, all runs of <code>stress-ng</code> terminated with error status 2 and
+                reported
+                zero bogo-ops, accompanied by warnings that metrics might be incorrect. Despite this, <code>top</code>
+                clearly showed the CPU cores becoming heavily utilised while the stressors were running, and the server
+                remained reachable over SSH without crashing.
+            </p>
+            <p>
+                The most plausible interpretation is that VirtualBox’s handling of virtual CPU performance counters and
+                timers prevented <code>stress-ng</code> from completing its benchmarks reliably. The CPU workload was
+                applied successfully, but the tool could not produce meaningful quantitative metrics within this
+                virtualised environment.
+            </p>
+        </section>
+
+        <section>
+            <h2>5. Disk I/O Performance Evaluation</h2>
+            <p>
+                Disk write performance was evaluated using the standard <code>dd</code> benchmark:
+            </p>
+            <pre>dd if=/dev/zero of=testfile.img bs=1G count=1 oflag=direct</pre>
+            <p>
+                This command writes a 1&nbsp;GiB file using direct I/O. The benchmark was executed on both the
+                workstation
+                VM and the server VM.
+            </p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>System</th>
+                        <th>Measured write speed</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Workstation VM</td>
+                        <td>Approximately 261&nbsp;MB/s</td>
+                    </tr>
+                    <tr>
+                        <td>Server VM</td>
+                        <td>Approximately 2.1&nbsp;GB/s</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p>
+                The server’s result is clearly unrealistic for the underlying physical storage. It can be explained by
+                VirtualBox aggressively caching writes in host memory for the server VM, while the workstation VM runs a
+                full desktop environment and competes for resources.
+            </p>
+        </section>
+
+        <section>
+            <h2>6. Network Performance Evaluation</h2>
+
+            <h3>6.1 Latency</h3>
+            <p>
+                Network latency between the workstation and server was measured using:
+            </p>
+            <pre>ping -c 10 192.168.56.102</pre>
+            <p>
+                The results showed 0% packet loss and average round-trip times of roughly 0.5&nbsp;ms, typical of a
+                host-only virtual network where both endpoints reside on the same physical machine.
+            </p>
+
+            <h3>6.2 Throughput</h3>
+            <p>
+                Throughput was tested with <code>iperf3</code>, with the server in server mode and the workstation as
+                client:
+            </p>
+            <pre># On server
+iperf3 -s
+
+# On workstation
+iperf3 -c 192.168.56.102</pre>
+            <p>
+                Across multiple runs, <code>iperf3</code> reported average bitrates in the region of
+                2.8–3.1&nbsp;Gbit/s.
+                However, each test also showed a high number of TCP retransmissions, often between 7,000 and 11,000
+                segments for a 10-second test, and congestion window sizes fluctuated between roughly 170 and
+                245&nbsp;KB.
+            </p>
+            <p>
+                The combination of very high throughput and high retransmission counts indicates that the virtual NIC
+                and
+                internal switching layer within VirtualBox are the main sources of network bottlenecks rather than the
+                Linux TCP/IP stack.
+            </p>
+        </section>
+
+        <section>
+            <h2>7. Optimisation Attempts</h2>
+            <p>
+                Within the constraints of the virtualised testbed, I focused on the Linux network stack, as this was the
+                area with clear quantitative anomalies.
+            </p>
+            <p>
+                I examined socket buffer settings using:
+            </p>
+            <pre>sysctl net.core.rmem_max
+sysctl net.core.wmem_max</pre>
+            <p>
+                Both parameters were already set to <code>212992</code>. I then attempted to set them explicitly:
+            </p>
+            <pre>sudo sysctl -w net.core.rmem_max=212992
+sudo sysctl -w net.core.wmem_max=212992</pre>
+            <p>
+                Subsequent checks confirmed that the values remained unchanged at <code>212992</code>. A repeat
+                <code>iperf3</code> test after this attempted optimisation produced throughput and retransmission
+                statistics
+                that were essentially identical to the baseline run, demonstrating that network performance was
+                constrained
+                by the virtual NIC rather than Linux socket buffer sizes.
+            </p>
+        </section>
+
+        <section>
+            <h2>8. Bottleneck Analysis</h2>
+            <p>
+                Combining results from CPU, disk and network tests leads to the following overall assessment of system
+                bottlenecks:
+            </p>
+            <ul>
+                <li>
+                    <strong>CPU:</strong> The inability of <code>stress-ng</code> to produce metrics appears to stem
+                    from
+                    VirtualBox’s handling of performance counters and timing, not from the Ubuntu scheduler.
+                </li>
+                <li>
+                    <strong>Memory:</strong> Baseline measurements showed more than 8&nbsp;GiB of free RAM, and none of
+                    the
+                    tests produced evidence of swapping or memory pressure.
+                </li>
+                <li>
+                    <strong>Disk I/O:</strong> The 2.1&nbsp;GB/s figure on the server VM is likely an artefact of
+                    virtualised caching rather than genuine disk performance.
+                </li>
+                <li>
+                    <strong>Network:</strong> Very high throughput combined with high retransmission rates indicates a
+                    bottleneck within the VirtualBox networking stack. Socket buffer tuning in the guest OS had no
+                    measurable effect.
+                </li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>9. Critical Reflection and Link to Learning Outcomes</h2>
+            <p>
+                The experiments confirmed that while command-line tools such as <code>stress-ng</code>, <code>dd</code>,
+                <code>ping</code> and <code>iperf3</code> are powerful for understanding OS behaviour, their outputs
+                must be
+                interpreted in the context of the underlying platform. In a fully virtualised environment, the
+                hypervisor
+                can distort CPU metrics, cache disk writes aggressively and implement networking via virtual switches
+                that
+                behave differently from physical networks.
+            </p>
+            <p>
+                Apparent performance values may therefore reflect the efficiency of the virtualisation layer rather than
+                the intrinsic performance of the Linux kernel or its configuration. The optimisation attempts around
+                network
+                buffers reinforced this point by showing that tuning within the guest OS cannot overcome limitations
+                imposed by VirtualBox’s implementation.
+            </p>
+        </section>
+
+        <section>
+            <h2>10. Conclusion</h2>
+            <p>
+                The Week 6 performance evaluation met the key requirements of Phase 6 in the assessment brief: it
+                documented a clear testing methodology, captured baseline and under-load metrics, attempted optimisation
+                of
+                network parameters and critically analysed the resulting data. The main conclusion is that the Ubuntu
+                Server installation is stable and responsive under the tested workloads, and that most apparent
+                performance
+                anomalies are attributable to VirtualBox’s handling of CPU counters, disk caching and virtual networking
+                rather than to weaknesses in the operating system configuration itself.
+            </p>
+        </section>
+
+        <section>
+            <h2>11. Figures (Terminal Evidence)</h2>
+            <p>
+                The following figures provide terminal evidence for the commands and measurements discussed above. Click
+                any
+                thumbnail to view a larger version.
+            </p>
+
+            <div class="fig-grid" id="gallery">
+                <!-- Baseline and environment -->
+                <figure class="gallery-item" tabindex="0"
+                    data-full="images/week6-fig-baseline-uptime-free-df-top-workstation.png"
+                    aria-label="Open Figure 1: Baseline system metrics">
+                    <img src="images/week6-fig-baseline-uptime-free-df-top-workstation.png"
+                        alt="Figure 1: Baseline uptime, free, df and top outputs">
+                    <figcaption class="fig-caption">
+                        Figure 1: Baseline system metrics workstation (uptime, free -h, df -h, top -b -n 1) showing an
+                        idle server.
+                    </figcaption>
+                </figure>
+
+                <figure class="gallery-item" tabindex="0"
+                    data-full="images/week6-fig=baseline-uptime-free-df-top-server.png"
+                    aria-label="Open Figure 2: Baseline system metrics">
+                    <img src="images/week6-fig=baseline-uptime-free-df-top-server.png"
+                        alt="Figure 2: Baseline uptime, free, df and top outputs">
+                    <figcaption class="fig-caption">
+                        Figure 2: Baseline system metrics server (uptime, free -h, df -h, top -b -n 1) showing an idle
+                        server.
+                    </figcaption>
+                </figure>
+
+                <figure class="gallery-item" tabindex="0" data-full="images/week6-fig-ssh-login-workstation.png"
+                    aria-label="Open Figure 3: SSH login to server">
+                    <img src="images/week6-fig-ssh-login-workstation.png"
+                        alt="Figure 3: SSH login from workstation to Ubuntu Server">
+                    <figcaption class="fig-caption">
+                        Figure 3: SSH login from the workstation to the headless Ubuntu Server VM.
+                    </figcaption>
+                </figure>
+
+                <figure class="gallery-item" tabindex="0" data-full="images/week6-fig-ipaddr-workstation.png"
+                    aria-label="Open Figure 4: ip addr on workstation">
+                    <img src="images/week6-fig-ipaddr-workstation.png" alt="Figure 4: ip addr output on workstation VM">
+                    <figcaption class="fig-caption">
+                        Figure 4: <code>ip addr</code> on the workstation VM, showing the host-only address
+                        192.168.56.10.
+                    </figcaption>
+                </figure>
+
+                <figure class="gallery-item" tabindex="0" data-full="images/week6-fig-ipaddr-server.png"
+                    aria-label="Open Figure 5: ip addr on server">
+                    <img src="images/week6-fig-ipaddr-server.png" alt="Figure 5: ip addr output on server VM">
+                    <figcaption class="fig-caption">
+                        Figure 5: <code>ip addr</code> on the Ubuntu Server VM, showing the host-only address
+                        192.168.56.102.
+                    </figcaption>
+                </figure>
+
+                <!-- Disk benchmarks -->
+                <figure class="gallery-item" tabindex="0" data-full="images/week6-fig-dd-workstation.png"
+                    aria-label="Open Figure 6: dd benchmark on workstation">
+                    <img src="images/week6-fig-dd-workstation.png" alt="Figure 6: dd write benchmark on workstation">
+                    <figcaption class="fig-caption">
+                        Figure 6: <code>dd</code> benchmark on the workstation VM, reporting around 261&nbsp;MB/s.
+                    </figcaption>
+                </figure>
+
+                <figure class="gallery-item" tabindex="0" data-full="images/week6-fig-dd-server.png"
+                    aria-label="Open Figure 7: dd benchmark on server">
+                    <img src="images/week6-fig-dd-server.png" alt="Figure 7: dd write benchmark on server">
+                    <figcaption class="fig-caption">
+                        Figure 7: <code>dd</code> benchmark on the server VM, reporting around 2.1&nbsp;GB/s due to
+                        VirtualBox caching.
+                    </figcaption>
+                </figure>
+
+                <!-- Network tests -->
+                <figure class="gallery-item" tabindex="0" data-full="images/week6-fig-ping.png"
+                    aria-label="Open Figure 8: ping latency test">
+                    <img src="images/week6-fig-ping.png" alt="Figure 8: ping output from workstation to server">
+                    <figcaption class="fig-caption">
+                        Figure 8: <code>ping -c 10 192.168.56.102</code> from the workstation, showing low latency and
+                        0% packet loss.
+                    </figcaption>
+                </figure>
+
+                <figure class="gallery-item" tabindex="0" data-full="images/week6-fig-iperf-run1.png"
+                    aria-label="Open Figure 9: iperf3 baseline throughput">
+                    <img src="images/week6-fig-iperf-run1.png" alt="Figure 9: iperf3 baseline throughput measurement">
+                    <figcaption class="fig-caption">
+                        Figure 9: Baseline <code>iperf3</code> run, with throughput around 2.9&nbsp;Gbit/s and high
+                        retransmission counts.
+                    </figcaption>
+                </figure>
+
+                <figure class="gallery-item" tabindex="0" data-full="images/week6-fig-iperf-run2.png"
+                    aria-label="Open Figure 10: iperf3 after optimisation">
+                    <img src="images/week6-fig-iperf-run2.png" alt="Figure 10: iperf3 throughput after sysctl tuning">
+                    <figcaption class="fig-caption">
+                        Figure 10: <code>iperf3</code> run after buffer tuning, showing similar throughput and
+                        retransmission behaviour.
+                    </figcaption>
+                </figure>
+
+                <figure class="gallery-item" tabindex="0" data-full="images/week6-fig-sysctl.png"
+                    aria-label="Open Figure 11: sysctl network buffer settings">
+                    <img src="images/week6-fig-sysctl.png" alt="Figure 11: sysctl rmem_max and wmem_max values">
+                    <figcaption class="fig-caption">
+                        Figure 11: <code>sysctl</code> output showing <code>net.core.rmem_max</code> and
+                        <code>net.core.wmem_max</code> already at 212992 before and after tuning attempts.
+                    </figcaption>
+                </figure>
+
+                <!-- CPU stress (you can add more figures here) -->
+                <figure class="gallery-item" tabindex="0" data-full="images/week6-fig-stressng-output1.png"
+                    aria-label="Open Figure 12: stress-ng CPU test">
+                    <img src="images/week6-fig-stressng-output1.png"
+                        alt="Figure 12: stress-ng output with failed CPU metrics">
+                    <figcaption class="fig-caption">
+                        Figure 12: <code>stress-ng --cpu 4 --metrics-brief</code> output 1, showing failed metric
+                        collection under VirtualBox.
+                    </figcaption>
+                </figure>
+
+                <figure class="gallery-item" tabindex="0" data-full="images/week6-fig-stressng-output2.png"
+                    aria-label="Open Figure 13: stress-ng CPU test">
+                    <img src="images/week6-fig-stressng-output2.png"
+                        alt="Figure 13: stress-ng output with failed CPU metrics">
+                    <figcaption class="fig-caption">
+                        Figure 13: <code>stress-ng --cpu 4 --metrics-brief</code> output 2, showing failed metric
+                        collection under VirtualBox.
+                    </figcaption>
+                </figure>
+
+                <figure class="gallery-item" tabindex="0" data-full="images/week6-fig-stressng-output3.png"
+                    aria-label="Open Figure 14: stress-ng CPU test">
+                    <img src="images/week6-fig-stressng-output3.png"
+                        alt="Figure 14: stress-ng output with failed CPU metrics">
+                    <figcaption class="fig-caption">
+                        Figure 14: <code>stress-ng --cpu 4 --metrics-brief</code> output 3, showing failed metric
+                        collection under VirtualBox.
+                    </figcaption>
+                </figure>
+
+                <figure class="gallery-item" tabindex="0" data-full="images/week6-fig-ls-lah.png"
+                    aria-label="Open Figure 15: ls -lah / of root filesystem">
+                    <img src="images/week6-fig-ls-lah.png"
+                        alt="Figure 15: ls output showing root filesystem contents and timing">
+                    <figcaption class="fig-caption">
+                        Figure 15: <code>ls</code> executed in the root filesystem (with timing), confirming the
+                        expected directory layout and negligible overhead for directory access.
+                    </figcaption>
+                </figure>
+
+                <!-- Figure: ip addr on server -->
+                <figure class="gallery-item" tabindex="0" data-full="images/week6-fig-ipaddr-server2.png"
+                    aria-label="Open Figure 16: ip addr on Ubuntu Server">
+                    <img src="images/week6-fig-ipaddr-server2.png"
+                        alt="Figure 16: ip addr output on Ubuntu Server showing host-only interface">
+                    <figcaption class="fig-caption">
+                        Figure 16: <code>ip addr</code> on the Ubuntu Server console, showing the loopback,
+                        NAT and host-only interfaces, including 192.168.56.102/24.
+                    </figcaption>
+                </figure>
+
+                <figure class="gallery-item" tabindex="0" data-full="images/week6-fig-iperf3-server.png"
+                    aria-label="Open Figure 17: top snapshot with iperf3">
+                    <img src="images/week6-fig-iperf3-server.png"
+                        alt="Figure 17: top output showing iperf3 process and low overall load">
+                    <figcaption class="fig-caption">
+                        Figure 17: <code>top -b -n 1</code> snapshot capturing the <code>iperf3</code> process and
+                        overall CPU utilisation during the network throughput test.
+                    </figcaption>
+                </figure>
+
+                <figure class="gallery-item" tabindex="0" data-full="images/week6-fig-sysctl2.png"
+                    aria-label="Open Figure 18: sysctl network buffer settings">
+                    <img src="images/week6-fig-sysctl2.png" alt="Figure 18: sysctl rmem_max and wmem_max values">
+                    <figcaption class="fig-caption">
+                        Figure 18: <code>sysctl</code> output showing <code>net.core.rmem_max</code> and
+                        <code>net.core.wmem_max</code> already at 212992 before and after tuning attempts.
+                    </figcaption>
+                </figure>
+
+            </div>
+        </section>
+
+        <!-- Modal for full-size images -->
+        <div id="imgModal" class="img-modal" role="dialog" aria-modal="true" aria-hidden="true" data-open="false">
+            <button class="modal-close" aria-label="Close image">&times;</button>
+            <div class="modal-content">
+                <img id="modalImg" src="" alt="">
+                <div id="modalCaption" class="modal-caption"></div>
+            </div>
+        </div>
+
+        <section>
+            <h2>References</h2>
+            <ol>
+                <li>[1] Canonical, “Ubuntu Performance Monitoring Tools,” Ubuntu Documentation. Available:
+                    https://ubuntu.com/server/docs. Accessed: Dec. 2025.</li>
+                <li>[2] Ubuntu Manpages, “stress-ng Manual,” Available: https://manpages.ubuntu.com/manpages/stress-ng.
+                    Accessed: Dec. 2025.</li>
+                <li>[3] Axboe, J., “fio: Flexible I/O Tester Documentation.” Available: https://github.com/axboe/fio.
+                    Accessed: Dec. 2025.</li>
+                <li>[4] ESnet, “iperf3 Documentation,” Available: https://iperf.fr/. Accessed: Dec. 2025.</li>
+                <li>[5] Oracle, “VirtualBox Networking Performance,” VirtualBox Manual. Available:
+                    https://www.virtualbox.org/manual/. Accessed: Dec. 2025.</li>
+            </ol>
+        </section>
+
+
+        <footer>
+            <div>© 2025 Andrei</div>
+        </footer>
+
+    </div>
+
+    <!-- Script generated using GitHub Copilot -->
+    <script>
+        (function () {
+            const gallery = document.getElementById('gallery');
+            const modal = document.getElementById('imgModal');
+            const modalImg = document.getElementById('modalImg');
+            const modalCaption = document.getElementById('modalCaption');
+            const closeBtn = modal.querySelector('.modal-close');
+
+            function openModal(fig) {
+                const full = fig.getAttribute('data-full') || fig.querySelector('img').src;
+                modalImg.src = full;
+                modalImg.alt = fig.querySelector('img').alt || '';
+                modalCaption.innerHTML = fig.querySelector('.fig-caption')?.innerHTML || '';
+                modal.setAttribute('data-open', 'true');
+                modal.setAttribute('aria-hidden', 'false');
+                document.body.style.overflow = 'hidden';
+                closeBtn.focus();
+            }
+
+            function closeModal() {
+                modal.setAttribute('data-open', 'false');
+                modal.setAttribute('aria-hidden', 'true');
+                modalImg.src = '';
+                document.body.style.overflow = '';
+            }
+
+            // Open on click
+            gallery.addEventListener('click', e => {
+                const fig = e.target.closest('figure.gallery-item');
+                if (!fig) return;
+                openModal(fig);
+            });
+
+            // Keyboard: open on Enter/Space when figure focused
+            gallery.addEventListener('keydown', e => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    const fig = document.activeElement.closest('figure.gallery-item');
+                    if (fig) { e.preventDefault(); openModal(fig); }
+                }
+            });
+
+            closeBtn.addEventListener('click', closeModal);
+
+            // Click backdrop to close
+            modal.addEventListener('click', e => {
+                if (e.target === modal) closeModal();
+            });
+
+            // ESC to close
+            document.addEventListener('keydown', e => {
+                if (e.key === 'Escape' && modal.getAttribute('data-open') === 'true') closeModal();
+            });
+        })();
+    </script>
+
+</body>
+
+</html>

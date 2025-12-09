@@ -1,101 +1,220 @@
-
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-	<meta charset="UTF-8">
-	<title>Week 2: Security Planning and Testing Methodology</title>
+    <meta charset="UTF-8">
+    <title>Week 2: Security Planning and Testing Methodology</title>
     <style>
-        :root{--max-w:900px;--accent:#1f618d;--muted:#666;}
-        body{font-family:system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;line-height:1.5;color:#222;margin:0;padding:2rem;background:#f7f9fb}
-        .wrap{max-width:var(--max-w);margin:0 auto;background:#fff;border-radius:8px;padding:1.5rem 2rem;box-shadow:0 8px 30px rgba(22,40,60,0.08)}
-        header{border-bottom:1px solid #e6eef6;padding-bottom:0.75rem;margin-bottom:1rem}
-        h1{margin:0;font-size:1.4rem;color:var(--accent)}
-        p.lead{margin:0.5rem 0;color:var(--muted)}
-        section{margin:1rem 0}
-        h2{font-size:1.05rem;margin:0 0 0.5rem 0;color:#113047}
-        ul,ol{margin:0.25rem 0 0.75rem 1.2rem}
-        pre{background:#0b1220;color:#e6f1ff;padding:0.75rem;border-radius:6px;overflow:auto;font-size:0.9rem}
-        table{width:100%;border-collapse:collapse;margin:0.5rem 0 0}
-        th,td{border:1px solid #e9f0f6;padding:0.5rem;text-align:left;background:#fff}
-        th{background:#f3f8fb;color:#113047;font-weight:600}
-        .fig-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem;margin-top:0.75rem}
-        figure{background:#fbfdff;border:1px dashed #e3eef9;padding:0.5rem;border-radius:6px;min-height:140px;display:flex;flex-direction:column;align-items:center;justify-content:center}
-        figure img{max-width:100%;max-height:96px;object-fit:contain;display:block}
-        figcaption{font-size:0.85rem;color:var(--muted);margin-top:0.5rem}
-        footer{border-top:1px solid #e6eef6;padding-top:0.75rem;color:var(--muted);font-size:0.9rem}
-        .note{background:#fff8e6;border-left:4px solid #ffb86b;padding:0.6rem;border-radius:4px;color:#663f00}
+        :root {
+            --max-w: 900px;
+            --accent: #1f618d;
+            --muted: #666;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial;
+            line-height: 1.5;
+            color: #222;
+            margin: 0;
+            padding: 2rem;
+            background: #f7f9fb
+        }
+
+        .wrap {
+            max-width: var(--max-w);
+            margin: 0 auto;
+            background: #fff;
+            border-radius: 8px;
+            padding: 1.5rem 2rem;
+            box-shadow: 0 8px 30px rgba(22, 40, 60, 0.08)
+        }
+
+        header {
+            border-bottom: 1px solid #e6eef6;
+            padding-bottom: 0.75rem;
+            margin-bottom: 1rem
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 1.4rem;
+            color: var(--accent)
+        }
+
+        p.lead {
+            margin: 0.5rem 0;
+            color: var(--muted)
+        }
+
+        section {
+            margin: 1rem 0
+        }
+
+        h2 {
+            font-size: 1.05rem;
+            margin: 0 0 0.5rem 0;
+            color: #113047
+        }
+
+        ul,
+        ol {
+            margin: 0.25rem 0 0.75rem 1.2rem
+        }
+
+        pre {
+            background: #0b1220;
+            color: #e6f1ff;
+            padding: 0.75rem;
+            border-radius: 6px;
+            overflow: auto;
+            font-size: 0.9rem
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 0.5rem 0 0
+        }
+
+        th,
+        td {
+            border: 1px solid #e9f0f6;
+            padding: 0.5rem;
+            text-align: left;
+            background: #fff
+        }
+
+        th {
+            background: #f3f8fb;
+            color: #113047;
+            font-weight: 600
+        }
+
+        .fig-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1rem;
+            margin-top: 0.75rem
+        }
+
+        figure {
+            background: #fbfdff;
+            border: 1px dashed #e3eef9;
+            padding: 0.5rem;
+            border-radius: 6px;
+            min-height: 140px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center
+        }
+
+        figure img {
+            max-width: 100%;
+            max-height: 96px;
+            object-fit: contain;
+            display: block
+        }
+
+        figcaption {
+            font-size: 0.85rem;
+            color: var(--muted);
+            margin-top: 0.5rem
+        }
+
+        footer {
+            border-top: 1px solid #e6eef6;
+            padding-top: 0.75rem;
+            color: var(--muted);
+            font-size: 0.9rem
+        }
+
+        .note {
+            background: #fff8e6;
+            border-left: 4px solid #ffb86b;
+            padding: 0.6rem;
+            border-radius: 4px;
+            color: #663f00
+        }
     </style>
 </head>
+
 <body>
-<div class="wrap">
+    <div class="wrap">
 
         <nav style="margin-bottom:1rem">
-            <a href="index.html" style="color:var(--accent);text-decoration:none;display:inline-flex;align-items:center;font-weight:500">
-            <span style="font-size:1.2em;margin-right:6px">🏠</span> Home
+            <a href="index.html"
+                style="color:var(--accent);text-decoration:none;display:inline-flex;align-items:center;font-weight:500">
+                <span style="font-size:1.2em;margin-right:6px">🏠</span> Home
             </a>
         </nav>
 
-    <header>
-        <h1>Week 3: Application Selection for Performance Testing</h1>
-        <p class="lead">Objective and planning for performance testing</p>
-    </header>
+        <header>
+            <h1>Week 3: Application Selection for Performance Testing</h1>
+            <p class="lead">Objective and planning for performance testing</p>
+        </header>
 
-    <section>
-        <h2>Objective</h2>
-        <p>In Week 3, I selected applications to evaluate the Ubuntu Server’s performance under different workloads. The goal is to prepare for detailed performance testing in Week 6 by choosing representative CPU-, RAM-, I/O-, and network-intensive applications. All selections are documented for justification; installation and testing come later.</p>
-    </section>
+        <section>
+            <h2>Objective</h2>
+            <p>In Week 3, I selected applications to evaluate the Ubuntu Server’s performance under different workloads.
+                The goal is to prepare for detailed performance testing in Week 6 by choosing representative CPU-, RAM-,
+                I/O-, and network-intensive applications. All selections are documented for justification; installation
+                and testing come later.</p>
+        </section>
 
-    <section>
-        <h2>1. Application Selection Matrix</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>Application / Service</th>
-                    <th>Workload Type</th>
-                    <th>Reason for Selection</th>
-                    <th>Expected Resource Use</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>Stress-ng</td>
-                    <td>CPU-intensive</td>
-                    <td>Generates high CPU load for testing system processing limits.</td>
-                    <td>High CPU usage, low RAM impact.</td>
-                </tr>
-                <tr>
-                    <td>Memtester</td>
-                    <td>RAM-intensive</td>
-                    <td>Tests memory stability and allocation under heavy load.</td>
-                    <td>High RAM usage, minimal CPU impact.</td>
-                </tr>
-                <tr>
-                    <td>Fio (Flexible I/O tester)</td>
-                    <td>Disk I/O-intensive</td>
-                    <td>Simulates read/write operations to measure disk performance.</td>
-                    <td>High disk read/write activity.</td>
-                </tr>
-                <tr>
-                    <td>Iperf3</td>
-                    <td>Network-intensive</td>
-                    <td>Measures network throughput and latency between server and workstation.</td>
-                    <td>Moderate CPU, high network utilization.</td>
-                </tr>
-                <tr>
-                    <td>NGINX</td>
-                    <td>Server application</td>
-                    <td>Common web server to simulate real-world service load.</td>
-                    <td>CPU and RAM usage vary with simulated requests; network usage moderate.</td>
-                </tr>
-            </tbody>
-        </table>
-        <p>Explanation: Applications were chosen to cover all major system resources and ensure that performance testing is comprehensive. Each tool is open-source, widely documented, and compatible with Ubuntu Server 22.04 LTS.</p>
-    </section>
+        <section>
+            <h2>1. Application Selection Matrix</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Application / Service</th>
+                        <th>Workload Type</th>
+                        <th>Reason for Selection</th>
+                        <th>Expected Resource Use</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Stress-ng</td>
+                        <td>CPU-intensive</td>
+                        <td>Generates high CPU load for testing system processing limits.</td>
+                        <td>High CPU usage, low RAM impact.</td>
+                    </tr>
+                    <tr>
+                        <td>Memtester</td>
+                        <td>RAM-intensive</td>
+                        <td>Tests memory stability and allocation under heavy load.</td>
+                        <td>High RAM usage, minimal CPU impact.</td>
+                    </tr>
+                    <tr>
+                        <td>Fio (Flexible I/O tester)</td>
+                        <td>Disk I/O-intensive</td>
+                        <td>Simulates read/write operations to measure disk performance.</td>
+                        <td>High disk read/write activity.</td>
+                    </tr>
+                    <tr>
+                        <td>Iperf3</td>
+                        <td>Network-intensive</td>
+                        <td>Measures network throughput and latency between server and workstation.</td>
+                        <td>Moderate CPU, high network utilization.</td>
+                    </tr>
+                    <tr>
+                        <td>NGINX</td>
+                        <td>Server application</td>
+                        <td>Common web server to simulate real-world service load.</td>
+                        <td>CPU and RAM usage vary with simulated requests; network usage moderate.</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p>Explanation: Applications were chosen to cover all major system resources and ensure that performance
+                testing is comprehensive. Each tool is open-source, widely documented, and compatible with Ubuntu Server
+                22.04 LTS.</p>
+        </section>
 
-    <section>
-        <h2>2. Installation Documentation (Planned Commands)</h2>
-        <p>Although installation will occur later via SSH, the commands are documented here for clarity:</p>
-        <pre># CPU-intensive
+        <section>
+            <h2>2. Installation Documentation (Planned Commands)</h2>
+            <p>Although installation will occur later via SSH, the commands are documented here for clarity:</p>
+            <pre># CPU-intensive
 sudo apt update
 sudo apt install stress-ng -y
 
@@ -112,52 +231,113 @@ sudo apt install iperf3 -y
 sudo apt install nginx -y
 
 Note: All installations will be performed on the Ubuntu Server via SSH from the workstation VM in later weeks.</pre>
-    </section>
+        </section>
 
-    <section>
-        <h2>3. Expected Resource Profiles</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>Application</th>
-                    <th>CPU</th>
-                    <th>RAM</th>
-                    <th>Disk I/O</th>
-                    <th>Network</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr><td>Stress-ng</td><td>Very High</td><td>Low</td><td>Low</td><td>Low</td></tr>
-                <tr><td>Memtester</td><td>Low</td><td>Very High</td><td>Low</td><td>Low</td></tr>
-                <tr><td>Fio</td><td>Low</td><td>Low</td><td>Very High</td><td>Low</td></tr>
-                <tr><td>Iperf3</td><td>Low</td><td>Low</td><td>Low</td><td>High</td></tr>
-                <tr><td>NGINX</td><td>Medium</td><td>Medium</td><td>Medium</td><td>Medium</td></tr>
-            </tbody>
-        </table>
-        <p>Explanation: Estimating expected resource usage helps to design monitoring scripts and anticipate potential bottlenecks during actual performance testing.</p>
-    </section>
+        <section>
+            <h2>3. Expected Resource Profiles</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Application</th>
+                        <th>CPU</th>
+                        <th>RAM</th>
+                        <th>Disk I/O</th>
+                        <th>Network</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Stress-ng</td>
+                        <td>Very High</td>
+                        <td>Low</td>
+                        <td>Low</td>
+                        <td>Low</td>
+                    </tr>
+                    <tr>
+                        <td>Memtester</td>
+                        <td>Low</td>
+                        <td>Very High</td>
+                        <td>Low</td>
+                        <td>Low</td>
+                    </tr>
+                    <tr>
+                        <td>Fio</td>
+                        <td>Low</td>
+                        <td>Low</td>
+                        <td>Very High</td>
+                        <td>Low</td>
+                    </tr>
+                    <tr>
+                        <td>Iperf3</td>
+                        <td>Low</td>
+                        <td>Low</td>
+                        <td>Low</td>
+                        <td>High</td>
+                    </tr>
+                    <tr>
+                        <td>NGINX</td>
+                        <td>Medium</td>
+                        <td>Medium</td>
+                        <td>Medium</td>
+                        <td>Medium</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p>Explanation: Estimating expected resource usage helps to design monitoring scripts and anticipate
+                potential bottlenecks during actual performance testing.</p>
+        </section>
 
-    <section>
-        <h2>4. Monitoring Strategy</h2>
-        <p>To evaluate the server’s performance, I will use remote monitoring via SSH from the workstation once applications are running. The planned tools and metrics are:</p>
-        <ul>
-            <li>CPU Usage: top, htop, or mpstat</li>
-            <li>Memory Usage: free -h, vmstat</li>
-            <li>Disk I/O: iostat, fio results</li>
-            <li>Network Performance: iperf3, ping</li>
-            <li>System Latency / Responsiveness: Observe delays under simulated workloads</li>
-        </ul>
-        <p>Explanation: Monitoring will be systematic, with results recorded at baseline, during load, and post-load to identify bottlenecks and validate system stability.</p>
-    </section>
+        <section>
+            <h2>4. Monitoring Strategy</h2>
+            <p>To evaluate the server’s performance, I will use remote monitoring via SSH from the workstation once
+                applications are running. The planned tools and metrics are:</p>
+            <ul>
+                <li>CPU Usage: top, htop, or mpstat</li>
+                <li>Memory Usage: free -h, vmstat</li>
+                <li>Disk I/O: iostat, fio results</li>
+                <li>Network Performance: iperf3, ping</li>
+                <li>System Latency / Responsiveness: Observe delays under simulated workloads</li>
+            </ul>
+            <p>Explanation: Monitoring will be systematic, with results recorded at baseline, during load, and post-load
+                to identify bottlenecks and validate system stability.</p>
+        </section>
 
-    <section>
-        <h2>5. Reflection</h2>
-        <p>Selecting applications in Week 3 allowed me to plan for comprehensive performance testing in a structured and methodical way. By including CPU-, memory-, disk-, network-, and server-based workloads, I can ensure that all critical system resources are properly evaluated under different types of stress. Thinking ahead about expected resource usage and monitoring strategies helps me prepare clear testing scripts and anticipate potential issues, which will make the actual performance testing more efficient and reliable. This planning builds directly on the server setup completed in Week 1 and the security considerations from Week 2, ensuring that performance testing will be conducted in a secure, controlled, and measurable manner. This process reinforced the importance of careful planning and justification before implementing changes, highlighting professional practices in system administration. Overall, it gave me a clearer understanding of how different applications can impact server performance and the value of proactive preparation in identifying bottlenecks and optimizing system behaviour.</p>
-    </section>
+        <section>
+            <h2>5. Reflection</h2>
+            <p>Selecting applications in Week 3 allowed me to plan for comprehensive performance testing in a structured
+                and methodical way. By including CPU-, memory-, disk-, network-, and server-based workloads, I can
+                ensure that all critical system resources are properly evaluated under different types of stress.
+                Thinking ahead about expected resource usage and monitoring strategies helps me prepare clear testing
+                scripts and anticipate potential issues, which will make the actual performance testing more efficient
+                and reliable. This planning builds directly on the server setup completed in Week 1 and the security
+                considerations from Week 2, ensuring that performance testing will be conducted in a secure, controlled,
+                and measurable manner. This process reinforced the importance of careful planning and justification
+                before implementing changes, highlighting professional practices in system administration. Overall, it
+                gave me a clearer understanding of how different applications can impact server performance and the
+                value of proactive preparation in identifying bottlenecks and optimizing system behaviour.</p>
+        </section>
 
-    <footer>
-        <p>Prepared for performance testing planning.</p>
-    </footer>
-</div>
+        <section>
+            <h2>References</h2>
+            <ol>
+                <li>[1] Canonical, “stress-ng Manual Pages,” Ubuntu Manpages. Available:
+                    https://manpages.ubuntu.com/manpages/stress-ng. Accessed: Oct. 2025.</li>
+                <li>[2] Ubuntu, “memtester — RAM Testing Tool,” Ubuntu Manpages. Available:
+                    https://manpages.ubuntu.com/manpages/memtester. Accessed: Oct. 2025.</li>
+                <li>[3] Axboe, J., “fio: Flexible I/O Tester,” GitHub. Available: https://github.com/axboe/fio.
+                    Accessed: Oct. 2025.</li>
+                <li>[4] “iperf3 — Network Performance Measurement,” ESnet. Available: https://iperf.fr/. Accessed: Oct.
+                    2025.</li>
+                <li>[5] NGINX, “NGINX Documentation,” F5 Inc. Available: https://nginx.org/en/docs/. Accessed: Oct.
+                    2025.</li>
+            </ol>
+        </section>
+
+
+        <footer>
+            <p>Prepared for performance testing planning.</p>
+        </footer>
+    </div>
 </body>
+
 </html>

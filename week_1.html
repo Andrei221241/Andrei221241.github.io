@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -7,153 +8,370 @@
     <style>
         /* Styles generated using GitHub Copilot*/
         /* Global Styles */
-        :root{--max-w:1280;--accent:#1f618d;--muted:#666;}
-        body{font-family:system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;line-height:1.5;color:#222;margin:0;padding:2rem;background:#f7f9fb}
-        .wrap{max-width:var(--max-w);margin:0 auto;background:#fff;border-radius:8px;padding:1.5rem 2rem;box-shadow:0 8px 30px rgba(22,40,60,0.08)}
-        header{border-bottom:1px solid #e6eef6;padding-bottom:0.75rem;margin-bottom:1rem}
-        h1{margin:0;font-size:1.4rem;color:var(--accent)}
-        p.lead{margin:0.5rem 0;color:var(--muted)}
-        section{margin:1rem 0}
-        h2{font-size:1.05rem;margin:0 0 0.5rem 0;color:#113047}
-        ul,ol{margin:0.25rem 0 0.75rem 1.2rem}
-        pre{background:#0b1220;color:#e6f1ff;padding:0.75rem;border-radius:6px;overflow:auto;font-size:0.9rem}
-        table{width:100%;border-collapse:collapse;margin:0.5rem 0 0}
-        th,td{border:1px solid #e9f0f6;padding:0.5rem;text-align:left;background:#fff}
-        th{background:#f3f8fb;color:#113047;font-weight:600}
-        .fig-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem;margin-top:0.75rem}
-        figure{background:#fbfdff;border:1px dashed #e3eef9;padding:0.5rem;border-radius:6px;min-height:140px;display:flex;flex-direction:column;align-items:center;justify-content:center}
-        figure img{max-width:100%;max-height:96px;object-fit:contain;display:block}
-        figcaption{font-size:0.85rem;color:var(--muted);margin-top:0.5rem}
-        footer{border-top:1px solid #e6eef6;padding-top:0.75rem;color:var(--muted);font-size:0.9rem}
-        .note{background:#fff8e6;border-left:4px solid #ffb86b;padding:0.6rem;border-radius:4px;color:#663f00}
-        
+        :root {
+            --max-w: 1280;
+            --accent: #1f618d;
+            --muted: #666;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial;
+            line-height: 1.5;
+            color: #222;
+            margin: 0;
+            padding: 2rem;
+            background: #f7f9fb
+        }
+
+        .wrap {
+            max-width: var(--max-w);
+            margin: 0 auto;
+            background: #fff;
+            border-radius: 8px;
+            padding: 1.5rem 2rem;
+            box-shadow: 0 8px 30px rgba(22, 40, 60, 0.08)
+        }
+
+        header {
+            border-bottom: 1px solid #e6eef6;
+            padding-bottom: 0.75rem;
+            margin-bottom: 1rem
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 1.4rem;
+            color: var(--accent)
+        }
+
+        p.lead {
+            margin: 0.5rem 0;
+            color: var(--muted)
+        }
+
+        section {
+            margin: 1rem 0
+        }
+
+        h2 {
+            font-size: 1.05rem;
+            margin: 0 0 0.5rem 0;
+            color: #113047
+        }
+
+        ul,
+        ol {
+            margin: 0.25rem 0 0.75rem 1.2rem
+        }
+
+        pre {
+            background: #0b1220;
+            color: #e6f1ff;
+            padding: 0.75rem;
+            border-radius: 6px;
+            overflow: auto;
+            font-size: 0.9rem
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 0.5rem 0 0
+        }
+
+        th,
+        td {
+            border: 1px solid #e9f0f6;
+            padding: 0.5rem;
+            text-align: left;
+            background: #fff
+        }
+
+        th {
+            background: #f3f8fb;
+            color: #113047;
+            font-weight: 600
+        }
+
+        .fig-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1rem;
+            margin-top: 0.75rem
+        }
+
+        figure {
+            background: #fbfdff;
+            border: 1px dashed #e3eef9;
+            padding: 0.5rem;
+            border-radius: 6px;
+            min-height: 140px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center
+        }
+
+        figure img {
+            max-width: 100%;
+            max-height: 96px;
+            object-fit: contain;
+            display: block
+        }
+
+        figcaption {
+            font-size: 0.85rem;
+            color: var(--muted);
+            margin-top: 0.5rem
+        }
+
+        footer {
+            border-top: 1px solid #e6eef6;
+            padding-top: 0.75rem;
+            color: var(--muted);
+            font-size: 0.9rem
+        }
+
+        .note {
+            background: #fff8e6;
+            border-left: 4px solid #ffb86b;
+            padding: 0.6rem;
+            border-radius: 4px;
+            color: #663f00
+        }
+
         /* Gallery styles (keeps existing layout but adds modal) */
-        .fig-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem;margin-top:0.75rem}
-        figure.gallery-item{background:#fbfdff;border:1px dashed #e3eef9;padding:0.5rem;border-radius:6px;min-height:140px;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;outline:none}
-        figure.gallery-item img{max-width:100%;max-height:96px;object-fit:contain;display:block}
-        .fig-caption{font-size:0.85rem;color:var(--muted);margin-top:0.5rem;text-align:center}
+        .fig-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1rem;
+            margin-top: 0.75rem
+        }
+
+        figure.gallery-item {
+            background: #fbfdff;
+            border: 1px dashed #e3eef9;
+            padding: 0.5rem;
+            border-radius: 6px;
+            min-height: 140px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            outline: none
+        }
+
+        figure.gallery-item img {
+            max-width: 100%;
+            max-height: 96px;
+            object-fit: contain;
+            display: block
+        }
+
+        .fig-caption {
+            font-size: 0.85rem;
+            color: var(--muted);
+            margin-top: 0.5rem;
+            text-align: center
+        }
 
         /* Modal (full-size view) */
-        .img-modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(2,6,23,0.6);z-index:1000;padding:2rem}
-        .img-modal[data-open="true"]{display:flex}
-        .img-modal .modal-content{max-width:95%;max-height:95%;background:transparent;display:flex;flex-direction:column;align-items:center}
-        .img-modal img{max-width:100%;max-height:82vh;border-radius:6px;box-shadow:0 10px 40px rgba(2,6,23,0.6)}
-        .img-modal .modal-caption{margin-top:0.6rem;color:#fff;text-align:center;max-width:95%;overflow:auto}
-        .img-modal .modal-close{position:absolute;top:1rem;right:1rem;background:rgba(255,255,255,0.08);border:0;color:#fff;font-size:1.25rem;padding:0.4rem 0.6rem;border-radius:6px;cursor:pointer}
+        .img-modal {
+            position: fixed;
+            inset: 0;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            background: rgba(2, 6, 23, 0.6);
+            z-index: 1000;
+            padding: 2rem
+        }
+
+        .img-modal[data-open="true"] {
+            display: flex
+        }
+
+        .img-modal .modal-content {
+            max-width: 95%;
+            max-height: 95%;
+            background: transparent;
+            display: flex;
+            flex-direction: column;
+            align-items: center
+        }
+
+        .img-modal img {
+            max-width: 100%;
+            max-height: 82vh;
+            border-radius: 6px;
+            box-shadow: 0 10px 40px rgba(2, 6, 23, 0.6)
+        }
+
+        .img-modal .modal-caption {
+            margin-top: 0.6rem;
+            color: #fff;
+            text-align: center;
+            max-width: 95%;
+            overflow: auto
+        }
+
+        .img-modal .modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: rgba(255, 255, 255, 0.08);
+            border: 0;
+            color: #fff;
+            font-size: 1.25rem;
+            padding: 0.4rem 0.6rem;
+            border-radius: 6px;
+            cursor: pointer
+        }
     </style>
 </head>
+
 <body>
     <div class="wrap">
         <nav style="margin-bottom:1rem">
-            <a href="index.html" style="color:var(--accent);text-decoration:none;display:inline-flex;align-items:center;font-weight:500">
-            <span style="font-size:1.2em;margin-right:6px">🏠</span> Home
+            <a href="index.html"
+                style="color:var(--accent);text-decoration:none;display:inline-flex;align-items:center;font-weight:500">
+                <span style="font-size:1.2em;margin-right:6px">🏠</span> Home
             </a>
         </nav>
 
         <header>
             <h1>Week 1 — Workstation Configuration & Ubuntu Server (Headless)</h1>
-            <p clases="lead">Documented decisions, installation steps, network plan, verification commands and placeholders for terminal screenshots.</p>
+            <p clases="lead">Documented decisions, installation steps, network plan, verification commands and
+                placeholders for terminal screenshots.</p>
         </header>
-        
+
         <section>
             <h2>Workstation Configuration Decision and Justification</h2>
             <p>
-                Linux Desktop VM (Ubuntu Desktop 22.04 LTS) running as a separate VirtualBox VM. Rationale: Mirrors professional remote administration workflows by keeping all server management via SSH from a client machine. This ensures command-line proficiency, enables clean separation of concerns, and avoids any temptation to use GUI tools on th server (which must remain headless).</p>
+                Linux Desktop VM (Ubuntu Desktop 22.04 LTS) running as a separate VirtualBox VM. Rationale: Mirrors
+                professional remote administration workflows by keeping all server management via SSH from a client
+                machine. This ensures command-line proficiency, enables clean separation of concerns, and avoids any
+                temptation to use GUI tools on th server (which must remain headless).</p>
             <img src="images/figure0-diagram.png" alt="Ubuntu Server Logo" style="margin-top:1rem;max-width:160px">
             <p>
-                This diagram shows the dual-VM architecture for the coursework. The Ubuntu Server VM runs headless (no GUI) and will be administered remotely, while the Ubuntu Desktop VM acts as the workstation. Both VMs are connected via a Host-Only Network to enable secure local communication.
+                This diagram shows the dual-VM architecture for the coursework. The Ubuntu Server VM runs headless (no
+                GUI) and will be administered remotely, while the Ubuntu Desktop VM acts as the workstation. Both VMs
+                are connected via a Host-Only Network to enable secure local communication.
             </p>
         </section>
 
         <section>
             <h2>System planning and initial setup (Ubuntu Server Only)</h2>
-          
+
             Ubuntu Server Installation (Week 1 / Phase 1)
-<ol>
-    <li>Download ISO:
-        <ul>
-            <li>Downloaded Ubuntu Server 22.04 LTS ISfrom the official Ubuntu website.</li>
-        </ul>
-    </li>
+            <ol>
+                <li>Download ISO:
+                    <ul>
+                        <li>Downloaded Ubuntu Server 22.04 LTS ISfrom the official Ubuntu website.</li>
+                    </ul>
+                </li>
 
-    <li>Create VM in VirtualBox:
-        <ul>
-            <li>Created a new VM named UbuntuServer.</li>
-            <li>Type: Linux -> Version: Ubuntu (64-bit).</li>
-            <li>Allocated 10 GB RAM and a 20 GB dynamically allocated virtual hard disk.</li>
-            <li>Added an optical drive and mounted the Ubuntu Server ISO.</li>
-        </ul>
-    </li>
+                <li>Create VM in VirtualBox:
+                    <ul>
+                        <li>Created a new VM named UbuntuServer.</li>
+                        <li>Type: Linux -> Version: Ubuntu (64-bit).</li>
+                        <li>Allocated 10 GB RAM and a 20 GB dynamically allocated virtual hard disk.</li>
+                        <li>Added an optical drive and mounted the Ubuntu Server ISO.</li>
+                    </ul>
+                </li>
 
-    <li>Start VM and begin installation:
-        <ul>
-            <li>Booted the VM from the ISO.</li>
-            <li>Selected language and keyboard layout.</li>
-            <li>Network configured via DHCP.</li>
-        </ul>
-    </li>
+                <li>Start VM and begin installation:
+                    <ul>
+                        <li>Booted the VM from the ISO.</li>
+                        <li>Selected language and keyboard layout.</li>
+                        <li>Network configured via DHCP.</li>
+                    </ul>
+                </li>
 
-    <li>User Setup:
-        <ul>
-            <li>Created a non-root administrative user with a password.</li>
-        </ul>
-    </li>
+                <li>User Setup:
+                    <ul>
+                        <li>Created a non-root administrative user with a password.</li>
+                    </ul>
+                </li>
 
-    <li>SSH Installation:
-        <ul>
-            <li>Installed OpenSSH server by selecting the “Install OpenSSH server” option during the Ubuntu Server installation process.</li>
-        </ul>
-    </li>
+                <li>SSH Installation:
+                    <ul>
+                        <li>Installed OpenSSH server by selecting the “Install OpenSSH server” option during the Ubuntu
+                            Server installation process.</li>
+                    </ul>
+                </li>
 
-    <li>Partitioning:
-        <ul>
-            <li>Selected “Use entire disk” for simplicity.</li>
-        </ul>
-    </li>
+                <li>Partitioning:
+                    <ul>
+                        <li>Selected “Use entire disk” for simplicity.</li>
+                    </ul>
+                </li>
 
-    <li>Finish Installation:
-        <ul>
-            <li>Completed installation, removed the ISO, and rebooted the VM.</li>
-            <li>Confirmed login via the CLI prompt:</li>
-            <li style="margin-left:1rem"><pre>username@ubuntu-server:~$</pre></li>
-        </ul>
-    </li>
+                <li>Finish Installation:
+                    <ul>
+                        <li>Completed installation, removed the ISO, and rebooted the VM.</li>
+                        <li>Confirmed login via the CLI prompt:</li>
+                        <li style="margin-left:1rem">
+                            <pre>username@ubuntu-server:~$</pre>
+                        </li>
+                    </ul>
+                </li>
 
-    <li>Console Font Adjustment (Optional):
-        <ul>
-            <li>Configured UTF-8 and Terminus Bold font with a large size to make the console readable.</li>
-        </ul>
-    </li>
+                <li>Console Font Adjustment (Optional):
+                    <ul>
+                        <li>Configured UTF-8 and Terminus Bold font with a large size to make the console readable.</li>
+                    </ul>
+                </li>
 
-    <li>Verification:
-        <ul>
-            <li>Verified SSH server is running:</li>
-            <li style="margin-left:1rem"><pre>systemctl status ssh</pre></li>
-            <li>Server is now ready for administration.</li>
-        </ul>
-    </li>
-</ol>
+                <li>Verification:
+                    <ul>
+                        <li>Verified SSH server is running:</li>
+                        <li style="margin-left:1rem">
+                            <pre>systemctl status ssh</pre>
+                        </li>
+                        <li>Server is now ready for administration.</li>
+                    </ul>
+                </li>
+            </ol>
 
         </section>
 
         <section>
             <h2>Network Configuration (VirtualBox Settings & IP Addressing)</h2>
 
-            
+
             <ul>
                 <li>Open VirtualBox -> select each VM -> Settings -> Network.</li>
-                <li>For Adapter 1, choose “Host-Only Adapter” and ensure both VMs are attached to the same host-only network (e.g., vboxnet0).</li>
+                <li>For Adapter 1, choose “Host-Only Adapter” and ensure both VMs are attached to the same host-only
+                    network (e.g., vboxnet0).</li>
                 <li>Do not attach the server to NAT/bridged for Week 1; keep it isolated for safe testing.</li>
-                <li>•	Configure a static IP for the server via Netplan; allow the workstation to receive an address in the same subnet.</li>
+                <li>• Configure a static IP for the server via Netplan; allow the workstation to receive an address in
+                    the same subnet.</li>
             </ul>
-            
+
             <table>
                 <thead>
-                    <tr><th>System</th><th>Role</th><th>Adapter/Interface</th><th>IP Address</th></tr>
+                    <tr>
+                        <th>System</th>
+                        <th>Role</th>
+                        <th>Adapter/Interface</th>
+                        <th>IP Address</th>
+                    </tr>
                 </thead>
                 <tbody>
-                    <tr><td>Ubuntu Desktop (Workstation)</td><td>SSH Client</td><td>Host-Only (e.g., enp0s8)</td><td>192.168.56.101</td></tr>
-                    <tr><td>Ubuntu Server (Headless)</td><td>SSH Target</td><td>Host-Only (e.g., enp0s8)</td><td>192.168.56.10</td></tr>
+                    <tr>
+                        <td>Ubuntu Desktop (Workstation)</td>
+                        <td>SSH Client</td>
+                        <td>Host-Only (e.g., enp0s8)</td>
+                        <td>192.168.56.101</td>
+                    </tr>
+                    <tr>
+                        <td>Ubuntu Server (Headless)</td>
+                        <td>SSH Target</td>
+                        <td>Host-Only (e.g., enp0s8)</td>
+                        <td>192.168.56.10</td>
+                    </tr>
                 </tbody>
             </table>
 
@@ -161,13 +379,16 @@
                 From the workstation VM, verify L2/L3 connectivity and SSH access to the headless server:
                 <pre>ping 192.168.56.10
 ssh andreimac@192.168.56.10</pre>
-Expected results: ICMP replies from the server IP and a password or key-based SSH login prompt. Keep the server headless and perform administration strictly over SSH.
+                Expected results: ICMP replies from the server IP and a password or key-based SSH login prompt. Keep the
+                server headless and perform administration strictly over SSH.
             </div>
         </section>
 
         <section>
             <h2>CLI System Specifications </h2>
-            <p>Run these commands on BOTH systems (workstation and server) and embed screenshots with the terminal prompt visible (e.g., username@hostname:~$). Place each screenshot beneath its corresponding caption:</p>
+            <p>Run these commands on BOTH systems (workstation and server) and embed screenshots with the terminal
+                prompt visible (e.g., username@hostname:~$). Place each screenshot beneath its corresponding caption:
+            </p>
             <ul>
                 <li>uname -a</li>
                 <li>free -h</li>
@@ -177,45 +398,130 @@ Expected results: ICMP replies from the server IP and a password or key-based SS
             </ul>
 
             <style>
-            /* Gallery styles (keeps existing layout but adds modal) */
-            .fig-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem;margin-top:0.75rem}
-            figure.gallery-item{background:#fbfdff;border:1px dashed #e3eef9;padding:0.5rem;border-radius:6px;min-height:140px;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;outline:none}
-            figure.gallery-item img{max-width:100%;max-height:96px;object-fit:contain;display:block}
-            .fig-caption{font-size:0.85rem;color:var(--muted);margin-top:0.5rem;text-align:center}
+                /* Gallery styles (keeps existing layout but adds modal) */
+                .fig-grid {
+                    display: grid;
+                    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+                    gap: 1rem;
+                    margin-top: 0.75rem
+                }
 
-            /* Modal (full-size view) */
-            .img-modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(2,6,23,0.6);z-index:1000;padding:2rem}
-            .img-modal[data-open="true"]{display:flex}
-            .img-modal .modal-content{max-width:95%;max-height:95%;background:transparent;display:flex;flex-direction:column;align-items:center}
-            .img-modal img{max-width:100%;max-height:82vh;border-radius:6px;box-shadow:0 10px 40px rgba(2,6,23,0.6)}
-            .img-modal .modal-caption{margin-top:0.6rem;color:#fff;text-align:center;max-width:95%;overflow:auto}
-            .img-modal .modal-close{position:absolute;top:1rem;right:1rem;background:rgba(255,255,255,0.08);border:0;color:#fff;font-size:1.25rem;padding:0.4rem 0.6rem;border-radius:6px;cursor:pointer}
+                figure.gallery-item {
+                    background: #fbfdff;
+                    border: 1px dashed #e3eef9;
+                    padding: 0.5rem;
+                    border-radius: 6px;
+                    min-height: 140px;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    justify-content: center;
+                    cursor: pointer;
+                    outline: none
+                }
+
+                figure.gallery-item img {
+                    max-width: 100%;
+                    max-height: 96px;
+                    object-fit: contain;
+                    display: block
+                }
+
+                .fig-caption {
+                    font-size: 0.85rem;
+                    color: var(--muted);
+                    margin-top: 0.5rem;
+                    text-align: center
+                }
+
+                /* Modal (full-size view) */
+                .img-modal {
+                    position: fixed;
+                    inset: 0;
+                    display: none;
+                    align-items: center;
+                    justify-content: center;
+                    background: rgba(2, 6, 23, 0.6);
+                    z-index: 1000;
+                    padding: 2rem
+                }
+
+                .img-modal[data-open="true"] {
+                    display: flex
+                }
+
+                .img-modal .modal-content {
+                    max-width: 95%;
+                    max-height: 95%;
+                    background: transparent;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center
+                }
+
+                .img-modal img {
+                    max-width: 100%;
+                    max-height: 82vh;
+                    border-radius: 6px;
+                    box-shadow: 0 10px 40px rgba(2, 6, 23, 0.6)
+                }
+
+                .img-modal .modal-caption {
+                    margin-top: 0.6rem;
+                    color: #fff;
+                    text-align: center;
+                    max-width: 95%;
+                    overflow: auto
+                }
+
+                .img-modal .modal-close {
+                    position: absolute;
+                    top: 1rem;
+                    right: 1rem;
+                    background: rgba(255, 255, 255, 0.08);
+                    border: 0;
+                    color: #fff;
+                    font-size: 1.25rem;
+                    padding: 0.4rem 0.6rem;
+                    border-radius: 6px;
+                    cursor: pointer
+                }
             </style>
 
             <div class="fig-grid" id="gallery">
-                <figure class="gallery-item" tabindex="0" data-full="images/figure1-uname.png" aria-label="Open Figure 1: uname -a">
+                <figure class="gallery-item" tabindex="0" data-full="images/figure1-uname.png"
+                    aria-label="Open Figure 1: uname -a">
                     <img src="images/figure1-uname.png" alt="Figure 1: uname -a">
-                    <figcaption class="fig-caption">Figure 1: uname -a <br> Shows kernel version, architecture, and hostname</figcaption>
+                    <figcaption class="fig-caption">Figure 1: uname -a <br> Shows kernel version, architecture, and
+                        hostname</figcaption>
                 </figure>
 
-                <figure class="gallery-item" tabindex="0" data-full="images/figure2-free.png" aria-label="Open Figure 2: free -h">
+                <figure class="gallery-item" tabindex="0" data-full="images/figure2-free.png"
+                    aria-label="Open Figure 2: free -h">
                     <img src="images/figure2-free.png" alt="Figure 2: free -h">
-                    <figcaption class="fig-caption">Figure 2: free -h <br> Displays total, used, and available RAM and swap memory</figcaption>
+                    <figcaption class="fig-caption">Figure 2: free -h <br> Displays total, used, and available RAM and
+                        swap memory</figcaption>
                 </figure>
 
-                <figure class="gallery-item" tabindex="0" data-full="images/figure3-df.png" aria-label="Open Figure 3: df -h">
+                <figure class="gallery-item" tabindex="0" data-full="images/figure3-df.png"
+                    aria-label="Open Figure 3: df -h">
                     <img src="images/figure3-df.png" alt="Figure 3: df -h">
-                    <figcaption class="fig-caption">Figure 3: df -h <br> Shows disk usage for mounted filesystems</figcaption>
+                    <figcaption class="fig-caption">Figure 3: df -h <br> Shows disk usage for mounted filesystems
+                    </figcaption>
                 </figure>
 
-                <figure class="gallery-item" tabindex="0" data-full="images/figure4-ipaddr.png" aria-label="Open Figure 4: ip addr">
+                <figure class="gallery-item" tabindex="0" data-full="images/figure4-ipaddr.png"
+                    aria-label="Open Figure 4: ip addr">
                     <img src="images/figure4-ipaddr.png" alt="Figure 4: ip addr">
-                    <figcaption class="fig-caption">Figure 4: ip addr <br> Displays all network interfaces and their IP addresses</figcaption>
+                    <figcaption class="fig-caption">Figure 4: ip addr <br> Displays all network interfaces and their IP
+                        addresses</figcaption>
                 </figure>
 
-                <figure class="gallery-item" tabindex="0" data-full="images/figure5-lsb.png" aria-label="Open Figure 5: lsb_release -a">
+                <figure class="gallery-item" tabindex="0" data-full="images/figure5-lsb.png"
+                    aria-label="Open Figure 5: lsb_release -a">
                     <img src="images/figure5-lsb.png" alt="Figure 5: lsb_release -a">
-                    <figcaption class="fig-caption">Figure 5: lsb_release -a <br> Confirms Linux distribution name and version</figcaption>
+                    <figcaption class="fig-caption">Figure 5: lsb_release -a <br> Confirms Linux distribution name and
+                        version</figcaption>
                 </figure>
             </div>
 
@@ -227,7 +533,7 @@ Expected results: ICMP replies from the server IP and a password or key-based SS
                     <div id="modalCaption" class="modal-caption"></div>
                 </div>
             </div>
-            
+
         </section>
 
         <section>
@@ -235,22 +541,46 @@ Expected results: ICMP replies from the server IP and a password or key-based SS
                 Version Consistency Note
             </h2>
             <p>
-                This submission standardises on Ubuntu Server 22.04 LTS for the headless server and Ubuntu Desktop 22.04 LTS for the workstation. Ensure that any figures and terminal outputs you embed reflect the same versions throughout.
+                This submission standardises on Ubuntu Server 22.04 LTS for the headless server and Ubuntu Desktop 22.04
+                LTS for the workstation. Ensure that any figures and terminal outputs you embed reflect the same
+                versions throughout.
             </p>
         </section>
 
         <section>
             <h2>Reflection (Summary)</h2>
             <p>
-                In Week 1 I deliberately constrained myself to a headless Ubuntu Server administered exclusively over SSH from a separate Ubuntu Desktop VM, and that choice shaped everything I learned. Removing the crutch of a GUI forced me to slow down, read man pages properly, and reason about what the OS is actually doing—interfaces, services, filesystems, and the shell as my primary instrument. The dual-VM, host-only network wasn’t just “plumbing”; it made me think like an admin who must prove connectivity and isolation, not assume it. Getting IPs pinned down and verifying with ping and ssh taught me that evidence beats intention; if I can’t demonstrate it at the terminal with username@hostname visible, it doesn’t count. I also hit a small but telling inconsistency: my notes drifted between 22.04 and 24.04. Catching and correcting that matters, because accuracy in versioning underpins reproducibility and security guidance later. Choosing Ubuntu Server LTS over Debian or CentOS Stream felt like the right balance for this coursework: stable enough to avoid chasing the distro, modern enough that documentation and packages line up with current practices. More importantly, the exercise reframed “installation” as the beginning of an argument I need to make every week: can I justify my decisions, show the outputs, and link them to OS behaviour? I can now articulate why headless plus SSH advances the module’s learning outcomes—command-line confidence, security awareness from day one, and a habit of testing rather than assuming. Next, I’ll replace password logins with keys and tighten the firewall so the architecture doesn’t just function, it holds up under scrutiny. The foundation is real: I can see the server, I can reach it, and I can prove it.</p>
+                In Week 1 I deliberately constrained myself to a headless Ubuntu Server administered exclusively over
+                SSH from a separate Ubuntu Desktop VM, and that choice shaped everything I learned. Removing the crutch
+                of a GUI forced me to slow down, read man pages properly, and reason about what the OS is actually
+                doing—interfaces, services, filesystems, and the shell as my primary instrument. The dual-VM, host-only
+                network wasn’t just “plumbing”; it made me think like an admin who must prove connectivity and
+                isolation, not assume it. Getting IPs pinned down and verifying with ping and ssh taught me that
+                evidence beats intention; if I can’t demonstrate it at the terminal with username@hostname visible, it
+                doesn’t count. I also hit a small but telling inconsistency: my notes drifted between 22.04 and 24.04.
+                Catching and correcting that matters, because accuracy in versioning underpins reproducibility and
+                security guidance later. Choosing Ubuntu Server LTS over Debian or CentOS Stream felt like the right
+                balance for this coursework: stable enough to avoid chasing the distro, modern enough that documentation
+                and packages line up with current practices. More importantly, the exercise reframed “installation” as
+                the beginning of an argument I need to make every week: can I justify my decisions, show the outputs,
+                and link them to OS behaviour? I can now articulate why headless plus SSH advances the module’s learning
+                outcomes—command-line confidence, security awareness from day one, and a habit of testing rather than
+                assuming. Next, I’ll replace password logins with keys and tighten the firewall so the architecture
+                doesn’t just function, it holds up under scrutiny. The foundation is real: I can see the server, I can
+                reach it, and I can prove it.</p>
         </section>
 
         <section>
             <h2>References</h2>
             <ol>
-                <li>[1] Canonical, "Ubuntu Server — Server installation & administration," Ubuntu. Available: https://ubuntu.com/server. Accessed: Oct. 19, 2025.</li>
-                <li>[2] DigitalOcean, "SSH Essentials: Working with SSH Servers, Clients, and Keys," DigitalOcean Community. Available: https://www.digitalocean.com/community/tutorials/ssh-essentials-working-with-ssh-servers-clients-and-keys. Accessed: Oct. 19, 2025.</li>
-                <li>[3] Oracle, "Oracle VM VirtualBox User Manual — Networking," Oracle. Available: https://www.virtualbox.org/manual/ch06.html. Accessed: Oct. 19, 2025.</li>
+                <li>[1] Canonical, "Ubuntu Server — Server installation & administration," Ubuntu. Available:
+                    https://ubuntu.com/server. Accessed: Oct. 19, 2025.</li>
+                <li>[2] DigitalOcean, "SSH Essentials: Working with SSH Servers, Clients, and Keys," DigitalOcean
+                    Community. Available:
+                    https://www.digitalocean.com/community/tutorials/ssh-essentials-working-with-ssh-servers-clients-and-keys.
+                    Accessed: Oct. 19, 2025.</li>
+                <li>[3] Oracle, "Oracle VM VirtualBox User Manual — Networking," Oracle. Available:
+                    https://www.virtualbox.org/manual/ch06.html. Accessed: Oct. 19, 2025.</li>
             </ol>
         </section>
 
@@ -259,60 +589,61 @@ Expected results: ICMP replies from the server IP and a password or key-based SS
         </footer>
     </div>
 </body>
+
 </html>
 
 <!-- Script generated using GitHub Copilot -->
 <script>
-(function(){
-    const gallery = document.getElementById('gallery');
-    const modal = document.getElementById('imgModal');
-    const modalImg = document.getElementById('modalImg');
-    const modalCaption = document.getElementById('modalCaption');
-    const closeBtn = modal.querySelector('.modal-close');
+    (function () {
+        const gallery = document.getElementById('gallery');
+        const modal = document.getElementById('imgModal');
+        const modalImg = document.getElementById('modalImg');
+        const modalCaption = document.getElementById('modalCaption');
+        const closeBtn = modal.querySelector('.modal-close');
 
-    function openModal(fig){
-    const full = fig.getAttribute('data-full') || fig.querySelector('img').src;
-    modalImg.src = full;
-    modalImg.alt = fig.querySelector('img').alt || '';
-    modalCaption.innerHTML = fig.querySelector('.fig-caption')?.innerHTML || '';
-    modal.setAttribute('data-open','true');
-    modal.setAttribute('aria-hidden','false');
-    document.body.style.overflow='hidden';
-    closeBtn.focus();
-    }
+        function openModal(fig) {
+            const full = fig.getAttribute('data-full') || fig.querySelector('img').src;
+            modalImg.src = full;
+            modalImg.alt = fig.querySelector('img').alt || '';
+            modalCaption.innerHTML = fig.querySelector('.fig-caption')?.innerHTML || '';
+            modal.setAttribute('data-open', 'true');
+            modal.setAttribute('aria-hidden', 'false');
+            document.body.style.overflow = 'hidden';
+            closeBtn.focus();
+        }
 
-    function closeModal(){
-    modal.setAttribute('data-open','false');
-    modal.setAttribute('aria-hidden','true');
-    modalImg.src = '';
-    document.body.style.overflow='';
-    }
+        function closeModal() {
+            modal.setAttribute('data-open', 'false');
+            modal.setAttribute('aria-hidden', 'true');
+            modalImg.src = '';
+            document.body.style.overflow = '';
+        }
 
-    // Open on click
-    gallery.addEventListener('click', e=>{
-    const fig = e.target.closest('figure.gallery-item');
-    if(!fig) return;
-    openModal(fig);
-    });
+        // Open on click
+        gallery.addEventListener('click', e => {
+            const fig = e.target.closest('figure.gallery-item');
+            if (!fig) return;
+            openModal(fig);
+        });
 
-    // Keyboard: open on Enter/Space when figure focused
-    gallery.addEventListener('keydown', e=>{
-    if(e.key === 'Enter' || e.key === ' ') {
-        const fig = document.activeElement.closest('figure.gallery-item');
-        if(fig){ e.preventDefault(); openModal(fig); }
-    }
-    });
+        // Keyboard: open on Enter/Space when figure focused
+        gallery.addEventListener('keydown', e => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                const fig = document.activeElement.closest('figure.gallery-item');
+                if (fig) { e.preventDefault(); openModal(fig); }
+            }
+        });
 
-    closeBtn.addEventListener('click', closeModal);
+        closeBtn.addEventListener('click', closeModal);
 
-    // Click backdrop to close
-    modal.addEventListener('click', e=>{
-    if(e.target === modal) closeModal();
-    });
+        // Click backdrop to close
+        modal.addEventListener('click', e => {
+            if (e.target === modal) closeModal();
+        });
 
-    // ESC to close
-    document.addEventListener('keydown', e=>{
-    if(e.key === 'Escape' && modal.getAttribute('data-open') === 'true') closeModal();
-    });
-})();
+        // ESC to close
+        document.addEventListener('keydown', e => {
+            if (e.key === 'Escape' && modal.getAttribute('data-open') === 'true') closeModal();
+        });
+    })();
 </script>

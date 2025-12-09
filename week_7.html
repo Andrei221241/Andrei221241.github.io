@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Week 7: Security Audit & System Evaluation</title>
+
+    <style>
+        :root {
+            --max-w: 1200px;
+            --accent: #1f618d;
+            --muted: #666;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial;
+            line-height: 1.5;
+            color: #222;
+            margin: 0;
+            padding: 2rem;
+            background: #f7f9fb;
+        }
+
+        .wrap {
+            max-width: var(--max-w);
+            margin: 0 auto;
+            background: #fff;
+            border-radius: 8px;
+            padding: 1.5rem 2rem;
+            box-shadow: 0 8px 30px rgba(22, 40, 60, 0.08);
+        }
+
+        nav {
+            margin-bottom: 1rem;
+        }
+
+        nav a {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        header {
+            border-bottom: 1px solid #e6eef6;
+            padding-bottom: 0.75rem;
+            margin-bottom: 1rem;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 1.4rem;
+            color: var(--accent);
+        }
+
+        p.lead {
+            margin: 0.5rem 0;
+            color: var(--muted);
+        }
+
+        section {
+            margin: 1.25rem 0;
+        }
+
+        h2 {
+            font-size: 1.1rem;
+            margin: 0 0 0.5rem 0;
+            color: #113047;
+        }
+
+        h3 {
+            font-size: 1rem;
+            color: #153955;
+            margin-top: 0.6rem;
+        }
+
+        pre {
+            background: #0b1220;
+            color: #e6f1ff;
+            padding: 0.75rem;
+            border-radius: 6px;
+            overflow: auto;
+            font-size: 0.9rem;
+        }
+
+        /* Figure Grid */
+        .fig-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        figure {
+            background: #fbfdff;
+            border: 1px dashed #e3eef9;
+            padding: 0.5rem;
+            border-radius: 6px;
+            min-height: 140px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        figure img {
+            max-width: 100%;
+            max-height: 96px;
+            object-fit: contain;
+        }
+
+        figcaption {
+            font-size: 0.85rem;
+            color: var(--muted);
+            margin-top: 0.4rem;
+        }
+
+        /* Modal */
+        .img-modal {
+            position: fixed;
+            inset: 0;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            padding: 2rem;
+        }
+
+        .img-modal[data-open="true"] {
+            display: flex;
+        }
+
+        .img-modal-inner {
+            background: #fff;
+            max-width: 90vw;
+            max-height: 90vh;
+            padding: 0.75rem;
+            border-radius: 8px;
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.35);
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .img-modal-inner img {
+            max-width: 100%;
+            max-height: 75vh;
+            object-fit: contain;
+        }
+
+        .modal-close {
+            align-self: flex-end;
+            border: none;
+            background: none;
+            font-size: 1.3rem;
+            cursor: pointer;
+        }
+
+        .img-modal-caption {
+            font-size: 0.9rem;
+            color: #444;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="wrap">
+
+        <nav>
+            <a href="index.html">🏠 Home</a>
+        </nav>
+
+        <header>
+            <h1>Week 7: Security Audit & System Evaluation</h1>
+            <p class="lead">
+                Final security assessment of the Ubuntu Server, including Lynis auditing, network scanning,
+                service verification, access control analysis, and overall system evaluation.
+            </p>
+        </header>
+
+        <!-- ----------------------- INTRO ---------------------------- -->
+        <section>
+            <h2>1. Introduction</h2>
+            <p>
+                Week 7 concludes the operating systems project with a full security audit of the deployed
+                Ubuntu Server. Following the assessment brief’s Phase 7 requirements, I performed a
+                comprehensive evaluation using Lynis, nmap, access control validation, service review, and
+                configuration checks. All tasks were executed remotely via SSH, maintaining the
+                command-line–only administration constraint.
+            </p>
+        </section>
+
+        <!-- ----------------------- LYNIS ---------------------------- -->
+        <section>
+            <h2>2. System Audit with Lynis</h2>
+            <p>
+                Lynis was used to perform a deep security scan of the server. This helped identify
+                misconfigurations, opportunities for strengthening the system, and produced a security score.
+            </p>
+
+            <h3>Command Used</h3>
+            <pre>sudo lynis audit system</pre>
+
+            <p><strong>Before Remediation Score:</strong> [Insert score here]</p>
+
+            <div class="fig-grid">
+                <figure class="gallery-item" data-full="images/week7-lynis-before.png">
+                    <img src="images/week7-lynis-before.png" alt="">
+                    <figcaption>Figure 1 – Lynis audit (before remediation).</figcaption>
+                </figure>
+            </div>
+
+            <h3>Post-Remediation Improvements</h3>
+            <p>
+                After resolving warnings related to SSH, file permissions, and log configuration, I reran Lynis:
+            </p>
+
+            <div class="fig-grid">
+                <figure class="gallery-item" data-full="images/week7-lynis-after.png">
+                    <img src="images/week7-lynis-after.png" alt="">
+                    <figcaption>Figure 2 – Lynis audit (after remediation).</figcaption>
+                </figure>
+            </div>
+        </section>
+
+        <!-- ----------------------- NMAP ---------------------------- -->
+        <section>
+            <h2>3. Network Security Assessment (nmap)</h2>
+            <p>
+                An external security scan was performed from the workstation using <code>nmap</code> to
+                verify the firewall and ensure only SSH was reachable.
+            </p>
+
+            <h3>Commands Used</h3>
+            <pre>nmap -sV -O 192.168.56.102</pre>
+
+            <div class="fig-grid">
+                <figure class="gallery-item" data-full="images/week7-nmap.png">
+                    <img src="images/week7-nmap.png" alt="">
+                    <figcaption>Figure 3 – nmap scan showing exposed services.</figcaption>
+                </figure>
+            </div>
+
+            <p>
+                The scan confirmed that port 22 was the only open port, aligning with the firewall rules set
+                in Weeks 4 and 5.
+            </p>
+        </section>
+
+        <!-- ----------------------- ACCESS CONTROL ---------------------------- -->
+        <section>
+            <h2>4. Access Control Verification</h2>
+            <p>
+                I reviewed AppArmor status, SSH daemon configuration, and privilege assignments to ensure
+                that the principle of least privilege was respected.
+            </p>
+
+            <pre>
+aa-status
+sudo cat /etc/ssh/sshd_config | grep -E "PermitRootLogin|PasswordAuthentication"
+id adminuser
+        </pre>
+
+            <div class="fig-grid">
+                <figure class="gallery-item" data-full="images/week7-access.png">
+                    <img src="images/week7-access.png" alt="">
+                    <figcaption>Figure 4 – Evidence of AppArmor & SSH hardening.</figcaption>
+                </figure>
+            </div>
+        </section>
+
+        <!-- ----------------------- SERVICE AUDIT ---------------------------- -->
+        <section>
+            <h2>5. Service Inventory & Justification</h2>
+            <p>
+                Using <code>systemctl --type=service --state=running</code> and
+                <code>ps aux</code>, I compiled a list of all active services and evaluated whether they were
+                required for the system’s intended function.
+            </p>
+
+            <div class="fig-grid">
+                <figure class="gallery-item" data-full="images/week7-services.png">
+                    <img src="images/week7-services.png" alt="">
+                    <figcaption>Figure 5 – Running services audit.</figcaption>
+                </figure>
+            </div>
+
+            <p>
+                Unnecessary or unused services were disabled to reduce the attack surface.
+            </p>
+        </section>
+
+        <!-- ----------------------- FINAL EVALUATION ---------------------------- -->
+        <section>
+            <h2>6. Overall System Evaluation</h2>
+            <p>
+                The combined security controls from Weeks 4–7 create a robust environment aligned with
+                LO3 and the industry-standard practices in the assessment brief. The Final Week 7 audit
+                confirms that:
+            </p>
+
+            <ul>
+                <li>The firewall allows only authorised traffic.</li>
+                <li>SSH operates strictly with key-based authentication.</li>
+                <li>Access control (AppArmor) restricts system processes.</li>
+                <li>fail2ban and automatic updates strengthen long-term resilience.</li>
+                <li>No unnecessary network-exposed services remain active.</li>
+            </ul>
+
+            <p>
+                The system demonstrates a hardened, well-monitored, and well-documented Linux server
+                suitable for secure remote administration.
+            </p>
+
+            <div class="fig-grid">
+                <figure class="gallery-item" data-full="images/week7-final-summary.png">
+                    <img src="images/week7-final-summary.png" alt="">
+                    <figcaption>Figure 6 – Final system evaluation summary.</figcaption>
+                </figure>
+            </div>
+        </section>
+
+        <section>
+            <h2>References</h2>
+            <ol>
+                <li>[1] CISOfy, “Lynis — Security Auditing Tool Documentation,” Available: https://cisofy.com/lynis/.
+                    Accessed: Dec. 2025.</li>
+                <li>[2] nmap.org, “Nmap Security Scanner Documentation,” Available: https://nmap.org/book/man.html.
+                    Accessed: Dec. 2025.</li>
+                <li>[3] Canonical, “AppArmor Profile Management,” Ubuntu Documentation. Available:
+                    https://ubuntu.com/server/docs/security-apparmor. Accessed: Dec. 2025.</li>
+                <li>[4] Ubuntu, “systemd Service Management,” Ubuntu Manpages. Available:
+                    https://manpages.ubuntu.com/manpages/systemctl. Accessed: Dec. 2025.</li>
+                <li>[5] NIST, “Guide to General Server Security,” NIST SP 800-123. Accessed: Dec. 2025.</li>
+            </ol>
+        </section>
+
+        <footer>
+            <div>© 2025 Andrei</div>
+        </footer>
+
+
+    </div>
+
+    <!-- MODAL SCRIPT (same as Weeks 5–6) -->
+    <div class="img-modal" id="imgModal" data-open="false">
+        <div class="img-modal-inner">
+            <button class="modal-close" onclick="closeModal()">×</button>
+            <img id="modalImg" src="" alt="">
+            <div class="img-modal-caption" id="modalCaption"></div>
+        </div>
+    </div>
+
+    <script>
+        const modal = document.getElementById("imgModal");
+        const modalImg = document.getElementById("modalImg");
+        const modalCaption = document.getElementById("modalCaption");
+
+        document.querySelectorAll(".gallery-item").forEach(item => {
+            item.addEventListener("click", () => {
+                modal.setAttribute("data-open", "true");
+                modalImg.src = item.dataset.full;
+                modalCaption.textContent = item.querySelector("figcaption").innerText;
+            });
+        });
+
+        function closeModal() {
+            modal.setAttribute("data-open", "false");
+        }
+    </script>
+
+</body>
+
+</html>

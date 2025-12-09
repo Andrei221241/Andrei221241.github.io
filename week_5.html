@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Week 5: Advanced Security and Monitoring Infrastructure</title>
+
+    <style>
+        :root {
+            --max-w: 900px;
+            --accent: #1f618d;
+            --muted: #666;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial;
+            line-height: 1.5;
+            color: #222;
+            margin: 0;
+            padding: 2rem;
+            background: #f7f9fb
+        }
+
+        .wrap {
+            max-width: var(--max-w);
+            margin: 0 auto;
+            background: #fff;
+            border-radius: 8px;
+            padding: 1.5rem 2rem;
+            box-shadow: 0 8px 30px rgba(22, 40, 60, 0.08)
+        }
+
+        header {
+            border-bottom: 1px solid #e6eef6;
+            padding-bottom: 0.75rem;
+            margin-bottom: 1rem
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 1.4rem;
+            color: var(--accent)
+        }
+
+        p.lead {
+            margin: 0.5rem 0;
+            color: var(--muted)
+        }
+
+        section {
+            margin: 1rem 0
+        }
+
+        h2 {
+            font-size: 1.05rem;
+            margin: 0 0 0.5rem 0;
+            color: #113047
+        }
+
+        ul,
+        ol {
+            margin: 0.25rem 0 0.75rem 1.2rem
+        }
+
+        pre {
+            background: #0b1220;
+            color: #e6f1ff;
+            padding: 0.75rem;
+            border-radius: 6px;
+            overflow: auto;
+            font-size: 0.9rem
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 0.5rem 0 0
+        }
+
+        th,
+        td {
+            border: 1px solid #e9f0f6;
+            padding: 0.5rem;
+            text-align: left;
+            background: #fff
+        }
+
+        th {
+            background: #f3f8fb;
+            color: #113047;
+            font-weight: 600
+        }
+
+        .fig-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1rem;
+            margin-top: 0.75rem
+        }
+
+        figure {
+            background: #fbfdff;
+            border: 1px dashed #e3eef9;
+            padding: 0.5rem;
+            border-radius: 6px;
+            min-height: 140px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer
+        }
+
+        figure img {
+            max-width: 100%;
+            max-height: 96px;
+            object-fit: contain;
+            display: block
+        }
+
+        figcaption {
+            font-size: 0.85rem;
+            color: var(--muted);
+            margin-top: 0.5rem
+        }
+
+        footer {
+            border-top: 1px solid #e6eef6;
+            padding-top: 0.75rem;
+            color: var(--muted);
+            font-size: 0.9rem
+        }
+
+        .note {
+            background: #fff8e6;
+            border-left: 4px solid #ffb86b;
+            padding: 0.6rem;
+            border-radius: 4px;
+            color: #663f00
+        }
+
+        /* ---------- IMAGE MODAL CSS ---------- */
+        .img-modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity .2s ease;
+            z-index: 1000;
+        }
+
+        .img-modal[data-open="true"] {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .img-modal-inner {
+            background: #fff;
+            max-width: 90vw;
+            max-height: 90vh;
+            padding: 0.75rem;
+            border-radius: 8px;
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.35);
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .img-modal-inner img {
+            max-width: 100%;
+            max-height: 70vh;
+            object-fit: contain;
+        }
+
+        .img-modal-caption {
+            font-size: 0.9rem;
+            color: #444;
+        }
+
+        .modal-close {
+            align-self: flex-end;
+            border: none;
+            background: none;
+            font-size: 1.3rem;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="wrap">
+
+        <nav style="margin-bottom:1rem">
+            <a href="index.html"
+                style="color:var(--accent);text-decoration:none;display:inline-flex;align-items:center;font-weight:500">
+                <span style="font-size:1.2em;margin-right:6px">🏠</span> Home
+            </a>
+        </nav>
+
+
+        <header>
+            <h1>Week 5: Advanced Security and Monitoring Infrastructure</h1>
+            <p class="lead">Strengthening server security and enabling remote monitoring capabilities.</p>
+        </header>
+
+        <section>
+            <h2>Introduction</h2>
+            <p>
+                Week 5 focused on implementing the advanced security and monitoring features needed to
+                strengthen the Ubuntu Server configured earlier in the project. The aim was to protect the
+                system against common threats while enabling reliable remote administration. All work was
+                performed over SSH from the workstation, maintaining a headless-server management workflow.
+            </p>
+        </section>
+
+        <section>
+            <h2>Objectives</h2>
+            <p>
+                The objective for this week was to enhance the server’s security posture by enabling mandatory
+                access control (AppArmor), configuring automatic security updates, deploying fail2ban to prevent
+                unauthorized SSH access, and validating protections using a custom baseline script. Additionally,
+                a remote monitoring script was created to collect system performance metrics securely over SSH.
+            </p>
+        </section>
+
+        <section>
+            <h2>1. Implement Access Control (AppArmor)</h2>
+            <p>
+                AppArmor was checked, verified, and enforced for critical services.
+            </p>
+
+            <pre>
+sudo systemctl status apparmor
+sudo aa-status
+sudo aa-enforce /etc/apparmor.d/usr.sbin.sshd
+</pre>
+
+            <p><strong>Result:</strong> AppArmor is active and enforcing security policies.</p>
+
+            <div class="fig-grid">
+                <figure class="gallery-item" tabindex="0" data-full="images/week5-apparmor-status.png">
+                    <img src="images/week5-apparmor-status.png" alt="AppArmor status output">
+                    <figcaption>Figure 1 – Active AppArmor profiles.</figcaption>
+                </figure>
+            </div>
+        </section>
+
+        <section>
+            <h2>2. Configure Automatic Security Updates</h2>
+
+            <pre>
+sudo apt install unattended-upgrades -y
+sudo dpkg-reconfigure --priority=low unattended-upgrades
+cat /etc/apt/apt.conf.d/20auto-upgrades
+</pre>
+
+            <p><strong>Result:</strong> The server now installs security updates automatically.</p>
+
+            <div class="fig-grid">
+                <figure class="gallery-item" tabindex="0" data-full="images/week5-automatic-updates.png">
+                    <img src="images/week5-automatic-updates.png" alt="APT auto upgrades configuration">
+                    <figcaption>Figure 2 – Automatic update configuration.</figcaption>
+                </figure>
+            </div>
+        </section>
+
+        <section>
+            <h2>3. Configure fail2ban</h2>
+            <p>fail2ban was installed to block SSH brute-force attempts.</p>
+
+            <pre>
+sudo apt install fail2ban -y
+sudo systemctl enable fail2ban
+sudo systemctl start fail2ban
+sudo fail2ban-client status
+</pre>
+
+            <div class="fig-grid">
+                <figure class="gallery-item" tabindex="0" data-full="images/week5-fail2ban-status.png">
+                    <img src="images/week5-fail2ban-status.png" alt="Fail2ban jail status">
+                    <figcaption>Figure 3 – Active fail2ban jail.</figcaption>
+                </figure>
+            </div>
+        </section>
+
+        <section>
+            <h2>4. Security Baseline Verification Script</h2>
+            <p>
+                A script verifying AppArmor, fail2ban, firewall, and SSH settings was executed remotely.
+            </p>
+
+            <pre>
+chmod +x security-baseline.sh
+ssh adminuser@192.168.56.10 'bash -s' < security-baseline.sh
+</pre>
+
+            <p><strong>Result:</strong> All checks passed successfully.</p>
+
+            <div class="fig-grid">
+                <figure class="gallery-item" tabindex="0" data-full="images/week5-security-baseline.png">
+                    <img src="images/week5-security-baseline.png" alt="Security baseline script output">
+                    <figcaption>Figure 4 – Security baseline verification output.</figcaption>
+                </figure>
+            </div>
+        </section>
+
+        <section>
+            <h2>5. Remote Monitoring Script</h2>
+
+            <pre>
+#!/bin/bash
+ssh adminuser@192.168.56.10 << 'EOF'
+uname -a
+free -h
+df -h
+ip addr
+EOF
+</pre>
+
+            <p><strong>Result:</strong> Monitoring output retrieved successfully.</p>
+
+            <div class="fig-grid">
+                <figure class="gallery-item" tabindex="0" data-full="images/week5-monitor-output-1.png">
+                    <img src="images/week5-monitor-output-1.png" alt="Monitor script output 1">
+                    <figcaption>Figure 5 – System info & resource usage.</figcaption>
+                </figure>
+
+                <figure class="gallery-item" tabindex="0" data-full="images/week5-monitor-output-2.png">
+                    <img src="images/week5-monitor-output-2.png" alt="Monitor script output 2">
+                    <figcaption>Figure 6 – Filesystem & network details.</figcaption>
+                </figure>
+            </div>
+        </section>
+
+        <section>
+            <h2>Reflection</h2>
+            <p>
+                This week strengthened server security by implementing AppArmor, automatic upgrades, and fail2ban.
+                The monitoring script provided remote visibility, supporting secure headless administration.
+            </p>
+        </section>
+
+        <section>
+            <h2>References</h2>
+            <ol>
+                <li>[1] Canonical, “AppArmor — Mandatory Access Control,” Ubuntu Documentation. Available:
+                    https://ubuntu.com/server/docs/security-apparmor. Accessed: Nov. 2025.</li>
+                <li>[2] Debian/Ubuntu, “unattended-upgrades Documentation,” Manpages. Available:
+                    https://manpages.debian.org/unattended-upgrades. Accessed: Nov. 2025.</li>
+                <li>[3] Fail2ban, “Fail2ban Intrusion Prevention Framework Documentation.” Available:
+                    https://fail2ban.readthedocs.io/. Accessed: Nov. 2025.</li>
+                <li>[4] CIS, “Linux Server Benchmark — Security Controls,” Center for Internet Security. Accessed: Nov.
+                    2025.</li>
+                <li>[5] Canonical, “Bash Scripting Guide,” Ubuntu Documentation. Accessed: Nov. 2025.</li>
+            </ol>
+        </section>
+
+
+        <footer>
+            <p>Week 5 — Operating Systems Coursework</p>
+        </footer>
+
+    </div> <!-- end .wrap -->
+
+    <!-- ---------- IMAGE MODAL HTML ---------- -->
+    <div class="img-modal" id="imgModal" aria-hidden="true">
+        <div class="img-modal-inner" role="dialog" aria-modal="true">
+            <button class="modal-close" aria-label="Close image">&times;</button>
+            <img id="modalImg" src="" alt="">
+            <div class="img-modal-caption" id="modalCaption"></div>
+        </div>
+    </div>
+
+    <!-- ---------- IMAGE MODAL SCRIPT ---------- -->
+    <script>
+        (function () {
+            const modal = document.getElementById('imgModal');
+            const modalImg = document.getElementById('modalImg');
+            const modalCaption = document.getElementById('modalCaption');
+            const closeBtn = modal.querySelector('.modal-close');
+            const figures = document.querySelectorAll('figure.gallery-item');
+
+            function openModal(fig) {
+                const img = fig.querySelector('img');
+                const full = fig.getAttribute('data-full') || img.src;
+                const captionEl = fig.querySelector('figcaption');
+
+                modalImg.src = full;
+                modalImg.alt = img.alt || '';
+                modalCaption.innerHTML = captionEl ? captionEl.innerHTML : '';
+
+                modal.setAttribute('data-open', 'true');
+                modal.setAttribute('aria-hidden', 'false');
+                document.body.style.overflow = 'hidden';
+
+                closeBtn.focus();
+            }
+
+            function closeModal() {
+                modal.setAttribute('data-open', 'false');
+                modal.setAttribute('aria-hidden', 'true');
+                modalImg.src = '';
+                document.body.style.overflow = '';
+            }
+
+            figures.forEach(fig => {
+                fig.addEventListener('click', () => openModal(fig));
+                fig.addEventListener('keydown', e => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        openModal(fig);
+                    }
+                });
+            });
+
+            closeBtn.addEventListener('click', closeModal);
+
+            modal.addEventListener('click', e => {
+                if (e.target === modal) closeModal();
+            });
+
+            document.addEventListener('keydown', e => {
+                if (e.key === 'Escape' && modal.getAttribute('data-open') === 'true') {
+                    closeModal();
+                }
+            });
+        })();
+    </script>
+
+</body>
+
+</html>
