@@ -229,40 +229,65 @@
                 <li>
                     Network security assessment with <code>nmap</code>
                     <div class="fig-grid">
-                        <figure class="gallery-item" data-full="images/week7-nmap.png">
-                            <img src="images/week7-nmap.png" alt="nmap scan of server">
+                        <figure class="gallery-item" data-full="images/Week7-figure3_nmap_network_scan.png">
+                            <img src="images/Week7-figure3_nmap_network_scan.png" alt="nmap scan of server">
                             <figcaption>Figure 3 – <code>nmap</code> scan from the workstation showing only SSH (port 22) open.</figcaption>
                         </figure>
                     </div>
                 </li>
+
+            <pre>
+Command Used:
+sudo nmap -sV -O 192.168.56.10            </pre>
+
+
                 <li>
                     Access control verification
                     <div class="fig-grid">
-                        <figure class="gallery-item" data-full="images/week7-access.png">
-                            <img src="images/week7-access.png" alt="Access control verification output">
+                        <figure class="gallery-item" data-full="images/Week7-figure4_access_control_verification.png">
+                            <img src="images/Week7-figure4_access_control_verification.png" alt="Access control verification output">
                             <figcaption>Figure 4 – Evidence of AppArmor status, SSH hardening, and sudo-based administration.</figcaption>
                         </figure>
                     </div>
                 </li>
+            <pre>
+Commands Used:
+sudo aa-status | head -n 10
+sudo cat /etc/ssh/sshd_config | grep -E "PermitRootLogin|PasswordAuthentication"
+id andreimac            </pre>
+
+
                 <li>
                     Service audit justifying all running services
                     <div class="fig-grid">
-                        <figure class="gallery-item" data-full="images/week7-services.png">
-                            <img src="images/week7-services.png" alt="Running services list">
+                        <figure class="gallery-item" data-full="images/Week7-figure5_running_services_audit.png">
+                            <img src="images/Week7-figure5_running_services_audit.png" alt="Running services list">
                             <figcaption>Figure 5 – Running services from <code>systemctl</code> and <code>ps</code> used for the service inventory.</figcaption>
                         </figure>
                     </div>
                 </li>
+            <pre>
+Commands Used:
+systemctl --type=service --state=running | head -n 20
+ps aux | head -n 20            </pre>
+
+
                 <li>
                     System configuration review
                     <div class="fig-grid">
-                        <figure class="gallery-item" data-full="images/week7-final-summary.png">
-                            <img src="images/week7-final-summary.png" alt="Final configuration summary">
+                        <figure class="gallery-item" data-full="images/Week7-figure6_final_system_configuration_summary.png">
+                            <img src="images/Week7-figure6_final_system_configuration_summary.png" alt="Final configuration summary">
                             <figcaption>Figure 6 – Summary view used to cross-check firewall, SSH, update, and monitoring configuration.</figcaption>
                         </figure>
                     </div>
                 </li>
             </ul>
+            <pre>
+Commands Used:
+sudo ufw status verbose
+sudo grep -E "PermitRootLogin|PasswordAuthentication" /etc/ssh/sshd_config
+sudo aa-status | head -n 5            </pre>
+
 
             <h3>Deliverables (Journal and Video)</h3>
             <ol>
@@ -271,13 +296,18 @@
                     after remediation, network security testing results, SSH security verification, service
                     inventory with justifications, and remaining risk assessment.
                     <div class="fig-grid">
-                        <figure class="gallery-item" data-full="images/week7-final-summary.png">
-                            <img src="images/week7-final-summary.png" alt="Security audit report evidence">
+                        <figure class="gallery-item" data-full="images/Week7-figure7_final_audit_summary.png">
+                            <img src="images/Week7-figure7_final_audit_summary.png" alt="Security audit report evidence">
                             <figcaption>Figure 7 – Visual summary used to support the written Week 7 Security Audit Report.</figcaption>
                         </figure>
                     </div>
                 </li>
             </ol>
+            <pre>
+Commands Used:
+printf "FINAL SECURITY AUDIT SUMMARY\n\nFirewall: ACTIVE (SSH only)\nSSH Hardening: OK (No root login, No passwords)\nAppArmor: ACTIVE (57 profiles enforced)\nLynis Scores: Before=59, After=63\nNetwork Exposure: Only port 22 open\nSystem Status: Hardened and compliant\n" | tee final_audit_summary.txt
+cat final_audit_summary.txt            </pre>
+            
         </section>
 
         <!-- INTRO -->
@@ -307,13 +337,13 @@
             <p><strong>After Remediation Score:</strong> Hardening index 63.</p>
 
             <div class="fig-grid">
-                <figure class="gallery-item" data-full="images/week7-lynis-before.png">
-                    <img src="images/week7-lynis-before.png" alt="Lynis scan before remediation">
+                <figure class="gallery-item" data-full="images/week7-figure1_lynis_before_remediation.png">
+                    <img src="images/week7-figure1_lynis_before_remediation.png" alt="Lynis scan before remediation">
                     <figcaption>Figure 1 – Lynis audit before remediation, highlighting missing controls such as a malware scanner.</figcaption>
                 </figure>
 
-                <figure class="gallery-item" data-full="images/week7-lynis-after.png">
-                    <img src="images/week7-lynis-after.png" alt="Lynis scan after remediation">
+                <figure class="gallery-item" data-full="images/week7-figure2_lynis_after_remediation.png">
+                    <img src="images/week7-figure2_lynis_after_remediation.png" alt="Lynis scan after remediation">
                     <figcaption>Figure 2 – Lynis audit after remediation showing an improved hardening index and all key modules enabled.</figcaption>
                 </figure>
             </div>
@@ -328,11 +358,11 @@
             </p>
 
             <h3>Command Used</h3>
-            <pre>nmap -sV -O 192.168.56.102</pre>
+            <pre>sudo nmap -sV -O 192.168.56.10</pre>
 
             <div class="fig-grid">
-                <figure class="gallery-item" data-full="images/week7-nmap.png">
-                    <img src="images/week7-nmap.png" alt="nmap scan result">
+                <figure class="gallery-item" data-full="images/Week7-figure3_nmap_network_scan.png">
+                    <img src="images/Week7-figure3_nmap_network_scan.png" alt="nmap scan result">
                     <figcaption>Figure 3 – <code>nmap</code> scan confirming that port 22/SSH is the only exposed service.</figcaption>
                 </figure>
             </div>
@@ -352,14 +382,13 @@
             </p>
 
             <pre>
-aa-status
+sudo aa-status | head -n 10
 sudo cat /etc/ssh/sshd_config | grep -E "PermitRootLogin|PasswordAuthentication"
-id adminuser
-            </pre>
+id adminuser            </pre>
 
             <div class="fig-grid">
-                <figure class="gallery-item" data-full="images/week7-access.png">
-                    <img src="images/week7-access.png" alt="Access control checks">
+                <figure class="gallery-item" data-full="images/Week7-figure4_access_control_verification.png">
+                    <img src="images/Week7-figure4_access_control_verification.png" alt="Access control checks">
                     <figcaption>Figure 4 – Evidence that AppArmor is enforcing and SSH disallows root and password logins.</figcaption>
                 </figure>
             </div>
@@ -375,8 +404,8 @@ id adminuser
             </p>
 
             <div class="fig-grid">
-                <figure class="gallery-item" data-full="images/week7-services.png">
-                    <img src="images/week7-services.png" alt="Running services">
+                <figure class="gallery-item" data-full="images/Week7-figure5_running_services_audit.png">
+                    <img src="images/Week7-figure5_running_services_audit.png" alt="Running services">
                     <figcaption>Figure 5 – Running services audit used to justify which daemons remain enabled.</figcaption>
                 </figure>
             </div>
@@ -409,8 +438,8 @@ id adminuser
             </p>
 
             <div class="fig-grid">
-                <figure class="gallery-item" data-full="images/week7-final-summary.png">
-                    <img src="images/week7-final-summary.png" alt="Final system evaluation summary">
+                <figure class="gallery-item" data-full="images/Week7-figure6_final_system_configuration_summary.png">
+                    <img src="images/Week7-figure6_final_system_configuration_summary.png" alt="Final system evaluation summary">
                     <figcaption>Figure 6 – Final summary view used to cross-check configuration against the Phase 7 requirements.</figcaption>
                 </figure>
             </div>
