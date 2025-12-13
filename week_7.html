@@ -211,18 +211,36 @@
                 configuration, using command-line tooling only and remote administration via SSH.
             </p>
 
+            <section>
+                <h2>Introduction</h2>
+                <p>Week 7 concludes the operating systems project with a comprehensive security audit of the Ubuntu
+                    Server environment built throughout Weeks 1–6. This phase shifts focus from implementation to
+                    evaluation, requiring a methodical assessment of system security, configuration integrity and
+                    service behaviour. Using only command-line tools over SSH, I performed an end-to-end audit including
+                    Lynis scans, nmap external probing, AppArmor and SSH hardening verification, and a full service
+                    inventory. The goal was not only to confirm that the server remained functional but to
+                    demonstrate—through evidence—that it met the security, performance and configuration expectations
+                    defined earlier in the project. This week represents the transition from building a system to
+                    validating and defending it through structured reporting, mirroring professional security auditing
+                    practice.</p>
+            </section>
+
             <h3>Mandatory Audit Tasks</h3>
             <ul>
                 <li>
                     Security scanning with Lynis
                     <div class="fig-grid">
                         <figure class="gallery-item" data-full="images/week7-figure1_lynis_before_remediation.png">
-                            <img src="images/week7-figure1_lynis_before_remediation.png" alt="Lynis scan before remediation">
-                            <figcaption>Figure 1 – Lynis security scan before remediation (hardening index 59).</figcaption>
+                            <img src="images/week7-figure1_lynis_before_remediation.png"
+                                alt="Lynis scan before remediation">
+                            <figcaption>Figure 1 – Lynis security scan before remediation (hardening index 59).
+                            </figcaption>
                         </figure>
                         <figure class="gallery-item" data-full="images/week7-figure2_lynis_after_remediation.png">
-                            <img src="images/week7-figure2_lynis_after_remediation.png" alt="Lynis scan after remediation">
-                            <figcaption>Figure 2 – Lynis security scan after remediation (hardening index 63).</figcaption>
+                            <img src="images/week7-figure2_lynis_after_remediation.png"
+                                alt="Lynis scan after remediation">
+                            <figcaption>Figure 2 – Lynis security scan after remediation (hardening index 63).
+                            </figcaption>
                         </figure>
                     </div>
                 </li>
@@ -231,12 +249,12 @@
                     <div class="fig-grid">
                         <figure class="gallery-item" data-full="images/Week7-figure3_nmap_network_scan.png">
                             <img src="images/Week7-figure3_nmap_network_scan.png" alt="nmap scan of server">
-                            <figcaption>Figure 3 – <code>nmap</code> scan from the workstation showing only SSH (port 22) open.</figcaption>
+                            <figcaption>Figure 3 – <code>nmap</code> scan showing SSH (port 22) open.</figcaption>
                         </figure>
                     </div>
                 </li>
 
-            <pre>
+                <pre>
 Command Used:
 sudo nmap -sV -O 192.168.56.10            </pre>
 
@@ -245,12 +263,14 @@ sudo nmap -sV -O 192.168.56.10            </pre>
                     Access control verification
                     <div class="fig-grid">
                         <figure class="gallery-item" data-full="images/Week7-figure4_access_control_verification.png">
-                            <img src="images/Week7-figure4_access_control_verification.png" alt="Access control verification output">
-                            <figcaption>Figure 4 – Evidence of AppArmor status, SSH hardening, and sudo-based administration.</figcaption>
+                            <img src="images/Week7-figure4_access_control_verification.png"
+                                alt="Access control verification output">
+                            <figcaption>Figure 4 – Evidence of AppArmor status, SSH hardening, and sudo-based
+                                administration.</figcaption>
                         </figure>
                     </div>
                 </li>
-            <pre>
+                <pre>
 Commands Used:
 sudo aa-status | head -n 10
 sudo cat /etc/ssh/sshd_config | grep -E "PermitRootLogin|PasswordAuthentication"
@@ -262,11 +282,12 @@ id andreimac            </pre>
                     <div class="fig-grid">
                         <figure class="gallery-item" data-full="images/Week7-figure5_running_services_audit.png">
                             <img src="images/Week7-figure5_running_services_audit.png" alt="Running services list">
-                            <figcaption>Figure 5 – Running services from <code>systemctl</code> and <code>ps</code> used for the service inventory.</figcaption>
+                            <figcaption>Figure 5 – Running services from <code>systemctl</code> and <code>ps</code> used
+                                for the service inventory.</figcaption>
                         </figure>
                     </div>
                 </li>
-            <pre>
+                <pre>
 Commands Used:
 systemctl --type=service --state=running | head -n 20
 ps aux | head -n 20            </pre>
@@ -275,9 +296,12 @@ ps aux | head -n 20            </pre>
                 <li>
                     System configuration review
                     <div class="fig-grid">
-                        <figure class="gallery-item" data-full="images/Week7-figure6_final_system_configuration_summary.png">
-                            <img src="images/Week7-figure6_final_system_configuration_summary.png" alt="Final configuration summary">
-                            <figcaption>Figure 6 – Summary view used to cross-check firewall, SSH, update, and monitoring configuration.</figcaption>
+                        <figure class="gallery-item"
+                            data-full="images/Week7-figure6_final_system_configuration_summary.png">
+                            <img src="images/Week7-figure6_final_system_configuration_summary.png"
+                                alt="Final configuration summary">
+                            <figcaption>Figure 6 – Summary view used to cross-check firewall, SSH, update, and
+                                monitoring configuration.</figcaption>
                         </figure>
                     </div>
                 </li>
@@ -297,8 +321,10 @@ sudo aa-status | head -n 5            </pre>
                     inventory with justifications, and remaining risk assessment.
                     <div class="fig-grid">
                         <figure class="gallery-item" data-full="images/Week7-figure7_final_audit_summary.png">
-                            <img src="images/Week7-figure7_final_audit_summary.png" alt="Security audit report evidence">
-                            <figcaption>Figure 7 – Visual summary used to support the written Week 7 Security Audit Report.</figcaption>
+                            <img src="images/Week7-figure7_final_audit_summary.png"
+                                alt="Security audit report evidence">
+                            <figcaption>Figure 7 – Visual summary used to support the written Week 7 Security Audit
+                                Report.</figcaption>
                         </figure>
                     </div>
                 </li>
@@ -307,7 +333,7 @@ sudo aa-status | head -n 5            </pre>
 Commands Used:
 printf "FINAL SECURITY AUDIT SUMMARY\n\nFirewall: ACTIVE (SSH only)\nSSH Hardening: OK (No root login, No passwords)\nAppArmor: ACTIVE (57 profiles enforced)\nLynis Scores: Before=59, After=63\nNetwork Exposure: Only port 22 open\nSystem Status: Hardened and compliant\n" | tee final_audit_summary.txt
 cat final_audit_summary.txt            </pre>
-            
+
         </section>
 
         <!-- INTRO -->
@@ -339,12 +365,14 @@ cat final_audit_summary.txt            </pre>
             <div class="fig-grid">
                 <figure class="gallery-item" data-full="images/week7-figure1_lynis_before_remediation.png">
                     <img src="images/week7-figure1_lynis_before_remediation.png" alt="Lynis scan before remediation">
-                    <figcaption>Figure 1 – Lynis audit before remediation, highlighting missing controls such as a malware scanner.</figcaption>
+                    <figcaption>Figure 1 – Lynis audit before remediation, highlighting missing controls such as a
+                        malware scanner.</figcaption>
                 </figure>
 
                 <figure class="gallery-item" data-full="images/week7-figure2_lynis_after_remediation.png">
                     <img src="images/week7-figure2_lynis_after_remediation.png" alt="Lynis scan after remediation">
-                    <figcaption>Figure 2 – Lynis audit after remediation showing an improved hardening index and all key modules enabled.</figcaption>
+                    <figcaption>Figure 2 – Lynis audit after remediation showing an improved hardening index and all key
+                        modules enabled.</figcaption>
                 </figure>
             </div>
         </section>
@@ -363,7 +391,8 @@ cat final_audit_summary.txt            </pre>
             <div class="fig-grid">
                 <figure class="gallery-item" data-full="images/Week7-figure3_nmap_network_scan.png">
                     <img src="images/Week7-figure3_nmap_network_scan.png" alt="nmap scan result">
-                    <figcaption>Figure 3 – <code>nmap</code> scan confirming that port 22/SSH is the only exposed service.</figcaption>
+                    <figcaption>Figure 3 – <code>nmap</code> scan confirming that port 22/SSH is the only exposed
+                        service.</figcaption>
                 </figure>
             </div>
 
@@ -389,7 +418,8 @@ id adminuser            </pre>
             <div class="fig-grid">
                 <figure class="gallery-item" data-full="images/Week7-figure4_access_control_verification.png">
                     <img src="images/Week7-figure4_access_control_verification.png" alt="Access control checks">
-                    <figcaption>Figure 4 – Evidence that AppArmor is enforcing and SSH disallows root and password logins.</figcaption>
+                    <figcaption>Figure 4 – Evidence that AppArmor is enforcing and SSH disallows root and password
+                        logins.</figcaption>
                 </figure>
             </div>
         </section>
@@ -406,7 +436,8 @@ id adminuser            </pre>
             <div class="fig-grid">
                 <figure class="gallery-item" data-full="images/Week7-figure5_running_services_audit.png">
                     <img src="images/Week7-figure5_running_services_audit.png" alt="Running services">
-                    <figcaption>Figure 5 – Running services audit used to justify which daemons remain enabled.</figcaption>
+                    <figcaption>Figure 5 – Running services audit used to justify which daemons remain enabled.
+                    </figcaption>
                 </figure>
             </div>
 
@@ -439,10 +470,51 @@ id adminuser            </pre>
 
             <div class="fig-grid">
                 <figure class="gallery-item" data-full="images/Week7-figure6_final_system_configuration_summary.png">
-                    <img src="images/Week7-figure6_final_system_configuration_summary.png" alt="Final system evaluation summary">
-                    <figcaption>Figure 6 – Final summary view used to cross-check configuration against the Phase 7 requirements.</figcaption>
+                    <img src="images/Week7-figure6_final_system_configuration_summary.png"
+                        alt="Final system evaluation summary">
+                    <figcaption>Figure 6 – Final summary view used to cross-check configuration against the Phase 7
+                        requirements.</figcaption>
                 </figure>
             </div>
+        </section>
+
+        <section>
+            <h2>
+                7. Reflection
+            </h2>
+            <p>
+                Week 7 brought together all the work from previous weeks and shifted my perspective from configuring a
+                server to evaluating it like an external assessor. Running Lynis, nmap, AppArmor checks and a service
+                inventory required me to justify not only what I had configured but why it mattered and whether the
+                evidence supported it. The before-and-after Lynis scores showed how changes such as SSH hardening and
+                AppArmor enforcement produced measurable security improvements. The nmap scan reinforced the value of
+                verification by proving that only port 22 was exposed, rather than assuming the firewall was correct.
+                Reviewing running services also highlighted the importance of minimising the attack surface.
+            </p>
+
+            <p>
+                Most importantly, this week helped me develop an audit mindset—documenting configurations, validating
+                them with tools and presenting findings clearly. This mirrors real system administration practice, where
+                evidence, repeatability and justification are essential. By the end of the audit, I could not only
+                secure an Ubuntu Server but assess its security posture and explain its remaining risks and overall
+                readiness.
+            </p>
+        </section>
+
+        <section>
+            <h2>8. Conclusion</h2>
+            <p>
+                The final audit validates that the Ubuntu Server is securely configured, minimally exposed and supported
+                by layered defence mechanisms including firewall restrictions, SSH hardening, AppArmor enforcement,
+                automatic updates and intrusion prevention. The improvements measured by Lynis, combined with the
+                external verification from nmap and service justification, show that each configuration decision across
+                Weeks 1–6 contributed directly to a stronger security posture in Week 7. While some residual risks
+                remain—primarily related to virtualisation constraints and the single-host design—they are acknowledged
+                and manageable within the scope of the coursework. Overall, the system meets the Phase 7 requirements
+                and demonstrates a clear, evidence-driven approach to secure server administration. The audit process
+                has reinforced habits of verification, documentation and critical analysis that are essential for
+                professional system management
+            </p>
         </section>
 
         <section>
