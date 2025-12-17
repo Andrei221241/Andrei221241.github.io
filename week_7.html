@@ -28,281 +28,124 @@
         <!-- PHASE 7 STRUCTURE -->
         <section>
             <h2>Phase 7: Security Audit and System Evaluation (Week 7)</h2>
-            <p>
-                This phase conducts a security audit of the deployed Ubuntu Server and evaluates the overall
-                configuration, using command-line tooling only and remote administration via SSH.
-            </p>
 
-            <section>
-                <h2>Introduction</h2>
-                <p>Week 7 concludes the operating systems project with a comprehensive security audit of the Ubuntu
-                    Server environment built throughout Weeks 1–6. This phase shifts focus from implementation to
-                    evaluation, requiring a methodical assessment of system security, configuration integrity and
-                    service behaviour. Using only command-line tools over SSH, I performed an end-to-end audit including
-                    Lynis scans, nmap external probing, AppArmor and SSH hardening verification, and a full service
-                    inventory. The goal was not only to confirm that the server remained functional but to
-                    demonstrate—through evidence—that it met the security, performance and configuration expectations
-                    defined earlier in the project. This week represents the transition from building a system to
-                    validating and defending it through structured reporting, mirroring professional security auditing
-                    practice.</p>
-            </section>
-
-            <h3>Mandatory Audit Tasks</h3>
-            <ul>
-                <li>
-                    Security scanning with Lynis
-                    <div class="fig-grid">
-                        <figure class="gallery-item" data-full="images/week7-figure1_lynis_before_remediation.png">
-                            <img src="images/week7-figure1_lynis_before_remediation.png"
-                                alt="Lynis scan before remediation">
-                            <figcaption>Figure 1 – Lynis security scan before remediation (hardening index 59).
-                            </figcaption>
-                        </figure>
-                        <figure class="gallery-item" data-full="images/week7-figure2_lynis_after_remediation.png">
-                            <img src="images/week7-figure2_lynis_after_remediation.png"
-                                alt="Lynis scan after remediation">
-                            <figcaption>Figure 2 – Lynis security scan after remediation (hardening index 63).
-                            </figcaption>
-                        </figure>
-                    </div>
-                </li>
-                <li>
-                    Network security assessment with <code>nmap</code>
-                    <div class="fig-grid">
-                        <figure class="gallery-item" data-full="images/Week7-figure3_nmap_network_scan.png">
-                            <img src="images/Week7-figure3_nmap_network_scan.png" alt="nmap scan of server">
-                            <figcaption>Figure 3 – <code>nmap</code> scan showing SSH (port 22) open.</figcaption>
-                        </figure>
-                    </div>
-                </li>
-
-                <pre>
-Command Used:
-sudo nmap -sV -O 192.168.56.10            </pre>
-
-
-                <li>
-                    Access control verification
-                    <div class="fig-grid">
-                        <figure class="gallery-item" data-full="images/Week7-figure4_access_control_verification.png">
-                            <img src="images/Week7-figure4_access_control_verification.png"
-                                alt="Access control verification output">
-                            <figcaption>Figure 4 – Evidence of AppArmor status, SSH hardening, and sudo-based
-                                administration.</figcaption>
-                        </figure>
-                    </div>
-                </li>
-                <pre>
-Commands Used:
-sudo aa-status | head -n 10
-sudo cat /etc/ssh/sshd_config | grep -E "PermitRootLogin|PasswordAuthentication"
-id andreimac            </pre>
-
-
-                <li>
-                    Service audit justifying all running services
-                    <div class="fig-grid">
-                        <figure class="gallery-item" data-full="images/Week7-figure5_running_services_audit.png">
-                            <img src="images/Week7-figure5_running_services_audit.png" alt="Running services list">
-                            <figcaption>Figure 5 – Running services from <code>systemctl</code> and <code>ps</code> used
-                                for the service inventory.</figcaption>
-                        </figure>
-                    </div>
-                </li>
-                <pre>
-Commands Used:
-systemctl --type=service --state=running | head -n 20
-ps aux | head -n 20            </pre>
-
-
-                <li>
-                    System configuration review
-                    <div class="fig-grid">
-                        <figure class="gallery-item"
-                            data-full="images/Week7-figure6_final_system_configuration_summary.png">
-                            <img src="images/Week7-figure6_final_system_configuration_summary.png"
-                                alt="Final configuration summary">
-                            <figcaption>Figure 6 – Summary view used to cross-check firewall, SSH, update, and
-                                monitoring configuration.</figcaption>
-                        </figure>
-                    </div>
-                </li>
-            </ul>
-            <pre>
-Commands Used:
-sudo ufw status verbose
-sudo grep -E "PermitRootLogin|PasswordAuthentication" /etc/ssh/sshd_config
-sudo aa-status | head -n 5            </pre>
-
-
-            <h3>Deliverables (Journal and Video)</h3>
-            <ol>
-                <li>
-                    Security Audit Report covering infrastructure security assessment, Lynis scores before and
-                    after remediation, network security testing results, SSH security verification, service
-                    inventory with justifications, and remaining risk assessment.
-                    <div class="fig-grid">
-                        <figure class="gallery-item" data-full="images/Week7-figure7_final_audit_summary.png">
-                            <img src="images/Week7-figure7_final_audit_summary.png"
-                                alt="Security audit report evidence">
-                            <figcaption>Figure 7 – Visual summary used to support the written Week 7 Security Audit
-                                Report.</figcaption>
-                        </figure>
-                    </div>
-                </li>
-            </ol>
-            <pre>
-Commands Used:
-printf "FINAL SECURITY AUDIT SUMMARY\n\nFirewall: ACTIVE (SSH only)\nSSH Hardening: OK (No root login, No passwords)\nAppArmor: ACTIVE (57 profiles enforced)\nLynis Scores: Before=59, After=63\nNetwork Exposure: Only port 22 open\nSystem Status: Hardened and compliant\n" | tee final_audit_summary.txt
-cat final_audit_summary.txt            </pre>
-
+            <p>The final phase focused on conducting a comprehensive security audit and overall system evaluation.
+                Security scanning was performed using Lynis, network exposure was assessed with nmap, and active
+                services were reviewed to ensure only essential components were running. Audit findings were
+                analysed and justified, including identified trade-offs appropriate for a virtualised learning
+                environment. This phase demonstrates a holistic understanding of system security, risk assessment,
+                and configuration review.</p>
         </section>
 
-        <!-- INTRO -->
         <section>
-            <h2>1. Introduction</h2>
+            <h3>Security audit with Lynis</h3>
+            <pre>sudo lynis audit system </pre>
+            <figure class="gallery-item" tabindex="0" data-full="images/week7_lynis_security_audit_summary .png"
+                aria-label="Open Figure 1: Security Audit Summary in full size">
+                <img src="images/week7_lynis_security_audit_summary .png" alt="Figure 1: Security Audit Summary">
+                <figcaption class="fig-caption">
+                    Figure 1: Security Audit Summary
+                </figcaption>
+            </figure>
             <p>
-                Week 7 concludes the operating systems project with a full security audit of the deployed
-                Ubuntu Server. Following the assessment brief’s Phase 7 requirements, I performed a
-                comprehensive evaluation using Lynis, nmap, access control validation, service review, and
-                configuration checks. All tasks were executed remotely via SSH, maintaining the
-                command-line–only administration constraint.
+                This screenshot shows the results of a comprehensive security audit performed using Lynis. The
+                system
+                achieved a hardening index score of 65 after completing 258 security tests, with key security
+                components
+                such as the firewall enabled and active. The audit identified several non-critical recommendations,
+                including optional kernel tuning and malware scanner installation, which were reviewed and
+                documented as
+                accepted risks within a controlled virtualised environment.
+            </p>
+            <p>
+                Following the Lynis security audit, a malware scanning tool (rkhunter) was installed to address
+                identified hardening recommendations. This resulted in an increased number of completed tests and an
+                improved security posture.
+            </p>
+
+            <p>
+                The final hardening index remained below 70 due to advisory checks relating to kernel sysctl tuning,
+                file permission tightening, and additional automation tools. These recommendations were intentionally
+                not applied, as modifying low-level kernel parameters and system-wide permissions in a virtualised
+                learning environment could introduce instability and was not appropriate for the system’s intended
+                purpose.
+            </p>
+
+            <p>
+                This reflects a conscious security trade-off, prioritising system stability and maintainability while
+                still implementing core security best practices such as firewalling, SSH hardening, AppArmor
+                enforcement, automatic updates, intrusion prevention, and malware detection.
             </p>
         </section>
 
-        <!-- LYNIS -->
         <section>
-            <h2>2. System Audit with Lynis</h2>
+            <h3>Network security assessment (nmap)</h3>
+            <pre>sudo nmap -sV -O 192.168.56.105 </pre>
+            <figure class="gallery-item" tabindex="0" data-full="images/week7_task2_nmap_network_scan.png"
+                aria-label="Open Figure 2: Network Security Assessment in full size">
+                <img src="images/week7_task2_nmap_network_scan.png" alt="Figure 2: Network Security Assessment">
+                <figcaption class="fig-caption">
+                    Figure 2: Network Security Assessment
+                </figcaption>
+            </figure>
             <p>
-                Lynis was used to perform a deep security scan of the server. This helped identify
-                misconfigurations, opportunities for strengthening the system, and produced a security score.
-            </p>
-
-            <h3>Command Used</h3>
-            <pre>sudo lynis audit system</pre>
-
-            <p><strong>Before Remediation Score:</strong> Hardening index 59.</p>
-            <p><strong>After Remediation Score:</strong> Hardening index 63.</p>
-
-            <div class="fig-grid">
-                <figure class="gallery-item" data-full="images/week7-figure1_lynis_before_remediation.png">
-                    <img src="images/week7-figure1_lynis_before_remediation.png" alt="Lynis scan before remediation">
-                    <figcaption>Figure 1 – Lynis audit before remediation, highlighting missing controls such as a
-                        malware scanner.</figcaption>
-                </figure>
-
-                <figure class="gallery-item" data-full="images/week7-figure2_lynis_after_remediation.png">
-                    <img src="images/week7-figure2_lynis_after_remediation.png" alt="Lynis scan after remediation">
-                    <figcaption>Figure 2 – Lynis audit after remediation showing an improved hardening index and all key
-                        modules enabled.</figcaption>
-                </figure>
-            </div>
-        </section>
-
-        <!-- NMAP -->
-        <section>
-            <h2>3. Network Security Assessment (nmap)</h2>
-            <p>
-                An external security scan was performed from the workstation using <code>nmap</code> to
-                verify the firewall and ensure only SSH was reachable.
-            </p>
-
-            <h3>Command Used</h3>
-            <pre>sudo nmap -sV -O 192.168.56.10</pre>
-
-            <div class="fig-grid">
-                <figure class="gallery-item" data-full="images/Week7-figure3_nmap_network_scan.png">
-                    <img src="images/Week7-figure3_nmap_network_scan.png" alt="nmap scan result">
-                    <figcaption>Figure 3 – <code>nmap</code> scan confirming that port 22/SSH is the only exposed
-                        service.</figcaption>
-                </figure>
-            </div>
-
-            <p>
-                The scan confirmed that port 22 was the only open port, aligning with the firewall rules set
-                in Weeks 4 and 5.
+                A network security assessment was performed using nmap from the workstation to evaluate the server's
+                exposed services. The scan confirmed that only port 22 (SSH) is open, running OpenSSH on Ubuntu Linux,
+                while all other ports are filtered by the firewall. This demonstrates effective firewall configuration,
+                minimal attack surface, and adherence to the principle of least privilege.
             </p>
         </section>
 
-        <!-- ACCESS CONTROL -->
         <section>
-            <h2>4. Access Control Verification</h2>
+            <h3>Service audit (justify running services)</h3>
+            <pre>systemctl --type=service --state=running | head -n 20</pre>
+            <figure class="gallery-item" tabindex="0" data-full="images/week7_task3_running_services.png"
+                aria-label="Open Figure 3: Service Audit ">
+                <img src="images/week7_task3_running_services.png" alt="Figure 3: Service Audit">
+                <figcaption class="fig-caption">
+                    Figure 3: Service Audit
+                </figcaption>
+            </figure>
             <p>
-                I reviewed AppArmor status, SSH daemon configuration, and privilege assignments to ensure
-                that the principle of least privilege was respected.
-            </p>
-
-            <pre>
-sudo aa-status | head -n 10
-sudo cat /etc/ssh/sshd_config | grep -E "PermitRootLogin|PasswordAuthentication"
-id adminuser            </pre>
-
-            <div class="fig-grid">
-                <figure class="gallery-item" data-full="images/Week7-figure4_access_control_verification.png">
-                    <img src="images/Week7-figure4_access_control_verification.png" alt="Access control checks">
-                    <figcaption>Figure 4 – Evidence that AppArmor is enforcing and SSH disallows root and password
-                        logins.</figcaption>
-                </figure>
-            </div>
-        </section>
-
-        <!-- SERVICE AUDIT -->
-        <section>
-            <h2>5. Service Inventory &amp; Justification</h2>
-            <p>
-                Using <code>systemctl --type=service --state=running</code> and
-                <code>ps aux</code>, I compiled a list of all active services and evaluated whether they were
-                required for the system’s intended function.
-            </p>
-
-            <div class="fig-grid">
-                <figure class="gallery-item" data-full="images/Week7-figure5_running_services_audit.png">
-                    <img src="images/Week7-figure5_running_services_audit.png" alt="Running services">
-                    <figcaption>Figure 5 – Running services audit used to justify which daemons remain enabled.
-                    </figcaption>
-                </figure>
-            </div>
-
-            <p>
-                Unnecessary or unused services were disabled to reduce the attack surface.
+                This command lists the active system services running on the server at the time of the audit. The output
+                confirms that only essential services are enabled, including SSH for remote administration, fail2ban for
+                intrusion prevention, unattended-upgrades for automated security updates, and core system services such
+                as logging, networking, and time synchronisation. No unnecessary or insecure services were identified,
+                demonstrating a minimal and hardened server configuration.
             </p>
         </section>
 
-        <!-- FINAL EVALUATION -->
         <section>
-            <h2>6. Overall System Evaluation &amp; Remaining Risk</h2>
+            <h3>System configuration review / audit summary</h3>
+            <pre>cat final_audit_summary.txt </pre>
+            <figure class="gallery-item" tabindex="0" data-full="images/week7_lynis_security_audit_summary .png"
+                aria-label="Open Figure 4: System Configuration Review">
+                <img src="images/week7_lynis_security_audit_summary .png" alt="Figure 4: System Configuration Review">
+                <figcaption class="fig-caption">
+                    Figure 4: System Configuration Review Part 1
+                </figcaption>
+            </figure>
+            <figure class="gallery-item" tabindex="0" data-full="images/week7_task4_final_audit_summary_part2.png"
+                aria-label="Open Figure 4: System Configuration Review">
+                <img src="images/week7_task4_final_audit_summary_part2.png" alt="Figure 4: System Configuration Review">
+                <figcaption class="fig-caption">
+                    Figure 5: System Configuration Review Part 2
+                </figcaption>
+            </figure>
             <p>
-                The combined security controls from Weeks 4–7 create a robust environment aligned with the
-                coursework learning outcomes. The final audit confirms that:
+                This command displays the final security audit summary for the Ubuntu server. The summary consolidates
+                all security configurations and audit findings from the coursework, including SSH hardening, firewall
+                restrictions, AppArmor enforcement, automatic security updates, and fail2ban intrusion prevention. The
+                audit confirms that no critical vulnerabilities were detected and that only essential network services
+                are exposed. Identified risks, such as optional kernel sysctl tuning and malware scanning, are
+                documented and justified as deliberate trade-offs appropriate for a virtualised learning environment.
+                This provides a clear overall evaluation of the system's security posture and configuration decisions.
             </p>
-
-            <ul>
-                <li>The firewall allows only authorised traffic (SSH from the workstation).</li>
-                <li>SSH operates strictly with key-based authentication and no direct root access.</li>
-                <li>Access control (AppArmor) restricts system processes to defined profiles.</li>
-                <li>fail2ban and automatic updates strengthen long-term resilience and patching.</li>
-                <li>No unnecessary network-exposed services remain active.</li>
-            </ul>
-
-            <p>
-                Residual risk mainly relates to the limits of a single-host setup (no redundancy) and
-                dependencies on VirtualBox networking. These are noted in the written report as design rather
-                than configuration risks.
-            </p>
-
-            <div class="fig-grid">
-                <figure class="gallery-item" data-full="images/Week7-figure6_final_system_configuration_summary.png">
-                    <img src="images/Week7-figure6_final_system_configuration_summary.png"
-                        alt="Final system evaluation summary">
-                    <figcaption>Figure 6 – Final summary view used to cross-check configuration against the Phase 7
-                        requirements.</figcaption>
-                </figure>
-            </div>
         </section>
 
         <section>
             <h2>
-                7. Reflection
+                Reflection
             </h2>
             <p>
                 Week 7 brought together all the work from previous weeks and shifted my perspective from configuring a
@@ -324,13 +167,13 @@ id adminuser            </pre>
         </section>
 
         <section>
-            <h2>8. Conclusion</h2>
+            <h2>Conclusion</h2>
             <p>
                 The final audit validates that the Ubuntu Server is securely configured, minimally exposed and supported
                 by layered defence mechanisms including firewall restrictions, SSH hardening, AppArmor enforcement,
                 automatic updates and intrusion prevention. The improvements measured by Lynis, combined with the
                 external verification from nmap and service justification, show that each configuration decision across
-                Weeks 1–6 contributed directly to a stronger security posture in Week 7. While some residual risks
+                Weeks 1-6 contributed directly to a stronger security posture in Week 7. While some residual risks
                 remain—primarily related to virtualisation constraints and the single-host design—they are acknowledged
                 and manageable within the scope of the coursework. Overall, the system meets the Phase 7 requirements
                 and demonstrates a clear, evidence-driven approach to secure server administration. The audit process
@@ -342,22 +185,26 @@ id adminuser            </pre>
         <section>
             <h2>References</h2>
             <ol>
-                <li>[1] CISOfy, “Lynis — Security Auditing Tool Documentation,” Available: https://cisofy.com/lynis/.
-                    Accessed: Dec. 2025.</li>
-                <li>[2] nmap.org, “Nmap Security Scanner Documentation,” Available: https://nmap.org/book/man.html.
-                    Accessed: Dec. 2025.</li>
-                <li>[3] Canonical, “AppArmor Profile Management,” Ubuntu Documentation. Available:
+                <li>[1] NIST, “Guide to General Server Security,” NIST SP 800-123. Accessed: Dec. 2025.</li>
+                <li>[2] Canonical, “AppArmor Profile Management,” Ubuntu Documentation. Available:
                     https://ubuntu.com/server/docs/security-apparmor. Accessed: Dec. 2025.</li>
-                <li>[4] Ubuntu, “systemd Service Management,” Ubuntu Manpages. Available:
-                    https://manpages.ubuntu.com/manpages/systemctl. Accessed: Dec. 2025.</li>
-                <li>[5] NIST, “Guide to General Server Security,” NIST SP 800-123. Accessed: Dec. 2025.</li>
             </ol>
         </section>
+
 
         <footer>
             <div>© 2025 Andrei</div>
         </footer>
 
+    </div>
+
+    <!-- Modal for full-size images -->
+    <div id="imgModal" class="img-modal" role="dialog" aria-modal="true" aria-hidden="true" data-open="false">
+        <button class="modal-close" aria-label="Close image">&times;</button>
+        <div class="modal-content">
+            <img id="modalImg" src="" alt="">
+            <div id="modalCaption" class="modal-caption"></div>
+        </div>
     </div>
 
     <script src="js/shared.js"></script>

@@ -64,12 +64,13 @@
                 <figure class="gallery-item" tabindex="0">
                     <img src="images/week4task1sshhardening.png" alt="Terminal showing ssh-keygen on workstation">
                     <figcaption class="fig-caption">
-                        Figure 1: This command displays the effective SSH daemon configuration. The output confirms that
-                        root login and password-based authentication are disabled, enforcing secure key-based
-                        authentication. This reduces the risk of brute-force attacks and prevents direct administrative
-                        access over SSH.
+                        Figure 1: SSH Daemon Configuration Verification
                     </figcaption>
                 </figure>
+                <p>This command displays the effective SSH daemon configuration. The output confirms that
+                        root login and password-based authentication are disabled, enforcing secure key-based
+                        authentication. This reduces the risk of brute-force attacks and prevents direct administrative
+                        access over SSH.</p>
             </div>
         </section>
 
@@ -84,11 +85,12 @@
                     <img src="images/week4task2firewallrules.png"
                         alt="ip addr output on workstation showing host-only interface">
                     <figcaption class="fig-caption">
-                        Figure 2: The UFW firewall is enabled with a default policy of denying all incoming connections.
-                        SSH access (port 22) is explicitly permitted only from the trusted workstation IP address
-                        (192.168.56.101), enforcing the principle of least privilege and reducing the attack surface.
+                        Figure 2: Firewall Status Verification
                     </figcaption>
                 </figure>
+                <p>The UFW firewall is enabled with a default policy of denying all incoming connections.
+                    SSH access (port 22) is explicitly permitted only from the trusted workstation IP address
+                    (192.168.56.101), enforcing the principle of least privilege and reducing the attack surface.</p>
             </div>
         </section>
 
@@ -117,6 +119,11 @@
                         Figure 3: This screenshot shows the creation of a non-root user account named
                     </figcaption>
                 </figure>
+                <p>The screenshot captures the process of creating a non-root user account named
+                    "adminuser" on the Ubuntu Server using the adduser command. This step is crucial for implementing
+                    privilege management, as it allows administrative tasks to be performed without using the root
+                    account. The creation of "adminuser" aligns with best practices for system security by promoting the
+                    principle of least privilege and enhancing accountability for administrative actions.</p>
             </div>
         </section>
 
@@ -131,11 +138,12 @@
                     <img src="images/Week4-Task-4 Ping-the-server-from-the-workstation.png"
                         alt="Terminal showing SSH login as adminuser to ubuntu-server">
                     <figcaption class="fig-caption">
-                        Figure 4: This command verifies network connectivity between the workstation and the Ubuntu
-                        server over the host-only network. Successful ICMP replies confirm that the server is online and
-                        reachable before attempting remote administration via SSH.
+                        Figure 4: Ping the Server from the Workstation
                     </figcaption>
                 </figure>
+                <p>This command verifies network connectivity between the workstation and the Ubuntu
+                    server over the host-only network. Successful ICMP replies confirm that the server is online and
+                    reachable before attempting remote administration via SSH.</p>
             </div>
         </section>
 
@@ -146,12 +154,13 @@
                 <img src="images/Week-4-task-4-Loging-in-from-the-workstation-to-the-server.png"
                     alt="Terminal showing SSH login as adminuser to ubuntu-server">
                 <figcaption class="fig-caption">
-                    Figure 5: This command establishes a secure SSH connection from the workstation to the server using
-                    the configured SSH settings. A successful login demonstrates that remote administration is
-                    functioning correctly and confirms compliance with the requirement that all server configuration
-                    tasks are performed via SSH from the workstation.
+                    Figure 5: Logging in from the Workstation to the Server
                 </figcaption>
             </figure>
+            <p>This command establishes a secure SSH connection from the workstation to the server using
+                the configured SSH settings. A successful login demonstrates that remote administration is
+                functioning correctly and confirms compliance with the requirement that all server configuration
+                tasks are performed via SSH from the workstation.</p>
         </div>
         </section>
 
@@ -167,12 +176,13 @@
                     <img src="images/week4task5sshdconfignano.png"
                         alt="Terminal showing SSH login as adminuser to ubuntu-server">
                     <figcaption class="fig-caption">
-                        Figure 6: The SSH daemon configuration file was first accessed using nano to review and verify
-                        the applied authentication settings. This step represents the configuration inspection stage,
-                        confirming that root login and password-based authentication were disabled as part of SSH
-                        hardening.
+                        Figure 6: SSH Daemon Configuration File Review
                     </figcaption>
                 </figure>
+                <p>The SSH daemon configuration file was first accessed using nano to review and verify
+                        the applied authentication settings. This step represents the configuration inspection stage,
+                        confirming that root login and password-based authentication were disabled as part of SSH
+                        hardening.</p>
             </div>
 
             <h3> After review stage.</h3>
@@ -182,11 +192,12 @@
                     <img src="images/week4task5sshdconfigcat.png"
                         alt="Terminal showing SSH login as adminuser to ubuntu-server">
                     <figcaption class="fig-caption">
-                        Figure 7: The configuration was then displayed using cat to provide clear, read-only evidence of
-                        the final active settings. This confirms that SSH hardening was successfully applied and
-                        documents the secure configuration state used during system operation.
+                        Figure 7: SSH Daemon Configuration File Final State
                     </figcaption>
                 </figure>
+                <p>The configuration was then displayed using cat to provide clear, read-only evidence of
+                        the final active settings. This confirms that SSH hardening was successfully applied and
+                        documents the secure configuration state used during system operation.</p>
             </div>
         </section>
 
@@ -236,12 +247,13 @@
                 <figure class="gallery-item" tabindex="0">
                     <img src="images/week4task2firewallrules.png" alt="Screenshot of ufw status verbose output">
                     <figcaption class="fig-caption">
-                        Figure 8: The firewall ruleset was documented using UFW. The output confirms that the firewall
-                        is active with a default deny policy for incoming connections. SSH access is restricted to a
-                        single trusted workstation IP address, ensuring secure remote administration and minimising the
-                        server's attack surface.
+                        Figure 8: Firewall Ruleset Documentation
                     </figcaption>
                 </figure>
+                <p>The firewall ruleset was documented using UFW. The output confirms that the firewall
+                        is active with a default deny policy for incoming connections. SSH access is restricted to a
+                        single trusted workstation IP address, ensuring secure remote administration and minimising the
+                        server's attack surface.</p>
             </div>
         </section>
 
@@ -326,14 +338,8 @@
             <ol>
                 <li>[1] Canonical, “OpenSSH Server — Key-Based Authentication,” Ubuntu Documentation. Available:
                     https://ubuntu.com/server/docs/security-ssh. Accessed: Nov. 2025.</li>
-                <li>[2] DigitalOcean, “How To Set Up SSH Keys on Ubuntu,” DigitalOcean Community. Available:
-                    https://www.digitalocean.com/community/tutorials/how-to-set-up-ssh-keys-on-ubuntu-20-04. Accessed:
-                    Nov. 2025.</li>
-                <li>[3] Ubuntu, “UFW — Uncomplicated Firewall,” Ubuntu Documentation. Available:
+                <li>[2] Ubuntu, “UFW — Uncomplicated Firewall,” Ubuntu Documentation. Available:
                     https://help.ubuntu.com/community/UFW. Accessed: Nov. 2025.</li>
-                <li>[4] Red Hat, “Linux User and Group Management Overview,” Red Hat Docs. Accessed: Nov. 2025.</li>
-                <li>[5] Canonical, “Hardening SSHD Configuration,” Ubuntu Security Guide. Available:
-                    https://ubuntu.com/security. Accessed: Nov. 2025.</li>
             </ol>
         </section>
 

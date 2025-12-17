@@ -59,12 +59,13 @@
             <div class="fig-grid">
                 <figure class="gallery-item" tabindex="0" data-full="images/week5task1apparmorstatus.png">
                     <img src="images/week5task1apparmorstatus.png" alt="AppArmor status output">
-                    <figcaption>Figure 1: AppArmor was verified as the active mandatory access control system on the
-                        server. The output confirms that the AppArmor module is loaded and that multiple security
-                        profiles are enforced. Enforcing mode ensures that applications are restricted according to
-                        defined policies, reducing the potential impact of compromised processes..
+                    <figcaption>Figure 1: AppArmor status output
                     </figcaption>
                 </figure>
+                <p>AppArmor was verified as the active mandatory access control system on the
+                    server. The output confirms that the AppArmor module is loaded and that multiple security
+                    profiles are enforced. Enforcing mode ensures that applications are restricted according to
+                    defined policies, reducing the potential impact of compromised processes..</p>
             </div>
         </section>
 
@@ -78,21 +79,23 @@
             <div class="fig-grid">
                 <figure class="gallery-item" tabindex="0" data-full="images/week5task2automaticupdates1.png">
                     <img src="images/week5task2automaticupdates1.png" alt="APT auto-upgrades configuration">
-                    <figcaption>Figure 2: Automatic security updates were configured and verified using
-                        unattended-upgrades. The configuration confirms that the system periodically applies security
-                        patches without manual intervention, reducing exposure to known vulnerabilities and ensuring the
-                        server remains up to date..
+                    <figcaption>Figure 2: APT auto-upgrades configuration
                     </figcaption>
                 </figure>
+                <p>Automatic security updates were configured and verified using
+                    unattended-upgrades. The configuration confirms that the system periodically applies security
+                    patches without manual intervention, reducing exposure to known vulnerabilities and ensuring the
+                    server remains up to date..</p>
             </div>
             <pre>systemctl status unattended-upgrades</pre>
             <div class="fig-grid">
                 <figure class="gallery-item" tabindex="0" data-full="images/week5task2automaticupdates2.png">
                     <img src="images/week5task2automaticupdates2.png" alt="Unattended upgrades service status">
-                    <figcaption>Figure 3: The status of the unattended-upgrades service was verified using systemctl.
-                        The output confirms that the service is active and running, ensuring that automatic security
-                        updates are applied regularly to mitigate known vulnerabilities without manual intervention.
+                    <figcaption>Figure 3: Unattended-upgrades service status
                     </figcaption>
+                    <p>The status of the unattended-upgrades service was verified using systemctl.
+                        The output confirms that the service is active and running, ensuring that automatic security
+                        updates are applied regularly to mitigate known vulnerabilities without manual intervention.</p>
                 </figure>
             </div>
         </section>
@@ -107,10 +110,11 @@
             <div class="fig-grid">
                 <figure class="gallery-item" tabindex="0" data-full="images/week5task3fail2banstatus.png">
                     <img src="images/week5task3fail2banstatus.png" alt="Fail2ban jail status">
-                    <figcaption>Figure 4: The status of the fail2ban service was verified using systemctl. The output
-                        confirms that fail2ban is active and running, providing intrusion prevention by monitoring
-                        authentication logs and blocking malicious access attempts.</figcaption>
+                    <figcaption>Figure 4: Fail2ban jail status</figcaption>
                 </figure>
+                <p>The status of the fail2ban service was verified using systemctl. The output
+                        confirms that fail2ban is active and running, providing intrusion prevention by monitoring
+                        authentication logs and blocking malicious access attempts.</p>
             </div>
         </section>
 
@@ -124,12 +128,13 @@
                     data-full="images/week5_task4_security_baseline_script_permissions.png">
                     <img src="images/week5_task4_security_baseline_script_permissions.png"
                         alt="Security baseline script output">
-                    <figcaption>Figure 4: This command verifies that the security-baseline.sh script exists on the
-                        server and has executable permissions. The presence of execute permissions confirms that the
-                        script can be run directly via SSH, satisfying the requirement for automated verification of
-                        security controls implemented in Phases 4 and 5.
+                    <figcaption>Figure 5: Security Baseline Script Premissions
                     </figcaption>
                 </figure>
+                <p>This command verifies that the security-baseline.sh script exists on the
+                        server and has executable permissions. The presence of execute permissions confirms that the
+                        script can be run directly via SSH, satisfying the requirement for automated verification of
+                        security controls implemented in Phases 4 and 5.</p>
             </div>
 
             <pre>sudo ./security-baseline.sh</pre>
@@ -138,13 +143,14 @@
                 <figure class="gallery-item" tabindex="0"
                     data-full="images/week5_task4_security_baseline_execution.png">
                     <img src="images/week5_task4_security_baseline_execution.png" alt="Security baseline script output">
-                    <figcaption>Figure 5: A custom security-baseline.sh script was executed on the server via SSH to
+                    <figcaption>Figure 6: Secutity Baseline Execution
+                    </figcaption>
+                </figure>
+                <p>A custom security-baseline.sh script was executed on the server via SSH to
                         verify all security configurations implemented in Phases 4 and 5. The script confirms SSH
                         hardening, firewall enforcement, active AppArmor profiles, enabled automatic security updates,
                         and operational intrusion prevention using fail2ban. This provides automated and repeatable
-                        validation of the server's security posture.
-                    </figcaption>
-                </figure>
+                        validation of the server's security posture.</p>
         </section>
 
         <!-- 5. monitor-server.sh -->
@@ -155,11 +161,12 @@
             <div class="fig-grid">
                 <figure class="gallery-item" tabindex="0" data-full="images/week5_task5_monitor_script_permissions.png">
                     <img src="images/week5_task5_monitor_script_permissions.png" alt="Monitor script output 1">
-                    <figcaption>Figure 5: This command verifies that the monitor-server.sh script exists on the server
-                        and has executable permissions. The script is designed to collect performance and system metrics
-                        remotely via SSH, enabling ongoing monitoring of server behaviour from the workstation.
+                    <figcaption>Figure 7: Monitor Script Execution Part 1
                     </figcaption>
                 </figure>
+                <p> This command verifies that the monitor-server.sh script exists on the server
+                        and has executable permissions. The script is designed to collect performance and system metrics
+                        remotely via SSH, enabling ongoing monitoring of server behaviour from the workstation.</p>
             </div>
 
             <pre>./monitor-server.sh</pre>
@@ -167,13 +174,14 @@
             <div class="fig-grid">
                 <figure class="gallery-item" tabindex="0" data-full="images/week5_task5_monitor_script_execution.png">
                     <img src="images/week5_task5_monitor_script_execution.png" alt="Monitor script output 1">
-                    <figcaption>Figure 6: The monitor-server.sh script was executed remotely via SSH to collect live
+                    <figcaption>Figure 8: Monitor Script Execution Part 2
+                    </figcaption>
+                </figure>
+                <p>The monitor-server.sh script was executed remotely via SSH to collect live
                         performance and system metrics from the server. The output includes CPU usage, memory
                         utilisation, disk usage, and active network connections, providing real-time insight into server
                         performance and operational status. This demonstrates effective remote monitoring capability
-                        from the workstation.
-                    </figcaption>
-                </figure>
+                        from the workstation.</p>
             </div>
         </section>
 
@@ -204,13 +212,8 @@
             <ol>
                 <li>[1] Canonical, “AppArmor — Mandatory Access Control,” Ubuntu Documentation. Available:
                     https://ubuntu.com/server/docs/security-apparmor. Accessed: Nov. 2025.</li>
-                <li>[2] Debian/Ubuntu, “unattended-upgrades Documentation,” Manpages. Available:
-                    https://manpages.debian.org/unattended-upgrades. Accessed: Nov. 2025.</li>
-                <li>[3] Fail2ban, “Fail2ban Intrusion Prevention Framework Documentation.” Available:
+                <li>[2] Fail2ban, “Fail2ban Intrusion Prevention Framework Documentation.” Available:
                     https://fail2ban.readthedocs.io/. Accessed: Nov. 2025.</li>
-                <li>[4] CIS, “Linux Server Benchmark — Security Controls,” Center for Internet Security. Accessed: Nov.
-                    2025.</li>
-                <li>[5] Canonical, “Bash Scripting Guide,” Ubuntu Documentation. Accessed: Nov. 2025.</li>
             </ol>
         </section>
 

@@ -175,7 +175,7 @@
                 <img src="images/week6_network_iperf_server_listening.png"
                     alt="Figure 4: Network Performance Evaluation (iperf3)">
                 <figcaption class="fig-caption">
-                    Figure 4: Network Performance Evaluation Part 1 (iperf3 Server)
+                    Figure 5: Network Performance Evaluation Part 1 (iperf3 Server)
                 </figcaption>
             </figure>
             <p>This screenshot shows an iperf3 network throughput test between the workstation and the server. The
@@ -187,7 +187,7 @@
                 <img src="images/week6_network_throughput_iperf_client.png"
                     alt="Figure 5: Network Performance Evaluation (iperf3)">
                 <figcaption class="fig-caption">
-                    Figure 5: Network Performance Evaluation Part 2 (iperf3 Client)
+                    Figure 6: Network Performance Evaluation Part 2 (iperf3 Client)
                 </figcaption>
             </figure>
             <p>This test measured network throughput between the workstation and the server using iperf3. The results
@@ -203,7 +203,7 @@
                 aria-label="Open Figure 5: System Latency Evaluation (ping)">
                 <img src="images/week6_system_latency_ping.png" alt="Figure 5: System Latency Evaluation (ping)">
                 <figcaption class="fig-caption">
-                    Figure 5: System Latency Evaluation (ping)
+                    Figure 7: System Latency Evaluation (ping)
                 </figcaption>
             </figure>
             <p>This test measured network latency between the workstation and the server using ICMP echo requests. The
@@ -318,7 +318,8 @@
                 when stressed, the VM stayed well below 100% utilisation and quickly returned to a
                 low-load state, which matches the snapshots seen in the <code>top</code> output.
             </p>
-            <div id="netChart" data-runs="iperf3 run 1,iperf3 run 2" data-throughput="2.9,3.0" data-retrans="8200,10500"></div>
+            <div id="netChart" data-runs="iperf3 run 1,iperf3 run 2" data-throughput="2.9,3.0"
+                data-retrans="8200,10500"></div>
             <p>
                 The network chart compares throughput and retransmissions for the two
                 <code>iperf3</code> runs. Throughput remains consistently high (around 3&nbsp;Gbit/s)
@@ -381,30 +382,11 @@
         </section>
 
         <section>
-            <h2>10. Conclusion</h2>
-            <p>
-                The Week 6 performance evaluation met the key requirements of Phase 6 in the assessment brief: it
-                documented a clear testing methodology, captured baseline and under-load metrics, attempted optimisation
-                of
-                network parameters and critically analysed the resulting data. The main conclusion is that the Ubuntu
-                Server installation is stable and responsive under the tested workloads, and that most apparent
-                performance
-                anomalies are attributable to VirtualBox’s handling of CPU counters, disk caching and virtual networking
-                rather than to weaknesses in the operating system configuration itself.
-            </p>
-        </section>
-
-        <section>
             <h2>References</h2>
             <ol>
-                <li>[1] Canonical, “Ubuntu Performance Monitoring Tools,” Ubuntu Documentation. Available:
-                    https://ubuntu.com/server/docs. Accessed: Dec. 2025.</li>
-                <li>[2] Ubuntu Manpages, “stress-ng Manual,” Available: https://manpages.ubuntu.com/manpages/stress-ng.
+                <li>[1] Ubuntu Manpages, “stress-ng Manual,” Available: https://manpages.ubuntu.com/manpages/stress-ng.
                     Accessed: Dec. 2025.</li>
-                <li>[3] Axboe, J., “fio: Flexible I/O Tester Documentation.” Available: https://github.com/axboe/fio.
-                    Accessed: Dec. 2025.</li>
-                <li>[4] ESnet, “iperf3 Documentation,” Available: https://iperf.fr/. Accessed: Dec. 2025.</li>
-                <li>[5] Oracle, “VirtualBox Networking Performance,” VirtualBox Manual. Available:
+                <li>[2] Oracle, “VirtualBox Networking Performance,” VirtualBox Manual. Available:
                     https://www.virtualbox.org/manual/. Accessed: Dec. 2025.</li>
             </ol>
         </section>
