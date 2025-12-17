@@ -4,140 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Week 2: Security Planning and Testing Methodology</title>
-    <style>
-        :root {
-            --max-w: 900px;
-            --accent: #1f618d;
-            --muted: #666;
-        }
-
-        body {
-            font-family: system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial;
-            line-height: 1.5;
-            color: #222;
-            margin: 0;
-            padding: 2rem;
-            background: #f7f9fb
-        }
-
-        .wrap {
-            max-width: var(--max-w);
-            margin: 0 auto;
-            background: #fff;
-            border-radius: 8px;
-            padding: 1.5rem 2rem;
-            box-shadow: 0 8px 30px rgba(22, 40, 60, 0.08)
-        }
-
-        header {
-            border-bottom: 1px solid #e6eef6;
-            padding-bottom: 0.75rem;
-            margin-bottom: 1rem
-        }
-
-        h1 {
-            margin: 0;
-            font-size: 1.4rem;
-            color: var(--accent)
-        }
-
-        p.lead {
-            margin: 0.5rem 0;
-            color: var(--muted)
-        }
-
-        section {
-            margin: 1rem 0
-        }
-
-        h2 {
-            font-size: 1.05rem;
-            margin: 0 0 0.5rem 0;
-            color: #113047
-        }
-
-        ul,
-        ol {
-            margin: 0.25rem 0 0.75rem 1.2rem
-        }
-
-        pre {
-            background: #0b1220;
-            color: #e6f1ff;
-            padding: 0.75rem;
-            border-radius: 6px;
-            overflow: auto;
-            font-size: 0.9rem
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 0.5rem 0 0
-        }
-
-        th,
-        td {
-            border: 1px solid #e9f0f6;
-            padding: 0.5rem;
-            text-align: left;
-            background: #fff
-        }
-
-        th {
-            background: #f3f8fb;
-            color: #113047;
-            font-weight: 600
-        }
-
-        .fig-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 1rem;
-            margin-top: 0.75rem
-        }
-
-        figure {
-            background: #fbfdff;
-            border: 1px dashed #e3eef9;
-            padding: 0.5rem;
-            border-radius: 6px;
-            min-height: 140px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center
-        }
-
-        figure img {
-            max-width: 100%;
-            max-height: 96px;
-            object-fit: contain;
-            display: block
-        }
-
-        figcaption {
-            font-size: 0.85rem;
-            color: var(--muted);
-            margin-top: 0.5rem
-        }
-
-        footer {
-            border-top: 1px solid #e6eef6;
-            padding-top: 0.75rem;
-            color: var(--muted);
-            font-size: 0.9rem;
-            margin-top: 1rem;
-        }
-
-        .note {
-            background: #fff8e6;
-            border-left: 4px solid #ffb86b;
-            padding: 0.6rem;
-            border-radius: 4px;
-            color: #663f00
-        }
-    </style>
+    <link rel="stylesheet" href="css/pagesStyle.css">
 </head>
 
 <body>
@@ -204,7 +71,8 @@
                     </tr>
                 </tbody>
             </table>
-            <p><strong>Explanation:</strong> Each control is selected to reduce the risk of common security threats and to
+            <p><strong>Explanation:</strong> Each control is selected to reduce the risk of common security threats and
+                to
                 follow best practices for server hardening.</p>
         </section>
 
@@ -240,7 +108,8 @@
                     </tr>
                 </tbody>
             </table>
-            <p><strong>Explanation:</strong> Identifying these threats ensures a proactive approach to securing the server
+            <p><strong>Explanation:</strong> Identifying these threats ensures a proactive approach to securing the
+                server
                 before deployment.</p>
         </section>
 
@@ -285,7 +154,8 @@
                     </tr>
                 </tbody>
             </table>
-            <p><strong>Explanation:</strong> Metrics will be collected via command-line tools and recorded systematically to
+            <p><strong>Explanation:</strong> Metrics will be collected via command-line tools and recorded
+                systematically to
                 evaluate the server’s behavior under different workloads.</p>
         </section>
 
@@ -294,12 +164,15 @@
         <section>
             <h2>4. Reflection</h2>
             <p>In Week 2, planning the security baseline and performance testing methodology helped me develop a deeper
-                understanding of the potential vulnerabilities and risks associated with the Ubuntu Server. This planning
+                understanding of the potential vulnerabilities and risks associated with the Ubuntu Server. This
+                planning
                 ensured that all future server configurations, monitoring, and testing activities will be structured,
                 consistent, and measurable. By carefully considering areas such as SSH hardening, firewall rules, access
                 control, and automated updates, I was able to create a clear roadmap for Week 4 and beyond. Focusing on
-                documentation and planning at this stage establishes a solid foundation for implementing security controls
-                and evaluating performance systematically, which will ultimately support a more secure and efficient server
+                documentation and planning at this stage establishes a solid foundation for implementing security
+                controls
+                and evaluating performance systematically, which will ultimately support a more secure and efficient
+                server
                 environment.</p>
         </section>
 
@@ -310,5 +183,7 @@
     </div>
 
 </body>
+
+<script src="js/shared.js"></script>
 
 </html>

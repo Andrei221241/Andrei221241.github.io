@@ -1,0 +1,234 @@
+/* ========== Shared site stylesheet (use across all pages) ========== */
+
+:root{
+  --max-w: 900px;          /* change to 1200px if you want wider pages everywhere */
+  --accent: #1f618d;
+  --muted: #666;
+  --bg: #f7f9fb;
+  --panel: #fff;
+  --border: #e6eef6;
+  --border-soft: #e9f0f6;
+}
+
+/* Base layout */
+*{ box-sizing: border-box; }
+
+body{
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial;
+  line-height: 1.5;
+  color: #222;
+  margin: 0;
+  padding: 2rem;
+  background: var(--bg);
+}
+
+.wrap{
+  max-width: var(--max-w);
+  margin: 0 auto;
+  background: var(--panel);
+  border-radius: 8px;
+  padding: 1.5rem 2rem;
+  box-shadow: 0 8px 30px rgba(22, 40, 60, 0.08);
+}
+
+/* Nav */
+nav{ margin-bottom: 1rem; }
+nav a{
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+}
+nav a:hover{ text-decoration: underline; }
+nav a span{ font-size: 1.2em; margin-right: 6px; }
+
+/* Header / typography */
+header{
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+h1{
+  margin: 0;
+  font-size: 1.4rem;
+  color: var(--accent);
+}
+
+p.lead{
+  margin: 0.5rem 0;
+  color: var(--muted);
+}
+
+section{ margin: 1rem 0; }
+
+h2{
+  font-size: 1.05rem;
+  margin: 0 0 0.5rem 0;
+  color: #113047;
+}
+
+h3{
+  font-size: 0.98rem;
+  margin: 0.5rem 0 0.35rem;
+  color: #153955;
+}
+
+ul, ol{ margin: 0.25rem 0 0.75rem 1.2rem; }
+
+/* Code blocks */
+pre{
+  background: #0b1220;
+  color: #e6f1ff;
+  padding: 0.75rem;
+  border-radius: 6px;
+  overflow: auto;
+  font-size: 0.9rem;
+}
+
+code{
+  font-family: Consolas, Menlo, Monaco, "Courier New", monospace;
+  font-size: 0.95em;
+}
+
+/* Tables */
+table{
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0.5rem 0 0;
+}
+
+th, td{
+  border: 1px solid var(--border-soft);
+  padding: 0.5rem;
+  text-align: left;
+  background: #fff;
+}
+
+th{
+  background: #f3f8fb;
+  color: #113047;
+  font-weight: 600;
+}
+
+/* Notes/callouts */
+.note{
+  background: #fff8e6;
+  border-left: 4px solid #ffb86b;
+  padding: 0.6rem;
+  border-radius: 4px;
+  color: #663f00;
+}
+
+/* Figures / gallery grid */
+.fig-grid{
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+  margin-top: 0.75rem;
+}
+
+/* Default figure styling (for any <figure>) */
+figure{
+  background: #fbfdff;
+  border: 1px dashed #e3eef9;
+  padding: 0.5rem;
+  border-radius: 6px;
+  min-height: 140px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Your clickable gallery figures */
+figure.gallery-item{
+  cursor: pointer;
+  outline: none;
+}
+
+figure.gallery-item:focus{
+  outline: 2px solid rgba(31, 97, 141, 0.35);
+  outline-offset: 2px;
+}
+
+figure img{
+  max-width: 100%;
+  max-height: 96px;
+  object-fit: contain;
+  display: block;
+}
+
+/* Captions (supports both your patterns) */
+.fig-caption,
+figcaption{
+  font-size: 0.85rem;
+  color: var(--muted);
+  margin-top: 0.5rem;
+  text-align: center;
+}
+
+/* Footer */
+footer{
+  border-top: 1px solid var(--border);
+  padding-top: 0.75rem;
+  color: var(--muted);
+  font-size: 0.9rem;
+  margin-top: 1rem;
+}
+
+/* ========== Image modal (matches your current Week 6 markup) ========== */
+.img-modal{
+  position: fixed;
+  inset: 0;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  background: rgba(2, 6, 23, 0.6);
+  z-index: 1000;
+  padding: 2rem;
+}
+
+.img-modal[data-open="true"]{ display: flex; }
+
+.img-modal .modal-content{
+  max-width: 95%;
+  max-height: 95%;
+  background: transparent;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.img-modal img{
+  max-width: 100%;
+  max-height: 82vh;
+  border-radius: 6px;
+  box-shadow: 0 10px 40px rgba(2, 6, 23, 0.6);
+}
+
+.img-modal .modal-caption{
+  margin-top: 0.6rem;
+  color: #fff;
+  text-align: center;
+  max-width: 95%;
+  overflow: auto;
+}
+
+.img-modal .modal-close{
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: rgba(255, 255, 255, 0.08);
+  border: 0;
+  color: #fff;
+  font-size: 1.25rem;
+  padding: 0.4rem 0.6rem;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.img-modal .modal-close:hover{
+  background: rgba(255, 255, 255, 0.14);
+}
