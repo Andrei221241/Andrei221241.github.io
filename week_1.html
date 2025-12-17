@@ -163,8 +163,12 @@
                 Linux Desktop VM (Ubuntu Desktop 22.04 LTS) running as a separate VirtualBox VM. Rationale: Mirrors
                 professional remote administration workflows by keeping all server management via SSH from a client
                 machine. This ensures command-line proficiency, enables clean separation of concerns, and avoids any
-                temptation to use GUI tools on th server (which must remain headless).</p>
-            <img src="images/figure0-diagram.png" alt="Ubuntu Server Logo" style="margin-top:1rem;max-width:160px">
+                temptation to use GUI tools on th server (which must remain headless). Ubuntu Desktop 22.04 LTS is chosen for its
+                stability, extensive documentation, and compatibility with Ubuntu Server 22.04 LTS, ensuring a smooth
+                SSH experience. The dual-VM setup with a host-only network simulates a realistic isolated environment,
+                enhancing security and control.
+            </p>
+            <img src="images/figure0-diagram.png" alt="Ubuntu Server Logo" style="margin-top:1rem;max-width:280px">
             <p>
                 This diagram shows the dual-VM architecture for the coursework. The Ubuntu Server VM runs headless (no
                 GUI) and will be administered remotely, while the Ubuntu Desktop VM acts as the workstation. Both VMs
@@ -510,20 +514,6 @@ ssh andreimac@192.168.56.10</pre>
                 assuming. Next, I’ll replace password logins with keys and tighten the firewall so the architecture
                 doesn’t just function, it holds up under scrutiny. The foundation is real: I can see the server, I can
                 reach it, and I can prove it.</p>
-        </section>
-
-        <section>
-            <h2>References</h2>
-            <ol>
-                <li>[1] Canonical, "Ubuntu Server — Server installation & administration," Ubuntu. Available:
-                    https://ubuntu.com/server. Accessed: Oct. 19, 2025.</li>
-                <li>[2] DigitalOcean, "SSH Essentials: Working with SSH Servers, Clients, and Keys," DigitalOcean
-                    Community. Available:
-                    https://www.digitalocean.com/community/tutorials/ssh-essentials-working-with-ssh-servers-clients-and-keys.
-                    Accessed: Oct. 19, 2025.</li>
-                <li>[3] Oracle, "Oracle VM VirtualBox User Manual — Networking," Oracle. Available:
-                    https://www.virtualbox.org/manual/ch06.html. Accessed: Oct. 19, 2025.</li>
-            </ol>
         </section>
 
         <footer>

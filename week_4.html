@@ -238,8 +238,11 @@
         <section>
             <h2>Phase 4: Initial System Configuration &amp; Security Implementation</h2>
             <p>
-                This phase focuses on deploying the Ubuntu Server and implementing foundational security controls via
-                remote administration.
+                This week focused on deploying the Ubuntu Server and implementing foundational security controls. Core
+                system hardening measures were applied, including secure SSH configuration, firewall restrictions, and
+                user privilege management. All server configuration tasks were performed remotely via SSH from a trusted
+                workstation, in line with the administrative constraints of the coursework. The objective was to
+                establish a secure baseline suitable for further security and performance enhancements.
             </p>
 
             <div class="note">
@@ -263,41 +266,16 @@
         <section id="deliverable-1">
             <h2>1. Configure SSH with Key-Based Authentication</h2>
 
-            <h3>Key pair generation on the workstation</h3>
-            <p>
-                On the Ubuntu Desktop workstation, I generated a 4096-bit RSA key pair to use for secure access to the
-                server:
-            </p>
-            <pre>ssh-keygen -t rsa -b 4096 -C "andreimac@workstation"</pre>
-            <p>
-                This produced a private key (stored securely on the workstation) and a matching public key that can be
-                safely copied to the server.
-            </p>
-
-            <h3>Authorising the key on the server</h3>
-            <p>
-                The public key was then copied to the Ubuntu Server so that SSH could trust connections from the
-                workstation:
-            </p>
-            <pre>ssh-copy-id andreimac@192.168.56.102</pre>
-            <p>
-                This appended the workstation’s public key to <code>~/.ssh/authorized_keys</code> on the server for the
-                <code>andreimac</code> account.
-            </p>
+            <pre> sudo sshd -T | grep -E "permitrootlogin|passwordauthentication"</pre>
 
             <div class="fig-grid">
                 <figure class="gallery-item" tabindex="0">
-                    <img src="images/week4-ssh-keygen-workstation.png" alt="Terminal showing ssh-keygen on workstation">
+                    <img src="images/week4task1sshhardening.png" alt="Terminal showing ssh-keygen on workstation">
                     <figcaption class="fig-caption">
-                        Figure 1: Generating a 4096-bit RSA key pair on the workstation.
-                    </figcaption>
-                </figure>
-
-                <figure class="gallery-item" tabindex="0">
-                    <img src="images/week4-ssh-copy-workstation.png"
-                        alt="ssh-copy-id output showing key deployed to server">
-                    <figcaption class="fig-caption">
-                        Figure 2: Deploying the public key to the Ubuntu Server using <code>ssh-copy-id</code>.
+                        Figure 1: This command displays the effective SSH daemon configuration. The output confirms that
+                        root login and password-based authentication are disabled, enforcing secure key-based
+                        authentication. This reduces the risk of brute-force attacks and prevents direct administrative
+                        access over SSH.
                     </figcaption>
                 </figure>
             </div>
@@ -306,43 +284,17 @@
         <!-- 2. Configure firewall permitting SSH only from one workstation -->
         <section id="deliverable-2">
             <h2>2. Configure a Firewall Permitting SSH from One Specific Workstation Only</h2>
-            <p>
-                To reduce the attack surface of the server, I configured UFW (Uncomplicated Firewall) to allow SSH only
-                from the workstation’s host-only IP address.
-            </p>
 
-            <h3>Identifying the workstation IP address</h3>
-            <p>
-                On the workstation, I confirmed the host-only network interface and its IP (in the
-                <code>192.168.56.x</code> range):
-            </p>
-            <pre>ip addr</pre>
-
-            <h3>Installing and enabling UFW on the server</h3>
-            <pre>sudo apt install ufw -y</pre>
-            <pre>sudo ufw enable</pre>
             <pre>sudo ufw status verbose</pre>
-
-            <h3>Restricting SSH to the workstation IP</h3>
-            <p>
-                SSH access was restricted so that only the workstation can initiate SSH connections to port 22:
-            </p>
-            <pre>sudo ufw allow from 192.168.56.10 to any port 22</pre>
 
             <div class="fig-grid">
                 <figure class="gallery-item" tabindex="0">
-                    <img src="images/week4-ipaddr-workstation.png"
+                    <img src="images/week4task2firewallrules.png"
                         alt="ip addr output on workstation showing host-only interface">
                     <figcaption class="fig-caption">
-                        Figure 3: Workstation network configuration showing the host-only IP address.
-                    </figcaption>
-                </figure>
-
-                <figure class="gallery-item" tabindex="0">
-                    <img src="images/week4-ufw-status-wrokstation.png"
-                        alt="UFW status showing SSH allowed only from workstation IP">
-                    <figcaption class="fig-caption">
-                        Figure 4: UFW ruleset on the server allowing SSH only from the workstation IP.
+                        Figure 2: The UFW firewall is enabled with a default policy of denying all incoming connections.
+                        SSH access (port 22) is explicitly permitted only from the trusted workstation IP address
+                        (192.168.56.101), enforcing the principle of least privilege and reducing the attack surface.
                     </figcaption>
                 </figure>
             </div>
@@ -351,39 +303,26 @@
         <!-- 3. Manage users / privilege management -->
         <section id="deliverable-3">
             <h2>3. Manage Users and Implement Privilege Management (Non-Root Administrative User)</h2>
-            <p>
-                Administrative work should not be performed directly as root. To follow best practice, I created a
-                dedicated non-root administrative user and granted it <code>sudo</code> capabilities.
-            </p>
 
-            <h3>Creating the administrative account</h3>
-            <pre>sudo adduser adminuser</pre>
-
-            <h3>Granting sudo access</h3>
-            <pre>sudo usermod -aG sudo adminuser</pre>
-            <p>
-                These commands created the <code>adminuser</code> account and added it to the
-                <code>sudo</code> group, allowing privileged commands via <code>sudo &lt;command&gt;</code> while still
-                requiring authentication.
-            </p>
-
-            <p>Account creation was verified with:</p>
-            <pre>cat /etc/passwd | grep adminuser</pre>
+            <pre>sudo adduser newuser1</pre>
+            <p>A non-root user account was created using adduser, ensuring administrative tasks are not performed
+                directly as root. This improves system security by limiting the scope of privileges and enabling better
+                accountability.</p>
+            <pre>sudo usermod -aG sudo newuser1</pre>
+            <p>The newly created user was added to the sudo group, granting controlled administrative privileges using
+                the command: sudo usermod -aG sudo newuser1. This allows system management tasks to be performed without
+                direct root access, improving security and accountability.</p>
+            <pre>groups newuser1</pre>
+            <p>This command verifies the group memberships of the newly created user. The output confirms that newuser1
+                belongs to the sudo group, granting controlled administrative privileges while maintaining separation
+                from the root account. This demonstrates correct privilege management and adherence to the principle of
+                least privilege</p>
 
             <div class="fig-grid">
                 <figure class="gallery-item" tabindex="0">
-                    <img src="images/week4-adduser-adminuser-workstation.png"
-                        alt="Terminal showing adduser adminuser on server">
+                    <img src="images/week4task3usermanagement.png" alt="Terminal showing adduser adminuser on server">
                     <figcaption class="fig-caption">
-                        Figure 5: Creating the non-root administrative account <code>adminuser</code>.
-                    </figcaption>
-                </figure>
-
-                <figure class="gallery-item" tabindex="0">
-                    <img src="images/week4-cat-paswd-workstation.png"
-                        alt="/etc/passwd entry for the adminuser account">
-                    <figcaption class="fig-caption">
-                        Figure 6: Verifying the <code>adminuser</code> entry in <code>/etc/passwd</code>.
+                        Figure 3: This screenshot shows the creation of a non-root user account named
                     </figcaption>
                 </figure>
             </div>
@@ -392,77 +331,68 @@
         <!-- 4. SSH access evidence -->
         <section id="deliverable-4">
             <h2>4. SSH Access Evidence (Successful Connection)</h2>
-            <p>
-                To confirm that administration now flows through the hardened path, I logged in as the new
-                administrative user using key-based authentication:
-            </p>
-            <pre>ssh adminuser@192.168.56.102</pre>
-            <p>
-                The shell prompt changed to <code>adminuser@ubuntu-server:~$</code>, confirming that:
-            </p>
-            <ul>
-                <li>The <code>adminuser</code> account exists and is active.</li>
-                <li>SSH key-based authentication works for this account.</li>
-                <li>Administration can proceed without using the root account directly.</li>
-            </ul>
+
+            <pre>ping 192.168.56.105</pre>
 
             <div class="fig-grid">
                 <figure class="gallery-item" tabindex="0">
-                    <img src="images/week4-ssh-login-workstation.png"
+                    <img src="images/Week4-Task-4 Ping-the-server-from-the-workstation.png"
                         alt="Terminal showing SSH login as adminuser to ubuntu-server">
                     <figcaption class="fig-caption">
-                        Figure 7: Successful SSH login from the workstation to the server as
-                        <code>adminuser</code>.
+                        Figure 4: This command verifies network connectivity between the workstation and the Ubuntu
+                        server over the host-only network. Successful ICMP replies confirm that the server is online and
+                        reachable before attempting remote administration via SSH.
                     </figcaption>
                 </figure>
             </div>
         </section>
 
+        <pre>ssh andreimac@192.168.56.105</pre>
+
+        <div class="fig-grid">
+            <figure class="gallery-item" tabindex="0">
+                <img src="images/Week-4-task-4-Loging-in-from-the-workstation-to-the-server.png"
+                    alt="Terminal showing SSH login as adminuser to ubuntu-server">
+                <figcaption class="fig-caption">
+                    Figure 5: This command establishes a secure SSH connection from the workstation to the server using
+                    the configured SSH settings. A successful login demonstrates that remote administration is
+                    functioning correctly and confirms compliance with the requirement that all server configuration
+                    tasks are performed via SSH from the workstation.
+                </figcaption>
+            </figure>
+        </div>
+        </section>
+
         <!-- 5. Configuration files before/after -->
         <section id="deliverable-5">
             <h2>5. Configuration Files (Before and After Comparisons)</h2>
-            <p>
-                With key-based access and a sudo-enabled user in place, I hardened the SSH configuration by disabling
-                root login and password authentication in <code>/etc/ssh/sshd_config</code>.
-            </p>
+            <pre>sudo nano /etc/ssh/sshd_config</pre>
+            <h3> Before review stage.</h3>
 
-            <h3>SSH configuration before hardening</h3>
-            <pre>
-PermitRootLogin yes
-PasswordAuthentication yes            </pre>
-
-            <h3>SSH configuration after hardening</h3>
-            <pre>
-PermitRootLogin no
-PasswordAuthentication no            </pre>
-
-            <p>
-                After editing, I restarted the SSH daemon so the new settings took effect:
-            </p>
-            <pre>sudo systemctl restart ssh</pre>
-
-            <p>
-                Comparing the before and after versions highlights how a few targeted changes can significantly improve
-                the security posture of the server.
-            </p>
 
             <div class="fig-grid">
                 <figure class="gallery-item" tabindex="0">
-                    <img src="images/week4-sshd_config_before_hardening.png"
+                    <img src="images/week4task5sshdconfignano.png"
                         alt="Terminal showing SSH login as adminuser to ubuntu-server">
                     <figcaption class="fig-caption">
-                        Figure 8: Before hardening, root login and password authentication are enabled in
-                        <code>adminuser</code>.
+                        Figure 6: The SSH daemon configuration file was first accessed using nano to review and verify
+                        the applied authentication settings. This step represents the configuration inspection stage,
+                        confirming that root login and password-based authentication were disabled as part of SSH
+                        hardening.
                     </figcaption>
                 </figure>
             </div>
+
+            <h3> After review stage.</h3>
+
             <div class="fig-grid">
                 <figure class="gallery-item" tabindex="0">
-                    <img src="images/week4-sshd_config_after_hardening.png"
+                    <img src="images/week4task5sshdconfigcat.png"
                         alt="Terminal showing SSH login as adminuser to ubuntu-server">
                     <figcaption class="fig-caption">
-                        Figure 9: After hardening, root login and password authentication are disabled in
-                        <code>adminuser</code>.
+                        Figure 7: The configuration was then displayed using cat to provide clear, read-only evidence of
+                        the final active settings. This confirms that SSH hardening was successfully applied and
+                        documents the secure configuration state used during system operation.
                     </figcaption>
                 </figure>
             </div>
@@ -495,9 +425,9 @@ PasswordAuthentication no            </pre>
                 <tbody>
                     <tr>
                         <td>Incoming</td>
-                        <td>192.168.56.10</td>
+                        <td>192.168.56.101</td>
                         <td>Any</td>
-                        <td>22/tcp (SSH)</td>
+                        <td>22/tcp (SSH) 5201/tcp (Docker)</td>
                         <td>Allow</td>
                     </tr>
                     <tr>
@@ -512,10 +442,12 @@ PasswordAuthentication no            </pre>
 
             <div class="fig-grid">
                 <figure class="gallery-item" tabindex="0">
-                    <img src="images/week4-ufw-status-wrokstation.png"
-                        alt="Screenshot of ufw status verbose output">
+                    <img src="images/week4task2firewallrules.png" alt="Screenshot of ufw status verbose output">
                     <figcaption class="fig-caption">
-                        Figure 8: Documented UFW ruleset confirming SSH is only allowed from the workstation IP.
+                        Figure 8: The firewall ruleset was documented using UFW. The output confirms that the firewall
+                        is active with a default deny policy for incoming connections. SSH access is restricted to a
+                        single trusted workstation IP address, ensuring secure remote administration and minimising the
+                        server's attack surface.
                     </figcaption>
                 </figure>
             </div>
@@ -529,17 +461,27 @@ PasswordAuthentication no            </pre>
                 were run from the <code>adminuser@ubuntu-server:~$</code> prompt:
             </p>
 
-            <pre>uname -a</pre>
-            <p>Shows the server kernel version, architecture, and hostname.</p>
+            <pre>sudo sshd -T | grep -E "permitrootlogin|passwordauthentication"</pre>
+            <p>This command verifies the effective SSH daemon configuration. The output confirms that root login and
+                password-based authentication are disabled, ensuring that only key-based authentication is permitted.
+                This significantly reduces the risk of brute-force and privilege escalation attacks.</p>
 
-            <pre>free -h</pre>
-            <p>Displays memory utilisation in human-readable units.</p>
+            <pre>sudo ufw status verbose</pre>
+            <p>This command displays the complete firewall ruleset and default policies. The output confirms that the
+                firewall is active, enforces a default deny policy for incoming connections, and allows SSH access only
+                from the trusted workstation IP address, demonstrating controlled network access.</p>
 
-            <pre>df -h</pre>
-            <p>Reports disk usage and available space on mounted filesystems.</p>
+            <pre>sudo aa-status | head -n 10</pre>
+            <p>This command checks the status of AppArmor, Ubuntu’s mandatory access control framework. The output
+                confirms that AppArmor is loaded and actively enforcing security profiles, which helps contain
+                application behaviour and limit the impact of potential compromises.</p>
 
-            <pre>ip addr</pre>
-            <p>Lists network interfaces and their assigned IP addresses on the server.</p>
+            <pre>grep -i "Unattended-Upgrade" -R /etc/apt/apt.conf.d/ </pre>
+            <p>This command confirms that unattended security updates are enabled. The configuration ensures that
+                critical security patches are automatically applied, reducing exposure to known vulnerabilities and
+                improving overall system security posture.</p>
+
+            <pre>sudo systemctl status fail2ban</pre>
 
             <p>
                 These commands provide operational visibility while respecting the remote-only administration
@@ -548,23 +490,23 @@ PasswordAuthentication no            </pre>
 
             <div class="fig-grid">
                 <figure class="gallery-item" tabindex="0">
-                    <img src="images/week4-uname-a-workstation.png" alt="uname -a output in SSH session">
+                    <img src="images/week4task7remoteadministration1.png" alt="uname -a output in SSH session">
                     <figcaption class="fig-caption">
-                        Figure 9: Kernel and system information retrieved remotely with <code>uname -a</code>.
+                        Figure 9
                     </figcaption>
                 </figure>
 
                 <figure class="gallery-item" tabindex="0">
-                    <img src="images/week4-free-h-workstation.png" alt="free -h output in SSH session">
+                    <img src="images/week4task7remoteadministration2.png" alt="free -h output in SSH session">
                     <figcaption class="fig-caption">
-                        Figure 10: Memory usage on the server using <code>free -h</code> over SSH.
+                        Figure 10
                     </figcaption>
                 </figure>
 
                 <figure class="gallery-item" tabindex="0">
-                    <img src="images/week4-dh-h-workstation.png" alt="df -h output in SSH session">
+                    <img src="images/week4task7remoteadministration3.png" alt="df -h output in SSH session">
                     <figcaption class="fig-caption">
-                        Figure 11: Disk usage on the server using <code>df -h</code> over SSH.
+                        Figure 11
                     </figcaption>
                 </figure>
             </div>
@@ -575,7 +517,7 @@ PasswordAuthentication no            </pre>
             <h2>Reflection</h2>
             <p>
                 Week 4 was about turning plans into enforceable controls. Enabling SSH key-based authentication and
-                restricting SSH to the workstation significantly reduced the server’s exposure to unauthorised access.
+                restricting SSH to the workstation significantly reduced the server's exposure to unauthorised access.
                 Moving administration to a non-root sudo user follows the principle of least privilege and lowers the
                 risk of accidental or malicious system damage.
             </p>
