@@ -40,35 +40,39 @@
         <section>
             <h3>Security audit with Lynis</h3>
             <pre>sudo lynis audit system </pre>
-            <figure class="gallery-item" tabindex="0" data-full="images/Week7_70hardening_index.png"
+            <figure class="gallery-item" tabindex="0" data-full="images/Week7_Hardening_Index81.png"
                 aria-label="Open Figure 1: Security Audit Summary in full size">
-                <img src="images/Week7_70hardening_index.png" alt="Figure 1: Security Audit Summary">
+                <img src="images/Week7_Hardening_Index81.png" alt="Figure 1: Security Audit Summary">
                 <figcaption class="fig-caption">
                     Figure 1: Security Audit Summary
-                </figcaption> Week7_70hardening_index.png
+                </figcaption> Week7_Hardening_Index81.png
             </figure>
             <p>
-                This screenshot shows the results of a comprehensive security audit performed using Lynis. Following the
-                implementation of multiple system-hardening measures, the system achieved a hardening index score of 70
-                after completing 264 security tests, demonstrating a significantly improved security posture. Core
-                security components such as the firewall and malware scanning were enabled and verified, and all
-                critical audit modules completed successfully.
-            </p>
-            <p>
-                To increase the hardening index, several key security controls were implemented in addition to the
-                original configuration. These included enabling system auditing (auditd), deploying file integrity
-                monitoring using AIDE, enforcing stricter password ageing policies, improving sudo logging and session
-                control, applying targeted network and kernel sysctl hardening, enabling automatic security updates, and
-                activating process accounting. A malware scanning tool (rkhunter) was also installed to address earlier
-                audit recommendations.
+                This screenshot shows the results of a comprehensive security audit performed using Lynis 3.0.9.
+                Following the implementation of multiple system-hardening measures, the system achieved a final
+                hardening index score of 81 after completing 263 security tests, demonstrating a strong and
+                well-validated security posture. Core security components such as the firewall and malware scanning were
+                enabled and verified, and all critical audit modules completed successfully without warnings.
             </p>
 
             <p>
-                The final score of 70 reflects a balanced and well-hardened system suitable for a controlled virtualised
-                learning environment. More intrusive recommendations, such as advanced bootloader protection or
-                low-level kernel recompilation, were deliberately excluded to avoid unnecessary complexity and potential
-                instability. This demonstrates an informed security trade-off, prioritising best-practice hardening,
-                auditability, and system stability in line with the system’s intended purpose.
+                To increase the hardening index beyond the initial baseline, several key security controls were
+                implemented in addition to the original configuration. These included enabling system auditing using
+                auditd, deploying file integrity monitoring with AIDE (including scheduled integrity checks and strong
+                cryptographic checksums), enforcing stricter password ageing and authentication policies, improving sudo
+                logging and session control, applying targeted kernel and network sysctl hardening, enabling automatic
+                security updates, and activating process and system accounting. A malware scanning tool (rkhunter) was
+                also installed to address earlier audit recommendations and enhance post-compromise detection
+                capabilities.
+            </p>
+
+            <p>
+                The final score of 81 reflects a well-hardened and security-conscious system, suitable for a controlled
+                virtualised learning environment while adhering to industry best-practice hardening standards. More
+                intrusive recommendations, such as advanced bootloader password enforcement or low-level kernel
+                recompilation, were deliberately excluded to avoid unnecessary complexity and potential system
+                instability. This outcome demonstrates an informed and balanced security trade-off, prioritising
+                effective hardening, auditability, and operational stability in line with the system’s intended purpose.
             </p>
 
             <ul>
@@ -106,7 +110,14 @@
                     </ul>
                 </li>
             </ul>
-
+            <p>
+                The hardening process followed an iterative audit–remediation–validation methodology, with Lynis used
+                not only as a diagnostic tool but also as a quantitative mechanism for measuring the effectiveness of
+                applied security controls. Each remediation step was validated through re-auditing, ensuring that
+                improvements were evidence-based rather than assumed. This approach demonstrates critical evaluation of
+                operating system security in practice and aligns system configuration decisions with both security best
+                practices and operational requirements.
+            </p>
 
         </section>
 
