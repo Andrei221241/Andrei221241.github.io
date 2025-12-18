@@ -40,42 +40,74 @@
         <section>
             <h3>Security audit with Lynis</h3>
             <pre>sudo lynis audit system </pre>
-            <figure class="gallery-item" tabindex="0" data-full="images/week7_lynis_security_audit_summary .png"
+            <figure class="gallery-item" tabindex="0" data-full="images/Week7_70hardening_index.png"
                 aria-label="Open Figure 1: Security Audit Summary in full size">
-                <img src="images/week7_lynis_security_audit_summary .png" alt="Figure 1: Security Audit Summary">
+                <img src="images/Week7_70hardening_index.png" alt="Figure 1: Security Audit Summary">
                 <figcaption class="fig-caption">
                     Figure 1: Security Audit Summary
-                </figcaption>
+                </figcaption> Week7_70hardening_index.png
             </figure>
             <p>
-                This screenshot shows the results of a comprehensive security audit performed using Lynis. The
-                system
-                achieved a hardening index score of 65 after completing 258 security tests, with key security
-                components
-                such as the firewall enabled and active. The audit identified several non-critical recommendations,
-                including optional kernel tuning and malware scanner installation, which were reviewed and
-                documented as
-                accepted risks within a controlled virtualised environment.
+                This screenshot shows the results of a comprehensive security audit performed using Lynis. Following the
+                implementation of multiple system-hardening measures, the system achieved a hardening index score of 70
+                after completing 264 security tests, demonstrating a significantly improved security posture. Core
+                security components such as the firewall and malware scanning were enabled and verified, and all
+                critical audit modules completed successfully.
             </p>
             <p>
-                Following the Lynis security audit, a malware scanning tool (rkhunter) was installed to address
-                identified hardening recommendations. This resulted in an increased number of completed tests and an
-                improved security posture.
+                To increase the hardening index, several key security controls were implemented in addition to the
+                original configuration. These included enabling system auditing (auditd), deploying file integrity
+                monitoring using AIDE, enforcing stricter password ageing policies, improving sudo logging and session
+                control, applying targeted network and kernel sysctl hardening, enabling automatic security updates, and
+                activating process accounting. A malware scanning tool (rkhunter) was also installed to address earlier
+                audit recommendations.
             </p>
 
             <p>
-                The final hardening index remained below 70 due to advisory checks relating to kernel sysctl tuning,
-                file permission tightening, and additional automation tools. These recommendations were intentionally
-                not applied, as modifying low-level kernel parameters and system-wide permissions in a virtualised
-                learning environment could introduce instability and was not appropriate for the system’s intended
-                purpose.
+                The final score of 70 reflects a balanced and well-hardened system suitable for a controlled virtualised
+                learning environment. More intrusive recommendations, such as advanced bootloader protection or
+                low-level kernel recompilation, were deliberately excluded to avoid unnecessary complexity and potential
+                instability. This demonstrates an informed security trade-off, prioritising best-practice hardening,
+                auditability, and system stability in line with the system’s intended purpose.
             </p>
 
-            <p>
-                This reflects a conscious security trade-off, prioritising system stability and maintainability while
-                still implementing core security best practices such as firewalling, SSH hardening, AppArmor
-                enforcement, automatic updates, intrusion prevention, and malware detection.
-            </p>
+            <ul>
+                <li>
+                    <strong>Security Hardening Measures Implemented to Achieve a Lynis Hardening Index of 70</strong>
+                    <ul>
+                        <li>UFW firewall – installed, enabled, and configured to allow only required services (SSH)</li>
+                        <li>SSH hardening – root login disabled and SSH access restricted to authorised users</li>
+                        <li>User and privilege management – non-root users created with controlled sudo access</li>
+                        <li>AppArmor – verified as enabled and enforcing mandatory access control profiles</li>
+                        <li>Fail2Ban – installed and enabled to protect against brute-force login attempts</li>
+                        <li>Malware scanning (rkhunter) – installed and executed to detect rootkits and malware</li>
+                        <li>System monitoring tools – used built-in tools (top, free, df) for performance and system
+                            observation</li>
+                        <li>Lynis security auditing – used to assess and evidence system hardening</li>
+                    </ul>
+                </li>
+
+                <li>
+                    <strong>Additional Hardening Measures and Tools Implemented</strong>
+                    <ul>
+                        <li>auditd – enabled system auditing to log security-relevant system and user activity</li>
+                        <li>AIDE – deployed file integrity monitoring to detect unauthorised file changes</li>
+                        <li>sysctl hardening – applied kernel and network parameter hardening to reduce the attack
+                            surface</li>
+                        <li>sudo hardening – enforced sudo session control, logging, and pseudo-TTY usage</li>
+                        <li>unattended upgrades – enabled automatic installation of security updates</li>
+                        <li>process accounting – activated to record executed commands and process usage</li>
+                        <li>password ageing – enforced password lifetime and minimum change intervals</li>
+                        <li>GRUB permissions – restricted access to bootloader configuration files</li>
+                        <li>System monitoring tools – used built-in tools (top, free, df) to observe system behaviour
+                        </li>
+                        <li>Lynis security auditing – used to assess, validate, and measure system hardening progress
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+
+
         </section>
 
         <section>
@@ -118,9 +150,9 @@
         <section>
             <h3>System configuration review / audit summary</h3>
             <pre>cat final_audit_summary.txt </pre>
-            <figure class="gallery-item" tabindex="0" data-full="images/week7_lynis_security_audit_summary .png"
+            <figure class="gallery-item" tabindex="0" data-full="images/week7_task4_final_audit_summary_part1.png"
                 aria-label="Open Figure 4: System Configuration Review">
-                <img src="images/week7_lynis_security_audit_summary .png" alt="Figure 4: System Configuration Review">
+                <img src="images/week7_task4_final_audit_summary_part1.png" alt="Figure 4: System Configuration Review">
                 <figcaption class="fig-caption">
                     Figure 4: System Configuration Review Part 1
                 </figcaption>

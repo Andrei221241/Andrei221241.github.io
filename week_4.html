@@ -68,9 +68,9 @@
                     </figcaption>
                 </figure>
                 <p>This command displays the effective SSH daemon configuration. The output confirms that
-                        root login and password-based authentication are disabled, enforcing secure key-based
-                        authentication. This reduces the risk of brute-force attacks and prevents direct administrative
-                        access over SSH.</p>
+                    root login and password-based authentication are disabled, enforcing secure key-based
+                    authentication. This reduces the risk of brute-force attacks and prevents direct administrative
+                    access over SSH.</p>
             </div>
         </section>
 
@@ -120,9 +120,9 @@
                     </figcaption>
                 </figure>
                 <p>The screenshot captures the process of creating a non-root user account named
-                    "adminuser" on the Ubuntu Server using the adduser command. This step is crucial for implementing
+                    "newuser1" on the Ubuntu Server using the adduser command. This step is crucial for implementing
                     privilege management, as it allows administrative tasks to be performed without using the root
-                    account. The creation of "adminuser" aligns with best practices for system security by promoting the
+                    account. The creation of "newuser1" aligns with best practices for system security by promoting the
                     principle of least privilege and enhancing accountability for administrative actions.</p>
             </div>
         </section>
@@ -180,9 +180,9 @@
                     </figcaption>
                 </figure>
                 <p>The SSH daemon configuration file was first accessed using nano to review and verify
-                        the applied authentication settings. This step represents the configuration inspection stage,
-                        confirming that root login and password-based authentication were disabled as part of SSH
-                        hardening.</p>
+                    the applied authentication settings. This step represents the configuration inspection stage,
+                    confirming that root login and password-based authentication were disabled as part of SSH
+                    hardening.</p>
             </div>
 
             <h3> After review stage.</h3>
@@ -196,8 +196,8 @@
                     </figcaption>
                 </figure>
                 <p>The configuration was then displayed using cat to provide clear, read-only evidence of
-                        the final active settings. This confirms that SSH hardening was successfully applied and
-                        documents the secure configuration state used during system operation.</p>
+                    the final active settings. This confirms that SSH hardening was successfully applied and
+                    documents the secure configuration state used during system operation.</p>
             </div>
         </section>
 
@@ -251,9 +251,9 @@
                     </figcaption>
                 </figure>
                 <p>The firewall ruleset was documented using UFW. The output confirms that the firewall
-                        is active with a default deny policy for incoming connections. SSH access is restricted to a
-                        single trusted workstation IP address, ensuring secure remote administration and minimising the
-                        server's attack surface.</p>
+                    is active with a default deny policy for incoming connections. SSH access is restricted to a
+                    single trusted workstation IP address, ensuring secure remote administration and minimising the
+                    server's attack surface.</p>
             </div>
         </section>
 
@@ -286,7 +286,11 @@
                 improving overall system security posture.</p>
 
             <pre>sudo systemctl status fail2ban</pre>
-
+            <p>
+                This command verifies that the fail2ban service is running. Fail2ban provides intrusion prevention by
+                monitoring authentication logs and automatically blocking IP addresses that exhibit suspicious or
+                repeated failed login attempts.
+            </p>
             <p>
                 These commands provide operational visibility while respecting the remote-only administration
                 constraint.
